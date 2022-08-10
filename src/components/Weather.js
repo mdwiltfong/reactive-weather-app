@@ -1,7 +1,10 @@
 import { Container, Form, FormGroup, Label, Input } from "reactstrap";
 import { Formik, useFormik } from "formik";
 import OpenWeatherAPI from "../helpers/helpers";
+import { useState } from "react";
+import { CurrentWeather } from "./CurrentWeather";
 export function Weather(params) {
+  const [weatherData, setWeatherData] = useState();
   const formik = useFormik({
     initialValues: {
       city: "",
@@ -9,7 +12,8 @@ export function Weather(params) {
     onSubmit: async (values) => {
       const { city } = values;
       const currentWeather = await OpenWeatherAPI.currentWeather(city);
-      console.log(currentWeather);
+      console.debug("Weather Data OnSubmit", currentWeather);
+      setWeatherData(currentWeather);
     },
   });
   return (
@@ -33,6 +37,7 @@ export function Weather(params) {
             />
           </FormGroup>
         </Form>
+        {weatherData ? <CurrentWeather weatherData={weatherData} /> : null}
       </Container>
     </>
   );

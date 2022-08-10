@@ -26,7 +26,6 @@ describe("Basic UI Flow", () => {
     fireEvent.keyDown(searchInput, {
       key: "Enter",
     });
-    screen.debug();
     const city = screen.getByTestId("city");
     expect(city).toBeInTheDocument();
   });
