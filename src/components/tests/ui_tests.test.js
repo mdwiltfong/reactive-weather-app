@@ -16,7 +16,7 @@ function setUp(route = "/") {
   };
 }
 describe("Basic UI Flow", () => {
-  test("User can search for a city", async () => {
+  test("App Renders City Name, Weather, and Time", async () => {
     const { screen, searchInput } = setUp();
 
     fireEvent.change(searchInput, {
@@ -28,8 +28,9 @@ describe("Basic UI Flow", () => {
 
     //TODO: Since this data is rendered from an API call, we have to do an asynchronous test here
     await waitFor(() => {
-      screen.debug();
       expect(screen.queryByText("Madrid")).toBeInTheDocument();
+      expect(screen.getByTestId("current-weather")).toBeInTheDocument();
+      expect(screen.getByTestId("current-date")).toBeInTheDocument();
     });
   });
 });
