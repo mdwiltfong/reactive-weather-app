@@ -1,5 +1,5 @@
 import App from "../../App";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, waitFor, getByText } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
 function setUp(route = "/") {
@@ -9,13 +9,14 @@ function setUp(route = "/") {
     </MemoryRouter>
   );
   const searchInput = screen.getByLabelText("City Name");
+  console.log(searchInput.nodeValue);
   return {
     screen,
     searchInput,
   };
 }
 describe("Basic UI Flow", () => {
-  test("User can search for a city", () => {
+  test("User can search for a city", async () => {
     const { screen, searchInput } = setUp();
 
     fireEvent.change(searchInput, {
@@ -23,10 +24,12 @@ describe("Basic UI Flow", () => {
         value: "Madrid",
       },
     });
-    fireEvent.keyDown(searchInput, {
-      key: "Enter",
+    fireEvent.submit(searchInput);
+
+    //TODO: Since this data is rendered from an API call, we have to do an asynchronous test here
+    await waitFor(() => {
+      screen.debug();
+      expect(screen.queryByText("Madrid")).toBeInTheDocument();
     });
-    const city = screen.getByTestId("city");
-    expect(city).toBeInTheDocument();
   });
 });
