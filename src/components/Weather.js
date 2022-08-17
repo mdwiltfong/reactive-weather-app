@@ -18,7 +18,7 @@ export function Weather(params) {
   });
   return (
     <>
-      <Container className="w-25">
+      <Container className="w-50">
         <Form
           onSubmit={(e) => {
             e.preventDefault();
@@ -34,6 +34,7 @@ export function Weather(params) {
               type="text"
               onChange={formik.handleChange}
               value={formik.values.q}
+              className="w-75 mx-auto"
             />
           </FormGroup>
         </Form>

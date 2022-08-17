@@ -23,7 +23,7 @@ export const handlers = [
         ],
         base: "stations",
         main: {
-          temp: 300.71,
+          temp: 26.15,
           feels_like: 300.02,
           temp_min: 298.02,
           temp_max: 302.4,

@@ -4,7 +4,7 @@ const BASE_URL = process.env.REACT_APP_MOCK || "http://localhost:3001";
 const api_key = process.env.REACT_APP_OPENWEATHER_API_KEY;
 console.debug("BASE_URL", BASE_URL);
 /* This class will handle all the api calls to the server */
-class OpenWeatherAPI {
+export default class OpenWeatherAPI {
   static token;
   static async request(endpoint, data = {}, method = "get") {
     console.debug("API Call:", endpoint, data, method);
@@ -33,6 +33,37 @@ class OpenWeatherAPI {
   }
 }
 
-OpenWeatherAPI.token = "test";
+export class DateFormatter {
+  epochTime;
+  now;
+  days;
+  constructor(epochTime) {
+    this.epochTime = epochTime;
+    this.now = new Date(epochTime);
+    this.days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+  }
 
-export default OpenWeatherAPI;
+  getDay = () => {
+    const day = this.days[this.now.getDay()];
+    return day;
+  };
+  getTime = () => {
+    let hours = this.now.getHours();
+    let timeOfDay = "a.m.";
+    const minutes = this.now.getMinutes();
+    if (hours > 12) {
+      hours -= 12;
+      timeOfDay = "p.m.";
+    }
+    return `${hours}:${minutes} ${timeOfDay}`;
+  };
+}
+OpenWeatherAPI.token = "test";
