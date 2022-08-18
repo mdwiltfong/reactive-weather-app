@@ -33,13 +33,16 @@ export default class OpenWeatherAPI {
   }
 }
 
+/* 
+DateFormatter will do the following: 
+
+It will show the client's time, day of the week, and time. 
+It will also show the searched city's time, day of the week and time.
+*/
 export class DateFormatter {
-  epochTime;
-  now;
-  days;
-  constructor(epochTime) {
-    this.epochTime = epochTime;
-    this.now = new Date(epochTime);
+  constructor(epochTime = Date.now(), timeZoneOffSet = null) {
+    this.now = epochTime;
+    this.offSet = timeZoneOffSet;
     this.days = [
       "Sunday",
       "Monday",
@@ -50,12 +53,21 @@ export class DateFormatter {
       "Saturday",
     ];
   }
-
-  getDay = () => {
-    const day = this.days[this.now.getDay()];
-    return day;
+  #timeZoneOffSet = () => {
+    this.now -= this.offSet;
   };
-  getTime = () => {
+  GetDay = () => {
+    if (this.offSet) {
+      this.#timeZoneOffSet();
+      return this.days[new Date(this.now).getDay()];
+    }
+    const number = new Date(this.now).getDay();
+    return this.days[number];
+  };
+  GetTime = () => {
+    if (this.offSet) {
+      this.#timeZoneOffSet();
+    }
     let hours = this.now.getHours();
     let timeOfDay = "a.m.";
     const minutes = this.now.getMinutes();
