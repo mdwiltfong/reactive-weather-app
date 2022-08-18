@@ -42,6 +42,7 @@ It will also show the searched city's time, day of the week and time.
 export class DateFormatter {
   constructor(epochTime = Date.now(), timeZoneOffSet = null) {
     this.now = epochTime;
+    this._Date = new Date(this.now);
     this.offSet = timeZoneOffSet;
     this.days = [
       "Sunday",
@@ -54,23 +55,25 @@ export class DateFormatter {
     ];
   }
   #timeZoneOffSet = () => {
-    this.now -= this.offSet;
+    this.now += this.offSet;
   };
   GetDay = () => {
+    const dateInstance = this._Date;
     if (this.offSet) {
       this.#timeZoneOffSet();
-      return this.days[new Date(this.now).getDay()];
+      return this.days[dateInstance.getDay()];
     }
-    const number = new Date(this.now).getDay();
+    const number = dateInstance.getDay();
     return this.days[number];
   };
   GetTime = () => {
     if (this.offSet) {
       this.#timeZoneOffSet();
     }
-    let hours = this.now.getHours();
+    const dateInstance = this._Date;
+    let hours = dateInstance.getHours();
     let timeOfDay = "a.m.";
-    const minutes = this.now.getMinutes();
+    const minutes = dateInstance.getMinutes();
     if (hours > 12) {
       hours -= 12;
       timeOfDay = "p.m.";
