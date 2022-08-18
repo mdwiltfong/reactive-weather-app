@@ -1,5 +1,6 @@
 import { DateFormatter } from "./helpers";
-import MockDate from "./DateMock";
+import MockDatePM from "./DateMockPM";
+import MockDateAM from "./DateMockAM";
 const days = [
   "Sunday",
   "Monday",
@@ -9,28 +10,37 @@ const days = [
   "Friday",
   "Saturday",
 ];
-function setUp() {
-  return new DateFormatter();
+function setUp(offSet = null) {
+  return new DateFormatter(offSet);
 }
 
 describe("DateFormatter client time tests", () => {
   const realDate = global.Date;
   beforeAll(() => {
-    global.Date = MockDate;
+    global.Date = MockDatePM;
   });
   afterAll(() => {
     global.Date = realDate;
   });
   test("Outputs current day", () => {
     const date = setUp();
-    const currentDate = date.GetDay();
-    expect(currentDate).toEqual(days[new Date().getDay()]);
+    const currentDay = date.GetDay();
+    expect(currentDay).toEqual(days[new Date().getDay()]);
   });
-  test.only("Outputs current time", () => {
+  test("Outputs current time in p.m.", () => {
     const date = setUp();
     const currentTime = date.GetTime();
     expect(currentTime).toEqual("11:17 p.m.");
   });
-  test.todo("Outputs am and pm");
-  test.todo("Outputs time in another timezone");
+  test("Outputs am", () => {
+    global.Date = MockDateAM;
+    const date = setUp();
+    const currentTime = date.GetTime();
+    expect(currentTime).toEqual("4:17 a.m.");
+  });
+  test.skip("Outputs time in another timezone", () => {
+    const date = setUp(172800000);
+    const currentDay = date.GetDay();
+    expect(currentDay).toEqual("Monday");
+  });
 });
