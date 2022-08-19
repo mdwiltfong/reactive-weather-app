@@ -4,10 +4,13 @@ import { DateFormatter } from "../helpers/helpers";
 
 export function CurrentWeather({ weatherData }) {
   const [isCelsius, setIsCelsius] = useState(true);
+  const date = new DateFormatter(weatherData.dt);
   function handleClick() {
     setIsCelsius((state) => !state);
   }
+
   let units;
+
   if (isCelsius) {
     units = (
       <>
@@ -53,10 +56,17 @@ export function CurrentWeather({ weatherData }) {
           </div>
           <div className="col" id="units"></div>
         </div>
-
-        <div className="col my-auto" data-testid="current-date">
-          {weatherData.name}
-        </div>
+        <span className="d-flex flex-column">
+          <div className="col my-auto text-end" data-testid="current-date">
+            <p className="my-0" style={{ fontSize: "2em" }}>
+              {weatherData.name}
+            </p>
+            <p>
+              {date.GetDay()} {date.GetTime()}
+            </p>
+          </div>
+          <div id="date-time" style={{ fontSize: "1em" }}></div>
+        </span>
       </Container>
     </>
   );

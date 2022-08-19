@@ -18,7 +18,7 @@ export function Weather(params) {
   });
   return (
     <>
-      <Container className="w-50">
+      <Container className="w-25">
         <Form
           onSubmit={(e) => {
             e.preventDefault();

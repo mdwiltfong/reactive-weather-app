@@ -38,9 +38,4 @@ describe("DateFormatter client time tests", () => {
     const currentTime = date.GetTime();
     expect(currentTime).toEqual("4:17 a.m.");
   });
-  test.skip("Outputs time in another timezone", () => {
-    const date = setUp(172800000);
-    const currentDay = date.GetDay();
-    expect(currentDay).toEqual("Monday");
-  });
 });

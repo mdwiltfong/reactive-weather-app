@@ -28,7 +28,7 @@ describe("Basic UI Flow", () => {
 
     //TODO: Since this data is rendered from an API call, we have to do an asynchronous test here
     await waitFor(() => {
-      expect(screen.queryByText("Madrid")).toBeInTheDocument();
+      expect(screen.getByText("Madrid")).toBeInTheDocument();
       expect(screen.getByTestId("current-weather")).toBeInTheDocument();
       expect(screen.getByTestId("current-date")).toBeInTheDocument();
     });
