@@ -31,6 +31,14 @@ export default class OpenWeatherAPI {
     const currentWeather = await this.request("weather", data);
     return currentWeather;
   }
+  static async currentWeatherForecast(city) {
+    const data = {
+      q: city,
+      appid: api_key,
+    };
+    const forecast = await this.request("forecast", data);
+    return forecast;
+  }
 }
 
 /* 
