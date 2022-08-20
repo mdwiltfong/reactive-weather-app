@@ -7,7 +7,7 @@ console.debug("BASE_URL", BASE_URL);
 export default class OpenWeatherAPI {
   static token;
   static async request(endpoint, data = {}, method = "get") {
-    console.debug("API Call:", endpoint, data, method);
+    console.debug("API Call:", BASE_URL, endpoint, data, method);
 
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${OpenWeatherAPI.token}` };
