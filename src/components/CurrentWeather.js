@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Container } from "reactstrap";
 import { DateFormatter } from "../helpers/helpers";
+import { Forecast } from "./Forecast";
 
 export function CurrentWeather({ weatherData }) {
   const [isCelsius, setIsCelsius] = useState(true);
   function handleClick() {
     setIsCelsius((state) => !state);
   }
-  console.log(weatherData);
   let units;
 
   if (isCelsius) {
@@ -66,6 +66,7 @@ export function CurrentWeather({ weatherData }) {
           </div>
           <div id="date-time" style={{ fontSize: "1em" }}></div>
         </span>
+        <Forecast data={weatherData.forecast} />
       </Container>
     </>
   );

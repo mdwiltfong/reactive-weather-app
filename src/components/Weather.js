@@ -4,6 +4,7 @@ import OpenWeatherAPI from "../helpers/helpers";
 import { useState } from "react";
 import { CurrentWeather } from "./CurrentWeather";
 import WeatherClass from "./WeatherClass";
+import { Forecast } from "./Forecast";
 export function Weather(params) {
   const [weatherData, setWeatherData] = useState();
   const formik = useFormik({
@@ -13,7 +14,9 @@ export function Weather(params) {
     onSubmit: async (values) => {
       const { city } = values;
       const currentWeather = await OpenWeatherAPI.currentWeather(city);
-      setWeatherData(new WeatherClass(currentWeather));
+      const foreCast = await OpenWeatherAPI.currentWeatherForecast(city);
+
+      setWeatherData(new WeatherClass({ currentWeather, foreCast }));
     },
   });
   return (
