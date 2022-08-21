@@ -1,6 +1,7 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+const BASE_URL = process.env.REACT_APP_MOCK || "http://localhost:3001";
+console.log(BASE_URL);
 export const handlers = [
   // Handles a GET /weather request. This will return the weather for madrid
   rest.get(`${BASE_URL}/weather`, (req, res, ctx) => {
@@ -54,7 +55,7 @@ export const handlers = [
     );
   }),
   // Handles a GET /forecast request. This will return the weather for madrid for 5 days.
-  rest.get("/forecast", (req, res, ctx) => {
+  rest.get(`${BASE_URL}/forecast`, (req, res, ctx) => {
     const { q, appid } = req.params;
     console.log(q, appid);
     return res(

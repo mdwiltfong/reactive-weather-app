@@ -14,8 +14,16 @@ export function Weather(params) {
       const currentWeather = await OpenWeatherAPI.currentWeather(city);
       const currentWeatherForecast =
         await OpenWeatherAPI.currentWeatherForecast(city);
+      console.debug(
+        "Current Weather in Weather.js",
+        currentWeather,
+        currentWeatherForecast
+      );
       console.debug("Weather Data OnSubmit", currentWeather);
-      setWeatherData({ currentWeather, ["foreCast"]: currentWeatherForecast });
+      setWeatherData({
+        currentWeather,
+        ["currentForecast"]: currentWeatherForecast,
+      });
       console.debug("Weather State", weatherData);
     },
   });
@@ -42,7 +50,6 @@ export function Weather(params) {
           </FormGroup>
         </Form>
         {weatherData ? <CurrentWeather weatherData={weatherData} /> : null}
-        {console.log(weatherData)}
       </Container>
     </>
   );

@@ -29,6 +29,7 @@ export default class OpenWeatherAPI {
       appid: api_key,
     };
     const currentWeather = await this.request("weather", data);
+    console.log(currentWeather);
     return currentWeather;
   }
   static async currentWeatherForecast(city) {
@@ -37,6 +38,7 @@ export default class OpenWeatherAPI {
       appid: api_key,
     };
     const forecast = await this.request("forecast", data);
+    console.log(forecast);
     return forecast;
   }
 }
