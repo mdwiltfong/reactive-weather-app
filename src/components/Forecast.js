@@ -9,7 +9,7 @@ import {
 } from "reactstrap";
 export function Forecast({ data }) {
   return (
-    <div test-id="forecast">
+    <div className="d-flex flex-row" data-testid="forecast">
       {data.map((foreCast) => {
         return (
           <Card
@@ -17,7 +17,10 @@ export function Forecast({ data }) {
               width: "18rem",
             }}
           >
-            <img alt="Sample" src="https://picsum.photos/300/200" />
+            <img
+              alt="Sample"
+              src={`http://openweathermap.org/img/wn/${foreCast.weather[0].icon}@2x.png`}
+            />
             <CardBody>
               <CardTitle tag="h5">Card title</CardTitle>
               <CardSubtitle className="mb-2 text-muted" tag="h6">

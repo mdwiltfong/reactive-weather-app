@@ -66,8 +66,8 @@ export function CurrentWeather({ weatherData }) {
           </div>
           <div id="date-time" style={{ fontSize: "1em" }}></div>
         </span>
-        <Forecast data={weatherData.forecast} />
       </Container>
+      <Forecast data={weatherData.forecast} />
     </>
   );
 }
