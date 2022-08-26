@@ -32,12 +32,15 @@ export default class OpenWeatherAPI {
     console.log(currentWeather);
     return currentWeather;
   }
-  static async currentWeatherForecast(city) {
+  static async currentWeatherForecast(city, lat, lon) {
+    //TODO: We will have to use a different route for this. As a result we will have tochanget he mock.
     const data = {
-      q: city,
+      lat: lat,
+      lon: lon,
+      exclude: "hourly,minutely",
       appid: api_key,
     };
-    const forecast = await this.request("forecast", data);
+    const forecast = await this.request("dailyForecast", data);
     console.log(forecast);
     return forecast;
   }
@@ -50,20 +53,25 @@ It will show the client's time, day of the week, and time.
 It will also show the searched city's time, day of the week and time.
 */
 export class DateFormatter {
+  static _days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   constructor(epochTime = Date.now()) {
     this.now = epochTime;
     this._Date = new Date(this.now);
-    this.days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
+    this.days = this.constructor._days;
   }
-
+  static _getDay = (epochTime) => {
+    const day = new Date(epochTime).getDay();
+    console.log(this);
+    return DateFormatter._days[day];
+  };
   GetDay = () => {
     const dateInstance = this._Date;
     const number = dateInstance.getDay();

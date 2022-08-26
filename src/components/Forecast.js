@@ -7,10 +7,11 @@ import {
   CardText,
   Button,
 } from "reactstrap";
-export function Forecast({ data }) {
+export function Forecast({ foreCastData }) {
+  console.log(foreCastData);
   return (
     <div className="d-flex flex-row" data-testid="forecast">
-      {data.map((foreCast) => {
+      {foreCastData.map((foreCast) => {
         return (
           <Card
             style={{
@@ -19,19 +20,8 @@ export function Forecast({ data }) {
           >
             <img
               alt="Sample"
-              src={`http://openweathermap.org/img/wn/${foreCast.weather[0].icon}@2x.png`}
+              src={`http://openweathermap.org/img/wn/${foreCast.icon}@2x.png`}
             />
-            <CardBody>
-              <CardTitle tag="h5">Card title</CardTitle>
-              <CardSubtitle className="mb-2 text-muted" tag="h6">
-                Card subtitle
-              </CardSubtitle>
-              <CardText>
-                Some quick example text to build on the card title and make up
-                the bulk of the card‘s content.
-              </CardText>
-              <Button>Button</Button>
-            </CardBody>
           </Card>
         );
       })}

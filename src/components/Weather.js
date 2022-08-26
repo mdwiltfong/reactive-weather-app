@@ -14,7 +14,11 @@ export function Weather(params) {
     onSubmit: async (values) => {
       const { city } = values;
       const currentWeather = await OpenWeatherAPI.currentWeather(city);
-      const foreCast = await OpenWeatherAPI.currentWeatherForecast(city);
+      const foreCast = await OpenWeatherAPI.currentWeatherForecast(
+        city,
+        currentWeather.coord.lat,
+        currentWeather.coord.lon
+      );
 
       setWeatherData(new WeatherClass({ currentWeather, foreCast }));
     },

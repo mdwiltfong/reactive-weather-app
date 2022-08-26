@@ -7,7 +7,7 @@ class Weather {
     this.temp = currentWeather.main.temp;
     this.name = currentWeather.name;
     this.Date = new DateFormatter(currentWeather.dt);
-    this.forecast = foreCast.list;
+    this.forecast = foreCast.daily;
   }
   get getDay() {
     return this.Date.GetDay();
@@ -17,6 +17,16 @@ class Weather {
   }
   getTempFahrenheit() {
     return (this.temp * 9) / 5 + 32;
+  }
+  getForeCast() {
+    return this.forecast.map((forecast) => {
+      return {
+        day: DateFormatter._getDay(forecast.dt).slice(0, 3),
+        icon: forecast.weather[0].icon,
+        maxTemp: forecast.temp.max,
+        minTemp: forecast.temp.min,
+      };
+    });
   }
 }
 

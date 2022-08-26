@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Container } from "reactstrap";
-import { DateFormatter } from "../helpers/helpers";
 import { Forecast } from "./Forecast";
 
 export function CurrentWeather({ weatherData }) {
@@ -67,7 +66,7 @@ export function CurrentWeather({ weatherData }) {
           <div id="date-time" style={{ fontSize: "1em" }}></div>
         </span>
       </Container>
-      <Forecast data={weatherData.forecast} />
+      <Forecast foreCastData={weatherData.getForeCast()} />
     </>
   );
 }
