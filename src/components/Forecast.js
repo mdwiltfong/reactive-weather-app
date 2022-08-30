@@ -10,10 +10,11 @@ import {
 export function Forecast({ foreCastData }) {
   console.log(foreCastData);
   return (
-    <div className="d-flex flex-row" data-testid="forecast">
-      {foreCastData.map((foreCast) => {
+    <div className="d-flex flex-row" data-testid="forecasts">
+      {foreCastData.map((foreCast, index) => {
         return (
           <Card
+            data-testid={`forecast-${index}`}
             style={{
               width: "18rem",
             }}

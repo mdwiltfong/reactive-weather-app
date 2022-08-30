@@ -2,7 +2,7 @@ import App from "../../App";
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
-async function setUp(route = "/") {
+function setUp(route = "/") {
   const screen = render(
     <MemoryRouter initialEntries={[route]}>
       <App />
@@ -21,8 +21,7 @@ async function setUp(route = "/") {
 }
 describe("Basic UI Flow", () => {
   test("App Renders City Name, Weather, and Time", async () => {
-    const screen = await setUp();
-
+    const screen = setUp();
     await waitFor(() => {
       expect(screen.getByText("Madrid")).toBeInTheDocument();
       expect(screen.getByTestId("current-weather")).toBeInTheDocument();
@@ -31,9 +30,8 @@ describe("Basic UI Flow", () => {
   });
   test("App Renders Forecast", async () => {
     const screen = setUp();
-
     await waitFor(() => {
-      expect(screen.getByTestId("forecast")).toBeInTheDocument();
+      expect(screen.getByTestId("forecasts")).toBeInTheDocument();
       expect(
         screen.queryAllByTestId("forecast-", { exact: false })
       ).toHaveLength(5);

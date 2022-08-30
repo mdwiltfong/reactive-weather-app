@@ -41,7 +41,7 @@ export default class OpenWeatherAPI {
       appid: api_key,
     };
     const forecast = await this.request("dailyForecast", data);
-    console.log(forecast);
+    console.debug("One Call API response", data);
     return forecast;
   }
 }
