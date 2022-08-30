@@ -89,4 +89,15 @@ export class DateFormatter {
     return `${hours}:${minutes} ${timeOfDay}`;
   };
 }
+
+class GeolocationAPI {
+  constructor() {
+    this.navigator = navigator;
+  }
+  //TODO: Create a function that accesses the browsers API and returns coords
+  getCoords() {
+    if ("geolocation" in this.navigator) {
+    }
+  }
+}
 OpenWeatherAPI.token = "test";
