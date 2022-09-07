@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import useLocalStoragestate from "./useLocalStorageState";
+let lat, long;
 function GetCoords() {
-  const [coords, setCoords] = useLocalStoragestate("coords", undefined);
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(success, error);
+  } else {
+    let [coords, setCoords] = useLocalStoragestate("coords", undefined);
+    lat = coords.latitude;
+    long = coords.longitude;
   }
 
   return {
-    latitud: lat,
+    latitude: lat,
     longitude: long,
   };
 }
