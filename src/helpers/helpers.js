@@ -90,36 +90,4 @@ export class DateFormatter {
   };
 }
 
-export class GeolocationAPI {
-  constructor() {
-    this.navigator = navigator;
-    this.latitude;
-    this.longitude;
-  }
-  //TODO: Create a function that accesses the browsers API and returns coords
-  #success = (position) => {
-    this.latitude = position.coords.latitude;
-    this.longitude = position.coords.longitude;
-    return {
-      lat: this.latitude,
-      long: this.longitude,
-    };
-  };
-  #error = () => {
-    throw Error("Unable to obtain location");
-  };
-  getCoords = () => {
-    try {
-      if ("geolocation" in this.navigator) {
-        return this.navigator.geolocation.getCurrentPosition(
-          this.#success,
-          this.#error
-        );
-      }
-    } catch (error) {
-      console.error(error.message);
-      return undefined;
-    }
-  };
-}
 OpenWeatherAPI.token = "test";

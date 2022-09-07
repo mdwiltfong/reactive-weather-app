@@ -39,22 +39,3 @@ describe("DateFormatter client time tests", () => {
     expect(currentTime).toEqual("4:17 a.m.");
   });
 });
-function GeoLocationAPISetUp() {
-  return new GeolocationAPI();
-}
-global.navigator;
-describe("GeolocationAPI Class", () => {
-  global.navigator.geolocation = {
-    getCurrentPosition: jest.fn(() => {
-      lat: 45.31963;
-      long: -75.89316;
-    }),
-  };
-  test("Class is able to output correct latitude and longitude", async () => {
-    const location = GeoLocationAPISetUp();
-    //TODO: Finish mocking getCurrentPostion
-    const { lat, long } = location.getCoords();
-    expect(lat).toBe(45.31963);
-    expect(long).toBe(-75.89316);
-  });
-});
