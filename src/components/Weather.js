@@ -15,7 +15,6 @@ export function Weather(params) {
       const { city } = values;
       const currentWeather = await OpenWeatherAPI.currentWeather(city);
       const foreCast = await OpenWeatherAPI.currentWeatherForecast(
-        city,
         currentWeather.coord.lat,
         currentWeather.coord.lon
       );
