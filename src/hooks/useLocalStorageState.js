@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 
-const useLocalStoragestate = (key, defaultValue) => {
+function reviver(key, value) {
+  return isNaN(value) ? undefined : Number(value);
+}
+
+const useLocalStoragestate = (key, defaultValue = '{"coords":"undefined"}') => {
   const [state, setState] = useState(() => {
-    let value = JSON.parse(window.localStorage.getItem(key) || defaultValue);
+    const coordsString = window.localStorage.getItem(key) || defaultValue;
+    let value = JSON.parse(coordsString, reviver);
     return value;
   });
   useEffect(() => {

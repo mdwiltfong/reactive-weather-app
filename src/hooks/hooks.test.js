@@ -1,26 +1,28 @@
 import useLocalStoragestate from "./useLocalStorageState";
 import "@testing-library/jest-dom";
+import { render, renderHook, act } from "@testing-library/react";
 
-const window = jest.fn(() => {
-  return (localStorage = {
-    getItem(keyName) {
-      return `
-            {
-                "latitude": 45.67,
-                "longitude":60.23
-            }
-            `;
-    },
-  });
-});
 describe("useLocalStoragestate", () => {
-  test("Can obtain information in local storage", () => {
-    const [coords, setCoords] = useLocalStoragestate("coords", undefined);
-    expect(coords).toBe(
-      expect.objectContaining({
-        latitude: expect.any(Number),
-        longitude: expect.any(Number),
-      })
-    );
+  test("Returns undefined if no information is stored locallys", () => {
+    const { result } = renderHook(() => useLocalStoragestate("coords"));
+    expect(result.current).toBe(undefined);
+  });
+  test.only("Is able to store value", () => {
+    const { result } = renderHook(() => useLocalStoragestate("coords"));
+    const [coords, setCoords] = result.current;
+    console.log(result.current);
+    act(() => {
+      setCoords(
+        `
+        {
+            "coords":{
+                "latitude":"45",
+                "longitude":"56"
+            }
+        }
+        `
+      );
+    });
+    console.log(result.current);
   });
 });
