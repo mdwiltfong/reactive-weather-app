@@ -4,6 +4,13 @@
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
 
+const mockGeolocation = {
+  getCurrentPosition: jest.fn(),
+  watchPosition: jest.fn(),
+};
+
+global.navigator.geolocation = mockGeolocation;
+
 // src/setupTests.js
 import { server } from "./mocks/server.js";
 // Establish API mocking before all tests.

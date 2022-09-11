@@ -1,10 +1,14 @@
 import useLocalStoragestate from "./useLocalStorageState";
 import "@testing-library/jest-dom";
 import { render, renderHook, act } from "@testing-library/react";
+import useGeoLocAPI from "./useGeoLocAPI";
 
 describe("useLocalStoragestate", () => {
   beforeEach(() => {
     window.localStorage.clear();
+  });
+  test("Smoke Test", () => {
+    renderHook(() => useLocalStoragestate());
   });
   test("Returns undefined if no information is stored locallys", () => {
     const { result } = renderHook(() => useLocalStoragestate("coords"));
@@ -38,4 +42,11 @@ describe("useLocalStoragestate", () => {
       })
     );
   });
+});
+
+describe("useGeoLocAPI", () => {
+  test("Smoke Test", () => {
+    const { result } = renderHook(() => useGeoLocAPI());
+  });
+  test.todo("Returns an object containing coordinats");
 });
