@@ -1,12 +1,14 @@
 import { Container, Form, FormGroup, Label, Input } from "reactstrap";
 import { Formik, useFormik } from "formik";
 import OpenWeatherAPI from "../helpers/helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CurrentWeather } from "./CurrentWeather";
 import WeatherClass from "./WeatherClass";
-import { Forecast } from "./Forecast";
+import useGeoLocAPI from "../hooks/useGeoLocAPI";
 export function Weather(params) {
   const [weatherData, setWeatherData] = useState();
+  const [coords, setCoords] = useGeoLocAPI();
+  console.log(coords);
   const formik = useFormik({
     initialValues: {
       city: "",

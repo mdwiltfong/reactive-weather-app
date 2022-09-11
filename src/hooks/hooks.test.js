@@ -48,5 +48,8 @@ describe("useGeoLocAPI", () => {
   test("Smoke Test", () => {
     const { result } = renderHook(() => useGeoLocAPI());
   });
-  test.todo("Returns an object containing coordinats");
+  /*   test.only("Returns an object containing coordinats", () => {
+    const { result } = renderHook(() => useGeoLocAPI());
+    console.log(result.current);
+  }); */
 });
