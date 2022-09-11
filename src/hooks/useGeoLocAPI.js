@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
-//TODO: You will have to implement the useEffect hook here within the custom hook.
+import OpenWeatherAPI from "../helpers/helpers";
+import WeatherClass from "../components/WeatherClass";
+
 const useGeoLocAPI = () => {
   const [coords, setCoords] = useState(null);
+  function success(position) {
+    setCoords({
+      lat: position.coords.latitude,
+      long: position.coords.longitude,
+    });
+  }
+  function error(error) {
+    console.error(error.message);
+  }
   useEffect(() => {
     if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setCoords({
-            lat: position.coords.latitude,
-            long: position.coords.longitude,
-          });
-        },
-        (error) => {
-          console.error(error.message);
-        }
-      );
+      navigator.geolocation.getCurrentPosition(success, error);
     }
   }, []);
 

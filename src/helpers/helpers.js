@@ -33,7 +33,6 @@ export default class OpenWeatherAPI {
     return currentWeather;
   }
   static async currentWeatherForecast(lat, lon) {
-    //TODO: We will have to use a different route for this. As a result we will have tochanget he mock.
     const data = {
       lat: lat,
       lon: lon,

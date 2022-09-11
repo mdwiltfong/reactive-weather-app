@@ -6,9 +6,21 @@ import { CurrentWeather } from "./CurrentWeather";
 import WeatherClass from "./WeatherClass";
 import useGeoLocAPI from "../hooks/useGeoLocAPI";
 export function Weather(params) {
-  const [weatherData, setWeatherData] = useState();
   const [coords, setCoords] = useGeoLocAPI();
-  console.log(coords);
+  const [weatherData, setWeatherData] = useState();
+
+  useEffect(() => {
+    if (coords) {
+      async function fetchWeather({ lat, long }) {
+        const currentWeather = await OpenWeatherAPI.currentWeatherForecast(
+          lat,
+          long
+        );
+        console.log(currentWeather);
+      }
+      fetchWeather(coords);
+    }
+  }, [coords]);
   const formik = useFormik({
     initialValues: {
       city: "",
