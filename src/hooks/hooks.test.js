@@ -48,6 +48,29 @@ describe("useGeoLocAPI", () => {
   test("Smoke Test", () => {
     const { result } = renderHook(() => useGeoLocAPI());
   });
+  test("useGeoLocAPI success", () => {
+    const mockGeolocation = {
+      getCurrentPosition: jest.fn().mockImplementationOnce((success) =>
+        Promise.resolve(
+          success({
+            coords: {
+              latitude: 51.1,
+              longitude: 45.3,
+            },
+          })
+        )
+      ),
+    };
+    global.navigator.geolocation = mockGeolocation;
+
+    const { result } = renderHook(() => useGeoLocAPI());
+    const [coords] = result.current;
+
+    expect(coords).toEqual({
+      lat: 51.1,
+      long: 45.3,
+    });
+  });
   /*   test.only("Returns an object containing coordinats", () => {
     const { result } = renderHook(() => useGeoLocAPI());
     console.log(result.current);
