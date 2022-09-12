@@ -29,7 +29,7 @@ export default class OpenWeatherAPI {
       appid: api_key,
     };
     const currentWeather = await this.request("weather", data);
-    console.log(currentWeather);
+    console.debug("API Call for current weather", currentWeather);
     return currentWeather;
   }
   static async currentWeatherForecast(lat, lon) {
@@ -40,7 +40,7 @@ export default class OpenWeatherAPI {
       appid: api_key,
     };
     const forecast = await this.request("dailyForecast", data);
-    console.debug("One Call API response", data);
+    console.debug("One Call API response", forecast);
     return forecast;
   }
 }
@@ -68,7 +68,6 @@ export class DateFormatter {
   }
   static _getDay = (epochTime) => {
     const day = new Date(epochTime).getDay();
-    console.log(this);
     return DateFormatter._days[day];
   };
   GetDay = () => {

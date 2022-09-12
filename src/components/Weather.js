@@ -12,11 +12,9 @@ export function Weather(params) {
   useEffect(() => {
     if (coords) {
       async function fetchWeather({ lat, long }) {
-        const currentWeather = await OpenWeatherAPI.currentWeatherForecast(
-          lat,
-          long
-        );
-        console.log(currentWeather);
+        const { current: currentWeather, daily: foreCast } =
+          await OpenWeatherAPI.currentWeatherForecast(lat, long);
+        setWeatherData(new WeatherClass({ currentWeather, foreCast }));
       }
       fetchWeather(coords);
     }

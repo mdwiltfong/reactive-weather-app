@@ -4,10 +4,14 @@ class Weather {
   constructor({ currentWeather, foreCast }) {
     this.description = currentWeather.weather[0].description;
     this.icon = currentWeather.weather[0].icon;
-    this.temp = currentWeather.main.temp;
+    if ("main" in currentWeather) {
+      this.temp = currentWeather.main.temp;
+    } else {
+      this.temp = currentWeather.temp;
+    }
     this.name = currentWeather.name;
     this.Date = new DateFormatter(currentWeather.dt);
-    this.forecast = foreCast.daily;
+    this.forecast = foreCast.daily || foreCast;
   }
   get getDay() {
     return this.Date.GetDay();
