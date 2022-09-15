@@ -7,17 +7,22 @@ import WeatherClass from "./WeatherClass";
 import useGeoLocAPI from "../hooks/useGeoLocAPI";
 export function Weather(params) {
   const [coords, setCoords] = useGeoLocAPI();
+  const [loading, setLoading] = useState(true);
+  console.debug("Client Coordinates", coords);
   const [weatherData, setWeatherData] = useState();
 
   useEffect(() => {
     if (coords) {
+      console.debug("Second Render", coords);
       async function fetchWeather({ lat, long }) {
         const { current: currentWeather, daily: foreCast } =
           await OpenWeatherAPI.currentWeatherForecast(lat, long);
         setWeatherData(new WeatherClass({ currentWeather, foreCast }));
       }
       fetchWeather(coords);
+      setLoading(false);
     }
+    console.log("First Render");
   }, [coords]);
   const formik = useFormik({
     initialValues: {
@@ -56,7 +61,12 @@ export function Weather(params) {
             />
           </FormGroup>
         </Form>
-        {weatherData ? <CurrentWeather weatherData={weatherData} /> : null}
+        {loading ? (
+          <p>Loading...</p>
+        ) : weatherData ? (
+          <CurrentWeather weatherData={weatherData} />
+        ) : null}
+        {}
       </Container>
     </>
   );

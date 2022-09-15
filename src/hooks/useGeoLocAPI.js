@@ -4,7 +4,13 @@ import WeatherClass from "../components/WeatherClass";
 
 const useGeoLocAPI = () => {
   const [coords, setCoords] = useState(null);
+  console.debug("Test");
   function success(position) {
+    console.debug(
+      "Browser Postion",
+      position.coords.latitude,
+      position.coords.longitude
+    );
     setCoords({
       lat: position.coords.latitude,
       long: position.coords.longitude,
@@ -14,9 +20,12 @@ const useGeoLocAPI = () => {
     console.error(error.message);
   }
   useEffect(() => {
+    console.log(navigator);
     if ("geolocation" in navigator) {
+      console.log("Geolocation is in navigator");
       navigator.geolocation.getCurrentPosition(success, error);
     }
+    console.log("UseEffect");
   }, []);
 
   return [coords, setCoords];

@@ -11,7 +11,11 @@ class Weather {
     }
     this.name = currentWeather.name;
     this.Date = new DateFormatter(currentWeather.dt);
-    this.forecast = foreCast.daily || foreCast;
+    if ("daily" in foreCast) {
+      this.forecast = foreCast.daily.slice(0, 5);
+    } else {
+      this.forecast = foreCast.slice(0, 5);
+    }
   }
   get getDay() {
     return this.Date.GetDay();
