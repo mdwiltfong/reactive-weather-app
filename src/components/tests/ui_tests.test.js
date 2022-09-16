@@ -20,38 +20,62 @@ function searchCity(screen) {
 
   fireEvent.submit(searchInput);
 }
+
+jest.mock("../../hooks/useGeoLocAPI");
+
 describe("Basic UI Flow", () => {
   test("App has loading screen", () => {
+    useGeoLocAPI.mockImplementation(() => [
+      null,
+      function setUp() {
+        return;
+      },
+    ]);
     const screen = setUp();
     const loading = screen.getByText("Loading...");
     expect(loading).toBeInTheDocument();
   });
-  test.skip("App loads geolocation", async () => {
+
+  test("App loads geolocation", async () => {
+    useGeoLocAPI.mockImplementation(() => [
+      {
+        lat: 56,
+        long: 67,
+      },
+      function setUp() {
+        return;
+      },
+    ]);
     const screen = setUp();
-    await waitFor(() => {
-      screen.debug();
-      screen.getByTestId("current-weather");
-    });
+    await waitFor(
+      () => {
+        screen.getByTestId("current-weather");
+      },
+      { timeout: 5000 }
+    );
     expect(screen.getByTestId("current-weather")).toBeInTheDocument();
+    expect(screen.queryAllByTestId("forecast-", { exact: false })).toHaveLength(
+      5
+    );
   });
 
-  test.only("Users can search for a city's weather", async () => {
+  test("Users can search for a city's weather", async () => {
+    useGeoLocAPI.mockImplementation(() => [
+      {
+        lat: 56,
+        long: 67,
+      },
+      function setUp() {
+        return;
+      },
+    ]);
     const screen = setUp();
+    await waitFor(() => screen.getByTestId("current-weather"));
     searchCity(screen);
-    await waitFor(() => {
-      expect(screen.getByText("Madrid")).toBeInTheDocument();
-      expect(screen.getByTestId("current-weather")).toBeInTheDocument();
-      expect(screen.getByTestId("current-date")).toBeInTheDocument();
-    });
-  });
-  test("App Renders Forecast", async () => {
-    const screen = setUp();
-    searchCity(screen);
-    await waitFor(() => {
-      expect(screen.getByTestId("forecasts")).toBeInTheDocument();
-      expect(
-        screen.queryAllByTestId("forecast-", { exact: false })
-      ).toHaveLength(5);
-    });
+    await waitFor(() => screen.getByText("Madrid"), { timeout: 5000 });
+    expect(screen.getByText("Madrid")).toBeInTheDocument();
+    expect(screen.queryAllByTestId("forecast-", { exact: false })).toHaveLength(
+      5
+    );
   });
 });

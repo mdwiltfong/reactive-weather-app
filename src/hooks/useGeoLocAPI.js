@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import OpenWeatherAPI from "../helpers/helpers";
 import WeatherClass from "../components/WeatherClass";
 
-const useGeoLocAPI = () => {
+function useGeoLocAPI() {
   const [coords, setCoords] = useState(null);
   console.debug("Test");
   function success(position) {
@@ -20,15 +20,12 @@ const useGeoLocAPI = () => {
     console.error(error.message);
   }
   useEffect(() => {
-    console.log(navigator);
     if ("geolocation" in navigator) {
-      console.log("Geolocation is in navigator");
       navigator.geolocation.getCurrentPosition(success, error);
     }
-    console.log("UseEffect");
   }, []);
 
   return [coords, setCoords];
-};
+}
 
 export default useGeoLocAPI;
