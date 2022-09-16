@@ -8,7 +8,6 @@ import {
   Button,
 } from "reactstrap";
 export function Forecast({ foreCastData }) {
-  console.log(foreCastData);
   return (
     <div className="d-flex flex-row" data-testid="forecasts">
       {foreCastData.map((foreCast, index) => {

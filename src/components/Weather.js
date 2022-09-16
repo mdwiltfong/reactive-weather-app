@@ -8,7 +8,7 @@ import useGeoLocAPI from "../hooks/useGeoLocAPI";
 export function Weather(params) {
   const [coords, setCoords] = useGeoLocAPI();
   const [loading, setLoading] = useState(true);
-  console.debug("Client Coordinates", coords);
+
   const [weatherData, setWeatherData] = useState();
 
   useEffect(() => {
