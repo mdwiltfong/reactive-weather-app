@@ -26,7 +26,7 @@ describe("Basic UI Flow", () => {
     const loading = screen.getByText("Loading...");
     expect(loading).toBeInTheDocument();
   });
-  test.skip("App loads geolocation", async () => {
+  test.only("App loads geolocation", async () => {
     const screen = setUp();
     await waitFor(() => {
       screen.debug();
@@ -35,7 +35,7 @@ describe("Basic UI Flow", () => {
     expect(screen.getByTestId("current-weather")).toBeInTheDocument();
   });
 
-  test.only("Users can search for a city's weather", async () => {
+  test("Users can search for a city's weather", async () => {
     const screen = setUp();
     searchCity(screen);
     await waitFor(() => {

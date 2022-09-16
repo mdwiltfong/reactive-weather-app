@@ -15,6 +15,7 @@ const useGeoLocAPI = () => {
       lat: position.coords.latitude,
       long: position.coords.longitude,
     });
+    console.debug("Coords in success function", coords);
   }
   function error(error) {
     console.error(error.message);

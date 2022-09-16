@@ -19,8 +19,7 @@ export function Weather(params) {
           await OpenWeatherAPI.currentWeatherForecast(lat, long);
         setWeatherData(new WeatherClass({ currentWeather, foreCast }));
       }
-      fetchWeather(coords);
-      setLoading(false);
+      fetchWeather(coords).then(() => setLoading(false));
     }
     console.log("First Render");
   }, [coords]);
