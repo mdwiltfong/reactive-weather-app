@@ -20,18 +20,34 @@ function searchCity(screen) {
 
   fireEvent.submit(searchInput);
 }
+
+jest.mock("../../hooks/useGeoLocAPI", () => {
+  return () => [
+    {
+      lat: 56,
+      long: 67,
+    },
+    function setUp() {
+      return;
+    },
+  ];
+});
+
 describe("Basic UI Flow", () => {
   test("App has loading screen", () => {
     const screen = setUp();
     const loading = screen.getByText("Loading...");
     expect(loading).toBeInTheDocument();
   });
+
   test.only("App loads geolocation", async () => {
     const screen = setUp();
-    await waitFor(() => {
-      screen.debug();
-      screen.getByTestId("current-weather");
-    });
+    await waitFor(
+      () => {
+        screen.getByTestId("current-weather");
+      },
+      { timeout: 5000 }
+    );
     expect(screen.getByTestId("current-weather")).toBeInTheDocument();
   });
 

@@ -13,15 +13,13 @@ export function Weather(params) {
 
   useEffect(() => {
     if (coords) {
-      console.debug("Second Render", coords);
       async function fetchWeather({ lat, long }) {
         const { current: currentWeather, daily: foreCast } =
           await OpenWeatherAPI.currentWeatherForecast(lat, long);
         setWeatherData(new WeatherClass({ currentWeather, foreCast }));
       }
-      fetchWeather(coords).then(() => setLoading(false));
+      fetchWeather(coords).then(setLoading(false));
     }
-    console.log("First Render");
   }, [coords]);
   const formik = useFormik({
     initialValues: {
