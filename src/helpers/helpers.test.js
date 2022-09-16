@@ -1,4 +1,4 @@
-import { DateFormatter, GeolocationAPI } from "./helpers";
+import { DateFormatter } from "./helpers";
 import MockDatePM from "./DateMockPM";
 import MockDateAM from "./DateMockAM";
 const days = [
@@ -38,4 +38,12 @@ describe("DateFormatter client time tests", () => {
     const currentTime = date.GetTime();
     expect(currentTime).toEqual("4:17 a.m.");
   });
+});
+
+describe("OpenWeatherAPI handler class", () => {
+  test.todo("Wrapper can retrieve current weather");
+  test.todo("Wrapper can retrieve forecast");
+  test.todo("Wrapper returns undefined");
+  test.todo("Wrapper obtains current weather through city name");
+  test.todo("Wrapper obtains current weather through coordinates");
 });

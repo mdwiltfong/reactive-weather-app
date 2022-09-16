@@ -71,8 +71,4 @@ describe("useGeoLocAPI", () => {
       long: 45.3,
     });
   });
-  /*   test.only("Returns an object containing coordinats", () => {
-    const { result } = renderHook(() => useGeoLocAPI());
-    console.log(result.current);
-  }); */
 });
