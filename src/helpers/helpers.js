@@ -14,7 +14,8 @@ export default class OpenWeatherAPI {
     const params = method === "get" ? data : {};
 
     try {
-      return (await axios({ url, method, data, params, headers })).data;
+      const weatherData = await axios({ url, method, data, params, headers });
+      return weatherData.data;
     } catch (err) {
       console.error("API Error:", err.response);
       let message = err.response.data.error.message;

@@ -1,6 +1,9 @@
-import { DateFormatter } from "./helpers";
+import OpenWeatherAPI, { DateFormatter } from "./helpers";
 import MockDatePM from "./DateMockPM";
 import MockDateAM from "./DateMockAM";
+import currentWeather from "./mocks/mocks";
+import axios from "axios";
+import { execMap } from "nodemon/lib/config/defaults";
 const days = [
   "Sunday",
   "Monday",
@@ -40,8 +43,32 @@ describe("DateFormatter client time tests", () => {
   });
 });
 
+jest.mock("axios");
+
 describe("OpenWeatherAPI handler class", () => {
-  test.todo("Wrapper can retrieve current weather");
+  test.only("Wrapper can retrieve current weather", async () => {
+    axios.mockImplementation(() => {
+      return { data: currentWeather };
+    });
+    const weatherData = await OpenWeatherAPI.currentWeather("Madrid");
+    expect(weatherData).toBe(
+      expect.objectContaining({
+        coord: expect.any(Object),
+        weather: expect.any(Array),
+        base: expect.any(String),
+        main: expect.any(Object),
+        visibility: expect.any(Number),
+        wind: expect.any(Object),
+        clouds: expect.any(Object),
+        dt: expect.any(Number),
+        sys: expect.any(Object),
+        timezone: expect.any(Number),
+        id: expect.any(Number),
+        name: expect.any(String),
+        cod: expect.any(Number),
+      })
+    );
+  });
   test.todo("Wrapper can retrieve forecast");
   test.todo("Wrapper returns undefined");
   test.todo("Wrapper obtains current weather through city name");
