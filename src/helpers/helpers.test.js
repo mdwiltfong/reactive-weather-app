@@ -51,7 +51,7 @@ describe("OpenWeatherAPI handler class", () => {
       return { data: currentWeather };
     });
     const weatherData = await OpenWeatherAPI.currentWeather("Madrid");
-    expect(weatherData).toBe(
+    expect(weatherData).toStrictEqual(
       expect.objectContaining({
         coord: expect.any(Object),
         weather: expect.any(Array),
