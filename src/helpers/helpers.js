@@ -19,6 +19,7 @@ export default class OpenWeatherAPI {
     } catch (err) {
       console.error("API Error:", err.response.data);
       let message = err.response.data.error.message;
+
       throw Array.isArray(message) ? message : [message];
     }
   }
@@ -29,10 +30,15 @@ export default class OpenWeatherAPI {
       q: city,
       appid: api_key,
     };
-    const currentWeather = await this.request("weather", data);
-    console.debug("API Response CurrentWeather", currentWeather);
-    console.debug("API Call for current weather", currentWeather);
-    return currentWeather;
+    try {
+      const currentWeather = await this.request("weather", data);
+
+      console.debug("API Response CurrentWeather", currentWeather);
+      console.debug("API Call for current weather", currentWeather);
+      return currentWeather;
+    } catch (error) {
+      return undefined;
+    }
   }
   static async currentWeatherForecast(lat, lon) {
     const data = {
@@ -41,8 +47,12 @@ export default class OpenWeatherAPI {
       exclude: "hourly,minutely",
       appid: api_key,
     };
-    const forecast = await this.request("dailyForecast", data);
-    return forecast;
+    try {
+      const forecast = await this.request("dailyForecast", data);
+      return forecast;
+    } catch (error) {
+      return undefined;
+    }
   }
 }
 
