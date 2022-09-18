@@ -17,7 +17,7 @@ export default class OpenWeatherAPI {
       const weatherData = await axios({ url, method, data, params, headers });
       return weatherData.data;
     } catch (err) {
-      console.error("API Error:", err.response);
+      console.error("API Error:", err.response.data);
       let message = err.response.data.error.message;
       throw Array.isArray(message) ? message : [message];
     }
@@ -30,6 +30,7 @@ export default class OpenWeatherAPI {
       appid: api_key,
     };
     const currentWeather = await this.request("weather", data);
+    console.debug("API Response CurrentWeather", currentWeather);
     console.debug("API Call for current weather", currentWeather);
     return currentWeather;
   }

@@ -14,6 +14,7 @@ export function Weather(params) {
   useEffect(() => {
     if (coords) {
       async function fetchWeather({ lat, long }) {
+        //TODO: In the event the API call returns and error, the front needs to handle it smoothly.
         const { current: currentWeather, daily: foreCast } =
           await OpenWeatherAPI.currentWeatherForecast(lat, long);
         setWeatherData(new WeatherClass({ currentWeather, foreCast }));

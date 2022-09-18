@@ -1,7 +1,7 @@
 import OpenWeatherAPI, { DateFormatter } from "./helpers";
 import MockDatePM from "./DateMockPM";
 import MockDateAM from "./DateMockAM";
-import currentWeather from "./mocks/mocks";
+import MockWeatherData from "./mocks/mocks";
 import axios from "axios";
 const days = [
   "Sunday",
@@ -41,16 +41,22 @@ describe("DateFormatter client time tests", () => {
     expect(currentTime).toEqual("4:17 a.m.");
   });
 });
-jest.mock("axios");
 
-function setUpMock(mockData) {
-  axios.mockImplementation(() => {
-    return { data: mockData };
-  });
+function setUpMock(mockData, errorMessage = null) {
+  if (!errorMessage) {
+    axios.mockImplementation(() => {
+      if (!errorMessage) {
+        return { data: mockData };
+      }
+    });
+  } else {
+    axios.mockImplementation(() => {
+      throw ErrorEvent;
+    });
+  }
 }
 describe("OpenWeatherAPI handler class", () => {
-  test.only("Wrapper can retrieve current weather", async () => {
-    setUpMock(currentWeather);
+  test("Wrapper can retrieve current weather", async () => {
     const weatherData = await OpenWeatherAPI.currentWeather("Madrid");
     expect(weatherData).toStrictEqual(
       expect.objectContaining({
@@ -70,8 +76,29 @@ describe("OpenWeatherAPI handler class", () => {
       })
     );
   });
-  test.skip("Wrapper can retrieve forecast", () => {});
-  test.todo("Wrapper returns undefined");
+  test("Wrapper can retrieve forecast", async () => {
+    const foreCastData = await OpenWeatherAPI.currentWeatherForecast(52, 53);
+    expect(foreCastData).toStrictEqual(
+      expect.objectContaining({
+        lat: expect.any(Number),
+        lon: expect.any(Number),
+        timezone: expect.any(String),
+        timezone_offset: expect.any(Number),
+        current: expect.any(Object),
+        daily: expect.any(Array),
+      })
+    );
+  });
+  test("Wrapper throws an error message", async () => {
+    try {
+      const apiData = await OpenWeatherAPI.request("badRoute");
+    } catch (error) {
+      console.debug("Wrapper Error Object", error);
+      expect(error).toStrictEqual(
+        expect.arrayContaining(["Internal Server Error"])
+      );
+    }
+  });
   test.todo("Wrapper obtains current weather through city name");
   test.todo("Wrapper obtains current weather through coordinates");
 });
