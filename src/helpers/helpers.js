@@ -25,15 +25,22 @@ export default class OpenWeatherAPI {
   }
 
   /* No authentication is needed to get the weather of a city */
-  static async currentWeather(city) {
-    const data = {
-      q: city,
-      appid: api_key,
-    };
+  static async currentWeather(city = null, lat, long) {
+    let data;
+    if (city) {
+      data = {
+        q: city,
+        appid: api_key,
+      };
+    } else {
+      data = {
+        lat: lat,
+        long: long,
+      };
+    }
+
     try {
       const currentWeather = await this.request("weather", data);
-
-      console.debug("API Response CurrentWeather", currentWeather);
       console.debug("API Call for current weather", currentWeather);
       return currentWeather;
     } catch (error) {

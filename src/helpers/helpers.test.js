@@ -99,6 +99,12 @@ describe("OpenWeatherAPI handler class", () => {
       );
     }
   });
-  test.todo("Wrapper obtains current weather through city name");
-  test.todo("Wrapper obtains current weather through coordinates");
+  test("Wrapper obtains current weather through city name", async () => {
+    const response = await OpenWeatherAPI.currentWeather("Madrid");
+    expect(response).toBeDefined();
+  });
+  test("Wrapper obtains current weather through coordinates", async () => {
+    const response = await OpenWeatherAPI.currentWeather(null, 56, 34);
+    expect(response).toBeDefined();
+  });
 });
