@@ -17,7 +17,16 @@ export function Weather(params) {
         //TODO: In the event the API call returns and error, the front needs to handle it smoothly.
         const { current: currentWeather, daily: foreCast } =
           await OpenWeatherAPI.currentWeatherForecast(lat, long);
-        setWeatherData(new WeatherClass({ currentWeather, foreCast }));
+        const { name } = await OpenWeatherAPI.currentWeather(null, lat, long);
+        setWeatherData(
+          new WeatherClass({
+            currentWeather: {
+              ...currentWeather,
+              name: name,
+            },
+            foreCast,
+          })
+        );
       }
       fetchWeather(coords).then(setLoading(false));
     }
