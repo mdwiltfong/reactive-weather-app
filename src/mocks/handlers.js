@@ -15,8 +15,8 @@ export const handlers = [
   }),
   // Handles a GET /forecast request. This will return the weather for madrid for 5 days.
   rest.get(`${BASE_URL}/dailyForecast`, (req, res, ctx) => {
-    const { q, appid } = req.params;
-    console.debug("Forecast API Call", q, appid);
+    const { lat, long } = req.params;
+    console.debug("Forecast API Call", lat, long);
     return res(
       ctx.status(200),
       ctx.json(MockWeatherData.mockOneCallAPIForecast)
