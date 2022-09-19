@@ -14,23 +14,38 @@ export default class OpenWeatherAPI {
     const params = method === "get" ? data : {};
 
     try {
-      return (await axios({ url, method, data, params, headers })).data;
+      const weatherData = await axios({ url, method, data, params, headers });
+      return weatherData.data;
     } catch (err) {
-      console.error("API Error:", err.response);
+      console.error("API Error:", err.response.data);
       let message = err.response.data.error.message;
+
       throw Array.isArray(message) ? message : [message];
     }
   }
 
   /* No authentication is needed to get the weather of a city */
-  static async currentWeather(city) {
-    const data = {
-      q: city,
-      appid: api_key,
-    };
-    const currentWeather = await this.request("weather", data);
-    console.debug("API Call for current weather", currentWeather);
-    return currentWeather;
+  static async currentWeather(city = null, lat, long) {
+    let data;
+    if (city) {
+      data = {
+        q: city,
+        appid: api_key,
+      };
+    } else {
+      data = {
+        lat: lat,
+        long: long,
+      };
+    }
+
+    try {
+      const currentWeather = await this.request("weather", data);
+      console.debug("API Call for current weather", currentWeather);
+      return currentWeather;
+    } catch (error) {
+      return undefined;
+    }
   }
   static async currentWeatherForecast(lat, lon) {
     const data = {
@@ -39,8 +54,12 @@ export default class OpenWeatherAPI {
       exclude: "hourly,minutely",
       appid: api_key,
     };
-    const forecast = await this.request("dailyForecast", data);
-    return forecast;
+    try {
+      const forecast = await this.request("dailyForecast", data);
+      return forecast;
+    } catch (error) {
+      return undefined;
+    }
   }
 }
 

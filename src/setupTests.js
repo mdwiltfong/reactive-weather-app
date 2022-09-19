@@ -4,6 +4,7 @@
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
 
+// Mock geolocation API for testing useGeoLocAPI hook
 const mockGeolocation = {
   getCurrentPosition: jest.fn().mockImplementationOnce((success) =>
     Promise.resolve(
