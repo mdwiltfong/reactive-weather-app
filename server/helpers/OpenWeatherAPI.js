@@ -1,7 +1,7 @@
 const axios = require("axios");
 const dotenv = require("dotenv").config({ path: "../../.env" });
 console.debug("DOTENV FILE", dotenv);
-const OWAPI_BASE_URL = process.env.OWAPI_BASE_URL;
+const OWAPI_BASE_URL = process.env.OWAPI_MOCK_URL;
 
 const api_key = process.env.OPENWEATHER_API_KEY;
 class OpenWeatherAPI {
@@ -23,7 +23,7 @@ class OpenWeatherAPI {
 
   static async fetchCurrentWeather(city) {
     try {
-      const currentWeather = await this.request("/weather", {
+      const currentWeather = await this.request("/2.5/weather", {
         q: city,
       });
       console.log(currentWeather);
