@@ -1,11 +1,14 @@
-import axios from "axios";
-const BASE_URL = process.env.OWAPI_CURRENTWEATHER;
-const api_key = process.env.OPENWEATHER_API_KEY;
-export class OpenWeatherAPI {
-  static async request(endpoint, data = {}, method = "get") {
-    console.debug("API Call:", BASE_URL, endpoint, data, method);
+const axios = require("axios");
+const dotenv = require("dotenv").config({ path: "../../.env" });
+console.debug("DOTENV FILE", dotenv);
+const OWAPI_BASE_URL = process.env.OWAPI_BASE_URL;
 
-    const url = `${BASE_URL}/${endpoint}`;
+const api_key = process.env.OPENWEATHER_API_KEY;
+class OpenWeatherAPI {
+  static async request(endpoint, data = {}, method = "get") {
+    console.debug("API Call:", OWAPI_BASE_URL, endpoint, data, method);
+    data.appid = api_key;
+    const url = `${OWAPI_BASE_URL}/${endpoint}`;
     const params = method === "get" ? data : {};
 
     try {
@@ -18,15 +21,17 @@ export class OpenWeatherAPI {
     }
   }
 
-  static async fetchCurrentWeather(lat, long) {
+  static async fetchCurrentWeather(city) {
     try {
       const currentWeather = await this.request("/weather", {
-        lat: lat,
-        long: long,
+        q: city,
       });
+      console.log(currentWeather);
       return currentWeather;
     } catch (error) {
       return undefined;
     }
   }
 }
+
+module.exports = OpenWeatherAPI;

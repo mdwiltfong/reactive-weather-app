@@ -1,12 +1,15 @@
 const express = require("express");
 const router = new express.Router();
-import OpenWeatherAPI from "../helpers/OpenWeatherAPI";
+const OpenWeatherAPI = require("../helpers/OpenWeatherAPI");
 router.get("/", async (req, res, next) => {
-  const { lat, long } = req.body;
+  const { q: city } = req.query;
+  console.debug(city);
   try {
-    const currentWeather = await OpenWeatherAPI.fetchCurrentWeather(lat, long);
-    return res.status(200).json({ currentWeather });
+    const currentWeather = await OpenWeatherAPI.fetchCurrentWeather(city);
+    return res.status(200).json({ data: currentWeather });
   } catch (error) {
     return next(error);
   }
 });
+
+module.exports = router;
