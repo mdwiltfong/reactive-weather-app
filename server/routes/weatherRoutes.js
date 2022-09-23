@@ -12,4 +12,19 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/dailyForecast", async (req, res, next) => {
+  const { lat, long } = req.query;
+  console.debug(
+    "Incoming Coordinates",
+    "Latitude - " + lat,
+    "Longitude -" + long
+  );
+  try {
+    const foreCast = await OpenWeatherAPI.fetchForecast(lat, long);
+    return res.status(200).json({ data: foreCast });
+  } catch (error) {
+    return next(error);
+  }
+});
+
 module.exports = router;

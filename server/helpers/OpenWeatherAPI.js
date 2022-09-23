@@ -32,6 +32,18 @@ class OpenWeatherAPI {
       return undefined;
     }
   }
+
+  static async fetchForecast(lat, long) {
+    try {
+      const oneApiCall = await this.request("/3.0/onecall", {
+        lat: lat,
+        long: long,
+      });
+      return oneApiCall;
+    } catch (error) {
+      return undefined;
+    }
+  }
 }
 
 module.exports = OpenWeatherAPI;

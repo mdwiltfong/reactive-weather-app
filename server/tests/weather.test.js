@@ -4,7 +4,6 @@ const app = require("../app");
 describe("CRUD Operations", () => {
   test("Server is able to return current weather", async () => {
     const { body } = await request(app).get("/weather?q=ottawa");
-
     expect(body.data).toStrictEqual(
       expect.objectContaining({
         coord: expect.any(Object),
@@ -22,5 +21,19 @@ describe("CRUD Operations", () => {
         cod: expect.any(Number),
       })
     );
+  });
+  test("Server is able to return data from onecall api route", async () => {
+    const { body } = await request(app).get(
+      "/weather/dailyForecast?lat=56&long=78"
+    );
+    console.log(body);
+    expect(body.data).toStrictEqual({
+      lat: expect.any(Number),
+      lon: expect.any(Number),
+      timezone: expect.any(String),
+      timezone_offset: expect.any(Number),
+      current: expect.any(Object),
+      daily: expect.any(Array),
+    });
   });
 });
