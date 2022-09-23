@@ -21,11 +21,20 @@ class OpenWeatherAPI {
     }
   }
 
-  static async fetchCurrentWeather(city) {
-    try {
-      const currentWeather = await this.request("/2.5/weather", {
+  static async fetchCurrentWeather(city = null, lat, lon) {
+    let data;
+    if (lat && lon) {
+      data = {
+        lat: lat,
+        lon: lon,
+      };
+    } else {
+      data = {
         q: city,
-      });
+      };
+    }
+    try {
+      const currentWeather = await this.request("/2.5/weather", data);
       console.log(currentWeather);
       return currentWeather;
     } catch (error) {
