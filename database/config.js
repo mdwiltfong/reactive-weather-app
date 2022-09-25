@@ -15,8 +15,8 @@ console.log(BASE_URI);
 // Use dev database, testing database, or via env var, production database
 function getDatabaseUri() {
   return process.env.NODE_ENV === "test"
-    ? BASE_URI + "jobly_test"
-    : BASE_URI + "jobly";
+    ? BASE_URI + "weatherapp_test"
+    : BASE_URI + "weatherapp";
 }
 
 // Speed up bcrypt during tests, since the algorithm safety isn't being tested
