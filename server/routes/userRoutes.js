@@ -4,6 +4,8 @@ const router = new express.Router();
 const bcrypt = require("bcrypt");
 const ExpressError = require("../ExpressError");
 const { BCRYPT_WORK_FACTOR } = require("../../database/config");
+const User = require("../../database/models/users");
+const { ensureAdmin } = require("../middleware/auth");
 // Only Admins should be able to retrieve an entire list of users
 router.get("/all", async (req, res, next) => {
   try {
