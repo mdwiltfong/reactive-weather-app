@@ -11,7 +11,6 @@ if (process.env.NODE_ENV === "test") {
         rejectUnauthorized: false,
       },
     });
-    console.debug("Database cursor", db);
   } catch (e) {
     console.error(e.message);
   }
