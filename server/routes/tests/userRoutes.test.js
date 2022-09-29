@@ -7,6 +7,7 @@ const {
   commonAfterEach,
   commonAfterAll,
   adminToken,
+  u1Token,
 } = require("./_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -21,6 +22,11 @@ describe("CRUD Operations for user routes", () => {
       .set("authorization", `Bearer ${adminToken}`);
     expect(resp.body.users).toStrictEqual(expect.any(Array));
   });
-  test.todo("Non-admin users can't access list of users");
+  test.only("Non-admin users can't access list of users", async () => {
+    const resp = await request(app)
+      .get("/users/all")
+      .set("authorization", `Bearer ${u1Token}`);
+    expect(resp.body.users).toBeUndefined();
+  });
   test.todo("A user can register");
 });
