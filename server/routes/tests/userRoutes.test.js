@@ -28,5 +28,25 @@ describe("CRUD Operations for user routes", () => {
       .set("authorization", `Bearer ${u1Token}`);
     expect(resp.body.users).toBeUndefined();
   });
-  test.todo("A user can register");
+  test.only("A user can register", async () => {
+    const resp = await request(app).post("/users/register").send({
+      username: "u-new",
+      firstName: "First-new",
+      lastName: "Last-newL",
+      password: "password-new",
+      email: "new@email.com",
+      isAdmin: false,
+    });
+    expect(resp.statusCode).toBe(201);
+    expect(resp.body).toEqual({
+      user: {
+        username: "u-new",
+        firstName: "First-new",
+        lastName: "Last-newL",
+        email: "new@email.com",
+        isAdmin: false,
+      },
+      token: expect.any(String),
+    });
+  });
 });

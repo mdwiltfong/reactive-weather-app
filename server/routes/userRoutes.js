@@ -6,6 +6,7 @@ const ExpressError = require("../ExpressError");
 const { BCRYPT_WORK_FACTOR } = require("../../database/config");
 const User = require("../../database/models/users");
 const { ensureAdmin, authenticateJWT } = require("../middleware/auth");
+const { createToken } = require("../helpers/token");
 // Only Admins should be able to retrieve an entire list of users
 router.get("/all", ensureAdmin, async (req, res, next) => {
   try {
@@ -23,7 +24,8 @@ router.post("/register", async (req, res, next) => {
       throw new ExpressError("Username and password required", 400);
     }
     const user = await User.register(req.body);
-    return res.json({ user: user });
+    const token = createToken(user);
+    return res.status(201).json({ user, token });
   } catch (error) {
     if (e.code === "23505") {
       return next(
