@@ -7,7 +7,7 @@ const { BCRYPT_WORK_FACTOR } = require("../../database/config");
 const User = require("../../database/models/users");
 const { ensureAdmin, authenticateJWT } = require("../middleware/auth");
 // Only Admins should be able to retrieve an entire list of users
-router.get("/all", authenticateJWT, ensureAdmin, async (req, res, next) => {
+router.get("/all", ensureAdmin, async (req, res, next) => {
   try {
     const users = await User.findAll();
     return res.json({ users: users });
