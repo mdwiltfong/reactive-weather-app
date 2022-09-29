@@ -57,8 +57,3 @@ describe("CRUD Operations", () => {
     });
   });
 });
-
-describe("Database Tests", () => {
-  //Only admins can retrieve this list
-  test.todo("Retrieve a list of all users");
-});
