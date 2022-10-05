@@ -14,11 +14,12 @@ VALUES
 ('einstein.bark','Einstein','$2b$12$AZH7virni5jlTTiGgEg4zu3lSvAw68qVEfSIOjJ3RqtbJbdW/Oi5q','Brown','einstein.brown@okta.com','t');
 
 
-INSERT INTO weathers (user_id,city_name,utc_offset)
+INSERT INTO weathers (user_id,city_name,utc_offset,latitude,longitude)
 VALUES 
-(1,'madrid',2),
-(2,'london',1),
-(3,'ottawa',-4)
+(1,'madrid',2,null,null),
+(2,'london',1,null,null),
+(3,'ottawa',-4,null,null),
+(4,null,-4,56,47)
 
 
 
