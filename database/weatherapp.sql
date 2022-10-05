@@ -16,3 +16,4 @@ CREATE DATABASE weatherapp_test;
 \connect weatherapp_test
 
 \i weatherapp_schema.sql
+\i weatherapp_seed.sql

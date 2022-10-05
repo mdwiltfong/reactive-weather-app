@@ -7,3 +7,12 @@ CREATE TABLE IF NOT EXISTS users(
    email TEXT NOT NULL,
    is_admin BOOLEAN NOT NULL DEFAULT false
    );
+
+CREATE TABLE IF NOT EXISTS weathers(
+   id SERIAL PRIMARY KEY,
+   user_id INT NOT NULL,
+   city_name TEXT NOT NULL,
+   utc_offset INTEGER NOT NULL,
+   CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
+)
+
