@@ -11,8 +11,13 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TABLE IF NOT EXISTS weathers(
    id SERIAL PRIMARY KEY,
    user_id INT NOT NULL,
-   city_name TEXT NOT NULL,
+   city_name TEXT,
    utc_offset INTEGER NOT NULL,
+   latitude INTEGER,
+   longitude INTEGER,
    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
 )
 
+ALTER TABLE weathers
+ADD CONSTRAINT CK_null
+CHECK (city_name IS NOT NULL OR latitude IS NOT NULL AND longitude IS NOT NULL)
