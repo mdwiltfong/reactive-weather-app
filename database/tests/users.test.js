@@ -16,7 +16,7 @@ const {
 } = require("./_testCommon");
 process.env.NODE_ENV = "test";
 
-beforeAll(commonBeforeAll);
+beforeAll(() => commonBeforeAll("users"));
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);

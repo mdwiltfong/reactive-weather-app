@@ -8,25 +8,7 @@ const {
   UnauthorizedError,
 } = require("../../server/ExpressError");
 class Weather {
-  /** Find all saved weather instances.
-   *
-   * Returns [{ username, first_name, last_name, email, is_admin }, ...]
-   **/
-
-  static async findAll() {
-    const result = await db.query(
-      `SELECT username,
-                  first_name AS "firstName",
-                  last_name AS "lastName",
-                  email,
-                  is_admin AS "isAdmin"
-           FROM users
-           ORDER BY username`
-    );
-
-    return result.rows;
-  }
-  /** Given a username, return data about user.
+  /** Given a username, return data about all the saved weather instances of a user.
    *
    * Returns { username, first_name, last_name, is_admin, jobs }
    *   where jobs is { id, title, company_handle, company_name, state }
@@ -34,21 +16,23 @@ class Weather {
    * Throws NotFoundError if user not found.
    **/
 
-  static async get(username) {
-    const userRes = await db.query(
-      `SELECT username,
-                  first_name AS "firstName",
-                  last_name AS "lastName",
-                  email,
-                  is_admin AS "isAdmin"
-           FROM users
-           WHERE username = $1`,
+  static async getAll(username) {
+    const result = await db.query(
+      `SELECT city_name,
+                  utc_offset AS "utcOffset",
+                  city_name AS "cityName",
+                  latitude,
+                  longitude 
+           FROM weathers
+           where user_id=$1
+           ORDER BY city_name`,
       [username]
     );
 
-    const user = userRes.rows[0];
+    const weather = result.rows;
 
-    if (!user) throw new NotFoundError(`No user: ${username}`);
+    if (!weather)
+      throw new NotFoundError(`No weather instance found for: ${username}`);
 
     /*    
  TODO: Replace this query for saved weather instances
@@ -61,7 +45,7 @@ class Weather {
 
     user.applications = userApplicationsRes.rows.map((a) => a.job_id);
     */
-    return user;
+    return weather;
   }
   static async remove(username) {
     let result = await db.query(
@@ -77,4 +61,4 @@ class Weather {
   }
 }
 
-module.exports = User;
+module.exports = Weather;

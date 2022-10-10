@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS weathers(
    latitude INTEGER,
    longitude INTEGER,
    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
+   ON DELETE CASCADE
 );
 
 ALTER TABLE weathers
