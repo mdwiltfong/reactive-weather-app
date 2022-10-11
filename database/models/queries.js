@@ -1,7 +1,5 @@
 class WeatherQueries {
-  getWeatherInstancesByUser = `
-  
-  
+  getWeatherInstancesByUser = `  
   SELECT user_id as "userId",
         city_name,
         utc_offset AS "utcOffset",
@@ -11,6 +9,12 @@ class WeatherQueries {
            FROM weathers
            where user_id=$1
            ORDER BY city_name`;
+
+  getAWeatherInstance = `
+  SELECT * FROM weathers
+  WHERE id = $1 
+  
+  `;
 
   removeWeather = `
 DELETE FROM weathers

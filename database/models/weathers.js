@@ -39,17 +39,14 @@ class Weather {
     const weather = result.rows[0];
     return weather;
   }
-  static async remove(username) {
-    let result = await db.query(
-      `DELETE
-           FROM users
-           WHERE username = $1
-           RETURNING username`,
-      [username]
-    );
-    const user = result.rows[0];
+  static async remove(weatherId) {
+    let result = await db.query(queries.weatherQueries.removeWeather, [
+      weatherId,
+    ]);
+    const weather = result.rows[0];
 
-    if (!user) throw new NotFoundError(`No user: ${username}`);
+    if (!weather)
+      throw new NotFoundError(`No weather instace with an id of ${weatherId}`);
   }
 }
 

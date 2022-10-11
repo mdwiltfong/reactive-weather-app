@@ -1,5 +1,6 @@
 "use strict";
 
+const queries = require("../models/queries");
 const {
   NotFoundError,
   BadRequestError,
@@ -50,5 +51,11 @@ describe("Weather model", () => {
     console.debug("Weather instance", weather);
     expect(weather).toEqual(newWeather);
   });
-  test.todo("can delete a weather instance");
+  test("can delete a weather instance", async () => {
+    await Weather.remove(1);
+    const result = await db.query(queries.weatherQueries.getAWeatherInstance, [
+      1,
+    ]);
+    expect(result.rows.length).toEqual(0);
+  });
 });
