@@ -1,5 +1,5 @@
 const axios = require("axios");
-const dotenv = require("dotenv").config({ path: "../../.env" });
+const dotenv = require("dotenv").config({ path: "../../../.env" });
 console.debug("DOTENV FILE", dotenv);
 const OWAPI_BASE_URL = process.env.OWAPI_MOCK_URL;
 
