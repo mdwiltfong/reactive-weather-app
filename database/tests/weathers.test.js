@@ -27,7 +27,7 @@ afterAll(commonAfterAll);
 describe("Weather model", () => {
   // User 2 will have multiple records
   test("can retrieve all weather instances of a user", async () => {
-    const weather = await Weather.getAll("2");
+    const weather = await Weather.getAll(2);
     expect(weather.length).toEqual(2);
     expect(weather[0]).toEqual(
       expect.objectContaining({
@@ -38,4 +38,17 @@ describe("Weather model", () => {
       })
     );
   });
+  test("can save a weather instance", async () => {
+    const newWeather = {
+      userId: 1,
+      cityName: "madrid",
+      utcOffset: -4,
+      latitude: null,
+      longitude: null,
+    };
+    const weather = await Weather.save(newWeather);
+    console.debug("Weather instance", weather);
+    expect(weather).toEqual(newWeather);
+  });
+  test.todo("can delete a weather instance");
 });

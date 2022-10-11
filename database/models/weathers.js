@@ -16,9 +16,10 @@ class Weather {
    **/
 
   static async getAll(username) {
-    const result = await db.query(queries.weatherQueries.getWeatherInstances, [
-      username,
-    ]);
+    const result = await db.query(
+      queries.weatherQueries.getWeatherInstancesByUser,
+      [username]
+    );
 
     const weather = result.rows;
 
@@ -27,7 +28,17 @@ class Weather {
     return weather;
   }
 
-  static async save({ userId, cityName, utcOffset, latitude, longitude }) {}
+  static async save({ userId, cityName, utcOffset, latitude, longitude }) {
+    const result = await db.query(queries.weatherQueries.insertWeather, [
+      userId,
+      cityName,
+      utcOffset,
+      latitude,
+      longitude,
+    ]);
+    const weather = result.rows[0];
+    return weather;
+  }
   static async remove(username) {
     let result = await db.query(
       `DELETE
