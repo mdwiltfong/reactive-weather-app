@@ -16,7 +16,10 @@ const {
 } = require("./_testCommon");
 process.env.NODE_ENV = "test";
 
-beforeAll(() => commonBeforeAll("users"));
+beforeAll(async () => {
+  await commonBeforeAll("users");
+  await commonBeforeAll("weathers");
+});
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
@@ -137,6 +140,7 @@ describe("get", function () {
   test("works", async function () {
     let user = await User.get("u1");
     expect(user).toEqual({
+      id: 1,
       username: "u1",
       firstName: "U1F",
       lastName: "U1L",
@@ -232,4 +236,45 @@ describe("remove", function () {
 
 /************************************** applyToJob */
 
-//TODO: Create tests surrounding a user being able to save a weather instance
+describe("Weather instances", () => {
+  test("Retrieve all of a user's weather", async () => {
+    const expected = [
+      {
+        userId: 2,
+        cityName: "london",
+        utcOffset: 1,
+        latitude: null,
+        longitude: null,
+      },
+      {
+        userId: 2,
+        cityName: "chicago",
+        utcOffset: 1,
+        latitude: null,
+        longitude: null,
+      },
+    ];
+    const weatherArray = await User.getSavedWeather("u2");
+    expect(weatherArray).toEqual(expect.arrayContaining(expected));
+  });
+  test("Save a weather's instances", async () => {
+    const newWeatherData = {
+      userId: 1,
+      cityName: "montreal",
+      utcOffset: -4,
+      latitude: null,
+      longitude: null,
+    };
+    const weatherInstance = await User.saveWeather("u1", newWeatherData);
+    expect(weatherInstance).toEqual(
+      expect.objectContaining({
+        weatherId: 6,
+        userId: 1,
+        cityName: "montreal",
+        utcOffset: -4,
+        latitude: null,
+        longitude: null,
+      })
+    );
+  });
+});

@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const ExpressError = require("../ExpressError");
 const { BCRYPT_WORK_FACTOR } = require("../../database/config");
 const User = require("../../database/models/users");
+const Weather = require("../../database/models/weathers");
 const { ensureAdmin, authenticateJWT } = require("../middleware/auth");
 const { createToken } = require("../helpers/token");
 // Only Admins should be able to retrieve an entire list of users
@@ -34,6 +35,11 @@ router.post("/register", async (req, res, next) => {
     }
     return next(e);
   }
+});
+
+router.post("/weather/:username", async (req, res, next) => {
+  const { username } = req.params;
+  const { weatherData } = req.body;
 });
 
 module.exports = router;

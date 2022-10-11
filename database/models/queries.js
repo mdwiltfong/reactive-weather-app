@@ -1,9 +1,8 @@
 class WeatherQueries {
   getWeatherInstancesByUser = `  
   SELECT user_id as "userId",
-        city_name,
+        city_name as "cityName",
         utc_offset AS "utcOffset",
-        city_name AS "cityName",
         latitude,
         longitude 
            FROM weathers
@@ -26,7 +25,7 @@ RETURNING id
 INSERT INTO weathers (user_id,city_name,utc_offset,latitude,longitude)
 VALUES 
 ($1,$2,$3,$4,$5)
-RETURNING user_id as "userId",city_name as "cityName",utc_offset as "utcOffset",latitude,longitude
+RETURNING id as "weatherId", user_id as "userId",city_name as "cityName",utc_offset as "utcOffset",latitude,longitude
 `;
 }
 

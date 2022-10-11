@@ -7,7 +7,26 @@ const {
   BadRequestError,
   UnauthorizedError,
 } = require("../../server/ExpressError");
+const Weather = require("./weathers");
 class User {
+  static async getSavedWeather(userName) {
+    try {
+      const user = await User.get(userName);
+      return await Weather.getAll(user.id);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  static async saveWeather(userName, weatherData) {
+    try {
+      const newWeatherInstance = await Weather.save(weatherData);
+      return newWeatherInstance;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   static async authenticate(username, password) {
     // try to find the user first
     const result = await db.query(
@@ -102,7 +121,9 @@ class User {
 
   static async get(username) {
     const userRes = await db.query(
-      `SELECT username,
+      `SELECT 
+                  id,
+                  username,
                   first_name AS "firstName",
                   last_name AS "lastName",
                   email,
@@ -116,17 +137,6 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
-    /*    
- TODO: Replace this query for saved weather instances
- const userApplicationsRes = await db.query(
-      `SELECT a.job_id
-           FROM applications AS a
-           WHERE a.username = $1`,
-      [username]
-    ); 
-
-    user.applications = userApplicationsRes.rows.map((a) => a.job_id);
-    */
     return user;
   }
   static async remove(username) {

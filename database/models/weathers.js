@@ -8,7 +8,7 @@ const {
   UnauthorizedError,
 } = require("../../server/ExpressError");
 class Weather {
-  /** Given a username, return data about all the saved weather instances of a user.
+  /** Given a usersID, return data about all the saved weather instances of a user.
    *
    * Returns { utc_offset,city_name,latitude,longitude }
    *
@@ -39,6 +39,10 @@ class Weather {
     const weather = result.rows[0];
     return weather;
   }
+
+  /*
+Given a weatherInstances ID, the function will remove the instance from the DB. 
+  */
   static async remove(weatherId) {
     let result = await db.query(queries.weatherQueries.removeWeather, [
       weatherId,
