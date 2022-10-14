@@ -6,8 +6,12 @@ const User = require("../../../database/models/users");
 const { createToken } = require("../../helpers/token");
 
 async function commonBeforeAll() {
-  // noinspection SqlWithoutWhere
+  const usersQuery = `ALTER SEQUENCE users_id_seq RESTART WITH 1;`;
+  await db.query(usersQuery);
+  const weathersQuery = `ALTER SEQUENCE weathers_id_seq RESTART WITH 1;`;
+  await db.query(weathersQuery);
   await db.query("DELETE FROM users");
+  await db.query("DELETE FROM weathers");
   await User.register({
     username: "u1",
     firstName: "U1F",

@@ -49,4 +49,26 @@ describe("CRUD Operations for user routes", () => {
       token: expect.any(String),
     });
   });
+
+  test("A logged in user can save a weather instance", async () => {
+    const weatherData = {
+      cityName: "madrid",
+      utcOffset: -4,
+      latitude: null,
+      longitude: null,
+    };
+    const resp = await request(app)
+      .post("/users/weather/u1")
+      .send(weatherData)
+      .set("authorization", `Bearer ${u1Token}`);
+    const { data } = resp.body;
+    expect(data).toEqual({
+      weatherId: 1,
+      userId: 1,
+      cityName: "madrid",
+      utcOffset: -4,
+      latitude: null,
+      longitude: null,
+    });
+  });
 });

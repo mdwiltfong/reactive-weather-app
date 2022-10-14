@@ -26,5 +26,4 @@ router.get("/dailyForecast", async (req, res, next) => {
     return next(error);
   }
 });
-
 module.exports = router;

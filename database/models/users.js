@@ -20,6 +20,8 @@ class User {
 
   static async saveWeather(userName, weatherData) {
     try {
+      const user = await this.get(userName);
+      weatherData.userId = user.id;
       const newWeatherInstance = await Weather.save(weatherData);
       return newWeatherInstance;
     } catch (error) {
@@ -113,8 +115,7 @@ class User {
   }
   /** Given a username, return data about user.
    *
-   * Returns { username, first_name, last_name, is_admin, jobs }
-   *   where jobs is { id, title, company_handle, company_name, state }
+   * Returns {id, username, firstName, lastName, isAdmin }
    *
    * Throws NotFoundError if user not found.
    **/
