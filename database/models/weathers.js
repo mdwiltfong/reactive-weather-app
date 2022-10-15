@@ -8,17 +8,17 @@ const {
   UnauthorizedError,
 } = require("../../server/ExpressError");
 class Weather {
-  /** Given a usersID, return data about all the saved weather instances of a user.
+  /** Given a userId, return data about all the saved weather instances of a user.
    *
-   * Returns { utc_offset,city_name,latitude,longitude }
+   * Returns { userId,utcOffset,cityName,latitude,longitude }
    *
    * Throws NotFoundError if user not found.
    **/
 
-  static async getAll(username) {
+  static async getAll(userId) {
     const result = await db.query(
       queries.weatherQueries.getWeatherInstancesByUser,
-      [username]
+      [userId]
     );
 
     const weather = result.rows;

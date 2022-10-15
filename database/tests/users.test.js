@@ -146,6 +146,29 @@ describe("get", function () {
       lastName: "U1L",
       email: "u1@email.com",
       isAdmin: false,
+      savedWeather: [
+        {
+          cityName: "madrid",
+          latitude: null,
+          longitude: null,
+          userId: 1,
+          utcOffset: 2,
+        },
+        {
+          cityName: "ottawa",
+          latitude: null,
+          longitude: null,
+          userId: 1,
+          utcOffset: -4,
+        },
+        {
+          cityName: null,
+          latitude: 56,
+          longitude: 47,
+          utcOffset: -4,
+          userId: 1,
+        },
+      ],
     });
   });
 

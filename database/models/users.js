@@ -138,6 +138,8 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
+    const savedWeather = await Weather.getAll(user.id);
+    user["savedWeather"] = savedWeather;
     return user;
   }
   static async remove(username) {

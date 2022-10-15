@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const ExpressError = require("../ExpressError");
 const { BCRYPT_WORK_FACTOR } = require("../../database/config");
 const User = require("../../database/models/users");
-const Weather = require("../../database/models/weathers");
 const { ensureCorrectUserOrAdmin } = require("../middleware/auth");
 const {
   ensureAdmin,

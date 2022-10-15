@@ -1,6 +1,7 @@
 const express = require("express");
 const weatherRoutes = require("./routes/weatherRoutes");
 const userRoutes = require("./routes/userRoutes");
+const loginRoutes = require("./routes/loginRoutes");
 const morgan = require("morgan");
 const { authenticateJWT } = require("./middleware/auth");
 const app = express();
@@ -14,4 +15,5 @@ app.get("/status", (req, res, next) => {
 
 app.use("/weather", weatherRoutes);
 app.use("/users", userRoutes);
+app.use("/login", loginRoutes);
 module.exports = app;
