@@ -30,11 +30,35 @@ describe("authenticate", function () {
   test("works", async function () {
     const user = await User.authenticate("u1", "password");
     expect(user).toEqual({
+      id: 1,
       username: "u1",
       firstName: "U1F",
       lastName: "U1L",
       email: "u1@email.com",
       isAdmin: false,
+      savedWeather: [
+        {
+          cityName: "madrid",
+          latitude: null,
+          longitude: null,
+          userId: 1,
+          utcOffset: 2,
+        },
+        {
+          cityName: "ottawa",
+          latitude: null,
+          longitude: null,
+          userId: 1,
+          utcOffset: -4,
+        },
+        {
+          cityName: null,
+          latitude: 56,
+          longitude: 47,
+          userId: 1,
+          utcOffset: -4,
+        },
+      ],
     });
   });
 
@@ -43,13 +67,13 @@ describe("authenticate", function () {
       await User.authenticate("nope", "password");
       fail();
     } catch (err) {
-      expect(err instanceof UnauthorizedError).toBeTruthy();
+      expect(err instanceof NotFoundError).toBeTruthy();
     }
   });
 
   test("unauth if wrong password", async function () {
     try {
-      await User.authenticate("c1", "wrong");
+      await User.authenticate("u1", "wrong");
       fail();
     } catch (err) {
       expect(err instanceof UnauthorizedError).toBeTruthy();
@@ -146,6 +170,7 @@ describe("get", function () {
       lastName: "U1L",
       email: "u1@email.com",
       isAdmin: false,
+      password: expect.any(String),
       savedWeather: [
         {
           cityName: "madrid",

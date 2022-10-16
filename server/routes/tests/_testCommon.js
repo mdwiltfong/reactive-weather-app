@@ -17,7 +17,7 @@ async function commonBeforeAll() {
     firstName: "U1F",
     lastName: "U1L",
     email: "user1@user.com",
-    password: "password1",
+    password: "password",
     isAdmin: false,
   });
   await User.register({
@@ -25,7 +25,7 @@ async function commonBeforeAll() {
     firstName: "U2F",
     lastName: "U2L",
     email: "user2@user.com",
-    password: "password2",
+    password: "password",
     isAdmin: false,
   });
   await User.register({
@@ -33,7 +33,7 @@ async function commonBeforeAll() {
     firstName: "U3F",
     lastName: "U3L",
     email: "user3@user.com",
-    password: "password3",
+    password: "password",
     isAdmin: false,
   });
 }

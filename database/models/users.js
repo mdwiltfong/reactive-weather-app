@@ -30,31 +30,21 @@ class User {
   }
 
   static async authenticate(username, password) {
-    // try to find the user first
-    const result = await db.query(
-      `SELECT username,
-                  password,
-                  first_name AS "firstName",
-                  last_name AS "lastName",
-                  email,
-                  is_admin AS "isAdmin"
-           FROM users
-           WHERE username = $1`,
-      [username]
-    );
-
-    const user = result.rows[0];
-
-    if (user) {
-      // compare hashed password to a new hash from password
-      const isValid = await bcrypt.compare(password, user.password);
-      if (isValid === true) {
-        delete user.password;
-        return user;
+    try {
+      // try to find the user first
+      const user = await this.get(username);
+      if (user) {
+        // compare hashed password to a new hash from password
+        const isValid = await bcrypt.compare(password, user.password);
+        if (isValid === true) {
+          delete user.password;
+          return user;
+        }
       }
+      throw new UnauthorizedError("Invalid username/password");
+    } catch (error) {
+      console.error("Authentication Error", error.message);
     }
-
-    throw new UnauthorizedError("Invalid username/password");
   }
 
   static async register({
@@ -128,7 +118,8 @@ class User {
                   first_name AS "firstName",
                   last_name AS "lastName",
                   email,
-                  is_admin AS "isAdmin"
+                  is_admin AS "isAdmin",
+                  password
            FROM users
            WHERE username = $1`,
       [username]
