@@ -1,5 +1,5 @@
 const db = require("../db");
-
+const queries = require("./queries");
 const { BCRYPT_WORK_FACTOR } = require("../config");
 const bcrypt = require("bcrypt");
 const {
@@ -55,12 +55,9 @@ class User {
     email,
     isAdmin,
   }) {
-    const duplicateCheck = await db.query(
-      `SELECT username
-           FROM users
-           WHERE username = $1`,
-      [username]
-    );
+    const duplicateCheck = await db.query(queries.userQueries.getUser, [
+      username,
+    ]);
 
     if (duplicateCheck.rows[0]) {
       throw new BadRequestError(`Duplicate username: ${username}`);
@@ -68,18 +65,14 @@ class User {
 
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
 
-    const result = await db.query(
-      `INSERT INTO users
-           (username,
-            password,
-            first_name,
-            last_name,
-            email,
-            is_admin)
-           VALUES ($1, $2, $3, $4, $5, $6)
-           RETURNING username, first_name AS "firstName", last_name AS "lastName", email, is_admin AS "isAdmin"`,
-      [username, hashedPassword, firstName, lastName, email, isAdmin]
-    );
+    const result = await db.query(queries.userQueries.insertUser, [
+      username,
+      hashedPassword,
+      firstName,
+      lastName,
+      email,
+      isAdmin,
+    ]);
 
     const user = result.rows[0];
 
@@ -91,15 +84,7 @@ class User {
    **/
 
   static async findAll() {
-    const result = await db.query(
-      `SELECT username,
-                  first_name AS "firstName",
-                  last_name AS "lastName",
-                  email,
-                  is_admin AS "isAdmin"
-           FROM users
-           ORDER BY username`
-    );
+    const result = await db.query(queries.userQueries.findAllUsers);
 
     return result.rows;
   }
@@ -111,19 +96,7 @@ class User {
    **/
 
   static async get(username) {
-    const userRes = await db.query(
-      `SELECT 
-                  id,
-                  username,
-                  first_name AS "firstName",
-                  last_name AS "lastName",
-                  email,
-                  is_admin AS "isAdmin",
-                  password
-           FROM users
-           WHERE username = $1`,
-      [username]
-    );
+    const userRes = await db.query(queries.userQueries.getUser, [username]);
 
     const user = userRes.rows[0];
 
