@@ -3,6 +3,7 @@
 /** Shared config for application; can be required many places. */
 
 const dotenv = require("dotenv").config({ path: "../../.env" });
+console.log(dotenv);
 require("colors");
 console.debug("CONFIG DOTENV", dotenv);
 const SECRET_KEY = process.env.SECRET_KEY || "secret-dev";

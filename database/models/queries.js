@@ -1,9 +1,8 @@
 class WeatherQueries {
   getWeatherInstancesByUser = `  
   SELECT user_id as "userId",
-        city_name,
+        city_name as "cityName",
         utc_offset AS "utcOffset",
-        city_name AS "cityName",
         latitude,
         longitude 
            FROM weathers
@@ -26,11 +25,45 @@ RETURNING id
 INSERT INTO weathers (user_id,city_name,utc_offset,latitude,longitude)
 VALUES 
 ($1,$2,$3,$4,$5)
-RETURNING user_id as "userId",city_name as "cityName",utc_offset as "utcOffset",latitude,longitude
+RETURNING id as "weatherId", user_id as "userId",city_name as "cityName",utc_offset as "utcOffset",latitude,longitude
 `;
 }
 
-class UserQueries {}
+class UserQueries {
+  getUser = `SELECT 
+                  id,
+                  username,
+                  first_name AS "firstName",
+                  last_name AS "lastName",
+                  email,
+                  is_admin AS "isAdmin",
+                  password
+           FROM users
+           WHERE username = $1`;
+  deleteUser = `DELETE
+           FROM users
+           WHERE username = $1
+           RETURNING username`;
+  findAllUsers = `SELECT username,
+                  first_name AS "firstName",
+                  last_name AS "lastName",
+                  email,
+                  is_admin AS "isAdmin"
+           FROM users
+           ORDER BY username`;
+  selectUsername = `SELECT username
+           FROM users
+           WHERE username = $1`;
+  insertUser = `INSERT INTO users
+           (username,
+            password,
+            first_name,
+            last_name,
+            email,
+            is_admin)
+           VALUES ($1, $2, $3, $4, $5, $6)
+           RETURNING username, first_name AS "firstName", last_name AS "lastName", email, is_admin AS "isAdmin"`;
+}
 
 const weatherQueries = new WeatherQueries();
 const userQueries = new UserQueries();

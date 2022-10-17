@@ -1,6 +1,7 @@
 const request = require("supertest");
 const app = require("../../app");
-
+const jwt = require("jsonwebtoken");
+const { SECRET_KEY } = require("../../../database/config");
 const {
   commonBeforeAll,
   commonBeforeEach,
@@ -9,6 +10,7 @@ const {
   adminToken,
   u1Token,
 } = require("./_testCommon");
+const { token } = require("morgan");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
@@ -47,6 +49,28 @@ describe("CRUD Operations for user routes", () => {
         isAdmin: false,
       },
       token: expect.any(String),
+    });
+  });
+
+  test("A logged in user can save a weather instance", async () => {
+    const weatherData = {
+      cityName: "madrid",
+      utcOffset: -4,
+      latitude: null,
+      longitude: null,
+    };
+    const resp = await request(app)
+      .post("/users/weather/u1")
+      .send(weatherData)
+      .set("authorization", `Bearer ${u1Token}`);
+    const { data } = resp.body;
+    expect(data).toEqual({
+      weatherId: 1,
+      userId: 1,
+      cityName: "madrid",
+      utcOffset: -4,
+      latitude: null,
+      longitude: null,
     });
   });
 });

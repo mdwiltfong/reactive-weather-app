@@ -16,7 +16,10 @@ const {
 } = require("./_testCommon");
 process.env.NODE_ENV = "test";
 
-beforeAll(() => commonBeforeAll("users"));
+beforeAll(async () => {
+  await commonBeforeAll("users");
+  await commonBeforeAll("weathers");
+});
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
@@ -27,11 +30,35 @@ describe("authenticate", function () {
   test("works", async function () {
     const user = await User.authenticate("u1", "password");
     expect(user).toEqual({
+      id: 1,
       username: "u1",
       firstName: "U1F",
       lastName: "U1L",
       email: "u1@email.com",
       isAdmin: false,
+      savedWeather: [
+        {
+          cityName: "madrid",
+          latitude: null,
+          longitude: null,
+          userId: 1,
+          utcOffset: 2,
+        },
+        {
+          cityName: "ottawa",
+          latitude: null,
+          longitude: null,
+          userId: 1,
+          utcOffset: -4,
+        },
+        {
+          cityName: null,
+          latitude: 56,
+          longitude: 47,
+          userId: 1,
+          utcOffset: -4,
+        },
+      ],
     });
   });
 
@@ -40,13 +67,13 @@ describe("authenticate", function () {
       await User.authenticate("nope", "password");
       fail();
     } catch (err) {
-      expect(err instanceof UnauthorizedError).toBeTruthy();
+      expect(err instanceof NotFoundError).toBeTruthy();
     }
   });
 
   test("unauth if wrong password", async function () {
     try {
-      await User.authenticate("c1", "wrong");
+      await User.authenticate("u1", "wrong");
       fail();
     } catch (err) {
       expect(err instanceof UnauthorizedError).toBeTruthy();
@@ -137,11 +164,36 @@ describe("get", function () {
   test("works", async function () {
     let user = await User.get("u1");
     expect(user).toEqual({
+      id: 1,
       username: "u1",
       firstName: "U1F",
       lastName: "U1L",
       email: "u1@email.com",
       isAdmin: false,
+      password: expect.any(String),
+      savedWeather: [
+        {
+          cityName: "madrid",
+          latitude: null,
+          longitude: null,
+          userId: 1,
+          utcOffset: 2,
+        },
+        {
+          cityName: "ottawa",
+          latitude: null,
+          longitude: null,
+          userId: 1,
+          utcOffset: -4,
+        },
+        {
+          cityName: null,
+          latitude: 56,
+          longitude: 47,
+          utcOffset: -4,
+          userId: 1,
+        },
+      ],
     });
   });
 
@@ -232,4 +284,45 @@ describe("remove", function () {
 
 /************************************** applyToJob */
 
-//TODO: Create tests surrounding a user being able to save a weather instance
+describe("Weather instances", () => {
+  test("Retrieve all of a user's weather", async () => {
+    const expected = [
+      {
+        userId: 2,
+        cityName: "london",
+        utcOffset: 1,
+        latitude: null,
+        longitude: null,
+      },
+      {
+        userId: 2,
+        cityName: "chicago",
+        utcOffset: 1,
+        latitude: null,
+        longitude: null,
+      },
+    ];
+    const weatherArray = await User.getSavedWeather("u2");
+    expect(weatherArray).toEqual(expect.arrayContaining(expected));
+  });
+  test("Save a weather's instances", async () => {
+    const newWeatherData = {
+      userId: 1,
+      cityName: "montreal",
+      utcOffset: -4,
+      latitude: null,
+      longitude: null,
+    };
+    const weatherInstance = await User.saveWeather("u1", newWeatherData);
+    expect(weatherInstance).toEqual(
+      expect.objectContaining({
+        weatherId: 6,
+        userId: 1,
+        cityName: "montreal",
+        utcOffset: -4,
+        latitude: null,
+        longitude: null,
+      })
+    );
+  });
+});
