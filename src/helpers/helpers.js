@@ -77,6 +77,7 @@ export default class OpenWeatherAPI {
       console.error(error.message);
     }
   }
+<<<<<<< HEAD
   static async getUser(userName) {
     try {
       const user = await this.request(`users/${userName}`);
@@ -85,6 +86,8 @@ export default class OpenWeatherAPI {
       console.error(error.message);
     }
   }
+=======
+>>>>>>> login route
 }
 
 /* 
