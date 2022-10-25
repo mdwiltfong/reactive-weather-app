@@ -10,6 +10,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Weather />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );
