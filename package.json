@@ -9,6 +9,7 @@
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "colors": "^1.4.0",
+    "concurrently": "^7.5.0",
     "dotenv": "^16.0.2",
     "formik": "^2.2.9",
     "jsonwebtoken": "^8.5.1",
@@ -27,6 +28,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "dev": "concurrently -n 'server,client' \"nodemon -r dotenv ./server/server.js test\" \"npm start\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
