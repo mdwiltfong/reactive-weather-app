@@ -50,6 +50,7 @@ class OpenWeatherAPI {
       });
       return oneApiCall;
     } catch (error) {
+      console.error("Fetch Forecast", error.message);
       return undefined;
     }
   }

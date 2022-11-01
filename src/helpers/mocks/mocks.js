@@ -391,12 +391,64 @@ export const oneCallAPIForecast = {
   ],
 };
 
-class MockWeatherData {
-  mockCurrentWeatherData;
-  mockOneCallAPIForecast;
-  constructor() {
-    this.mockCurrentWeatherData = currentWeather;
-    this.mockOneCallAPIForecast = oneCallAPIForecast;
-  }
+const users = [
+  {
+    username: "u1",
+    firstName: "U1F",
+    lastName: "U1L",
+    email: "user1@user.com",
+    isAdmin: false,
+  },
+  {
+    username: "u2",
+    firstName: "U2F",
+    lastName: "U2L",
+    email: "user2@user.com",
+    isAdmin: false,
+  },
+  {
+    username: "u3",
+    firstName: "U3F",
+    lastName: "U3L",
+    email: "user3@user.com",
+    isAdmin: true,
+  },
+];
+
+const weatherInstances = [
+  {
+    userId: 1,
+    cityName: "madrid",
+    utcOffset: 2,
+    latitude: null,
+    longitude: null,
+  },
+  {
+    userId: 2,
+    cityName: "london",
+    utcOffset: -1,
+    latitude: null,
+    longitude: null,
+  },
+  {
+    userId: 4,
+    cityName: null,
+    utcOffset: -4,
+    latitude: 56,
+    longitude: 47,
+  },
+];
+class MockUserData {
+  users = users;
+  savedWeatherInstances = weatherInstances;
 }
-export default new MockWeatherData();
+class MockWeatherData {
+  mockCurrentWeatherData = currentWeather;
+  mockOneCallAPIForecast = oneCallAPIForecast;
+}
+
+class MockData {
+  MockUserData = new MockUserData();
+  MockWeatherData = new MockWeatherData();
+}
+export default new MockData();
