@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { Weather } from "./components/Weather";
+import { Login } from "./components/Login";
 import NavBar from "./components/NavBar";
 
 function App() {
