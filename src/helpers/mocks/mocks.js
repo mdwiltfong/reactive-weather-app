@@ -444,6 +444,7 @@ class MockUserData {
 }
 class MockWeatherData {
   mockCurrentWeatherData = currentWeather;
+  mockSavedWeatherInstance = weatherInstances;
   mockOneCallAPIForecast = oneCallAPIForecast;
 }
 

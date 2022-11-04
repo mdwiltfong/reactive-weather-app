@@ -53,4 +53,16 @@ export const handlers = [
       })
     );
   }),
+  rest.post("/users/weather", (req, res, next) => {
+    ctx.status(201),
+      ctx.json({
+        data: MockData.MockWeatherData.mockSavedWeatherInstance,
+      });
+  }),
+  rest.post("/login", (req, res, next) => {
+    ctx.status(200),
+      ctx.json({
+        token: createToken(MockData.MockUserData.users[0], SECRET_KEY),
+      });
+  }),
 ];
