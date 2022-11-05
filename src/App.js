@@ -1,17 +1,61 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { Weather } from "./components/Weather";
 import { Login } from "./components/Login";
 import NavBar from "./components/NavBar";
+import OpenWeatherAPI from "./helpers/helpers";
+import { useEffect, useState } from "react";
+import useLocalStoragestate from "./hooks/useLocalStorageState";
+import jwt_decode from "jwt-decode";
+const USER_INITIAL_STATE = {
+  username: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  isAdmin: false,
+  applications: [],
+};
 
 function App() {
+  const [token, setToken] = useLocalStoragestate("weatherapp", null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [infoLoaded, setInfoLoaded] = useState(false);
+  useEffect(() => {
+    async function fetchUser() {
+      if (token) {
+        try {
+          let { username } = jwt_decode(token);
+          OpenWeatherAPI.token = token;
+          //TODO:
+          const user = await OpenWeatherAPI.getUser();
+          setCurrentUser(user);
+          setInfoLoaded(true);
+        } catch (error) {
+          console.error(error.message);
+        }
+      }
+      setInfoLoaded(true);
+    }
+
+    setInfoLoaded(false);
+    fetchUser();
+  }, [token]);
+  async function logIn(loginCredentials = { userName: null, password: null }) {
+    try {
+      let token = await OpenWeatherAPI.loginUser(loginCredentials);
+      setToken(token);
+      console.debug("Logged in User", currentUser);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <div className="App">
       <NavBar />
       <Routes>
         <Route path="/" element={<Weather />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login logIn={logIn} />} />
       </Routes>
     </div>
   );
