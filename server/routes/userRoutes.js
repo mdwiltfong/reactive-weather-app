@@ -59,5 +59,15 @@ router.post(
     }
   }
 );
+router.get("/:username", authenticateJWT, async (req, res, next) => {
+  try {
+    const { username } = req.params;
+    const user = await User.get(username);
+    return res.status(200).send({ data: { user } });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 
 module.exports = router;
