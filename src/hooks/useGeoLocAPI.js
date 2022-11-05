@@ -4,7 +4,6 @@ import WeatherClass from "../components/WeatherClass";
 
 function useGeoLocAPI() {
   const [coords, setCoords] = useState(null);
-  console.debug("Test");
   function success(position) {
     console.debug(
       "Browser Postion",
