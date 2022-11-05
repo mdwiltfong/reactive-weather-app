@@ -77,6 +77,7 @@ export default class OpenWeatherAPI {
       console.error(error.message);
     }
   }
+  static async getUser({ userName }) {}
 }
 
 /* 
