@@ -53,16 +53,24 @@ export const handlers = [
       })
     );
   }),
-  rest.post("/users/weather", (req, res, next) => {
+  rest.post("/users/weather", (req, res, ctx) => {
     ctx.status(201),
       ctx.json({
         data: MockData.MockWeatherData.mockSavedWeatherInstance,
       });
   }),
-  rest.post("/login", (req, res, next) => {
+  rest.post(`${BASE_URL}/login`, (req, res, ctx) => {
     ctx.status(200),
       ctx.json({
         token: createToken(MockData.MockUserData.users[0], SECRET_KEY),
       });
+  }),
+  rest.get(`${BASE_URL}/users/:username`, (req, res, ctx) => {
+    const userName = req.params.username;
+    console.debug("User from MSW handler", userName);
+    const foundUser = MockData.MockUserData.users.find(
+      (user) => user.username == userName
+    );
+    return res(ctx.status(200), ctx.json({ user: foundUser }));
   }),
 ];

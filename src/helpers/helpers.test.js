@@ -2,6 +2,7 @@ import OpenWeatherAPI, { DateFormatter } from "./helpers";
 import MockDatePM from "./DateMockPM";
 import MockDateAM from "./DateMockAM";
 import MockWeatherData from "./mocks/mocks";
+import MockData from "./mocks/mocks";
 import axios from "axios";
 const days = [
   "Sunday",
@@ -101,11 +102,27 @@ describe("OpenWeatherAPI handler class", () => {
   });
   test("Wrapper obtains current weather through city name", async () => {
     const response = await OpenWeatherAPI.currentWeather("Madrid");
-    expect(response).toBeDefined();
+    expect(response).toStrictEqual(
+      MockData.MockWeatherData.mockCurrentWeatherData
+    );
   });
   test("Wrapper obtains current weather through coordinates", async () => {
     const response = await OpenWeatherAPI.currentWeather(null, 56, 34);
-    expect(response).toBeDefined();
+    expect(response).toStrictEqual(
+      MockData.MockWeatherData.mockCurrentWeatherData
+    );
   });
-  test.skip("Wrapper can retrieve a single user", async () => {});
+  test("Wrapper can retrieve a single user", async () => {
+    const MockUser = MockData.MockUserData.users[0];
+    const response = await OpenWeatherAPI.getUser(MockUser.username);
+    expect(response.user).toStrictEqual(
+      expect.objectContaining({
+        email: MockUser.email,
+        firstName: MockUser.firstName,
+        isAdmin: false,
+        lastName: MockUser.lastName,
+        username: MockUser.username,
+      })
+    );
+  });
 });

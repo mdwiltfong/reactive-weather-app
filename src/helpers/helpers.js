@@ -77,9 +77,9 @@ export default class OpenWeatherAPI {
       console.error(error.message);
     }
   }
-  static async getUser({ userName }) {
+  static async getUser(userName) {
     try {
-      const user = await this.request(`/users/${userName}`);
+      const user = await this.request(`users/${userName}`);
       return user;
     } catch (error) {
       console.error(error.message);
