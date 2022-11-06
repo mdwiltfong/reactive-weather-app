@@ -51,6 +51,7 @@ describe("CRUD Operations for user routes", () => {
       token: expect.any(String),
     });
   });
+  test.todo("Route is able to retrieve and return a single user");
 
   test("A logged in user can save a weather instance", async () => {
     const weatherData = {

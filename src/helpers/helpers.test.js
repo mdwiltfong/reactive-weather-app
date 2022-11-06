@@ -107,4 +107,5 @@ describe("OpenWeatherAPI handler class", () => {
     const response = await OpenWeatherAPI.currentWeather(null, 56, 34);
     expect(response).toBeDefined();
   });
+  test.skip("Wrapper can retrieve a single user", async () => {});
 });
