@@ -10,7 +10,6 @@ const {
   adminToken,
   u1Token,
 } = require("./_testCommon");
-const { token } = require("morgan");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
@@ -49,6 +48,24 @@ describe("CRUD Operations for user routes", () => {
         isAdmin: false,
       },
       token: expect.any(String),
+    });
+  });
+  test("Route is able to retrieve and return a single user", async () => {
+    const resp = await request(app)
+      .get(`/users/u1`)
+      .set("authorization", `Bearer ${u1Token}`);
+    const {
+      body: {
+        data: { user },
+      },
+    } = resp;
+    expect(user).toStrictEqual({
+      username: "u1",
+      firstName: "U1F",
+      lastName: "U1L",
+      email: "user1@user.com",
+      savedWeather: [],
+      isAdmin: false,
     });
   });
 

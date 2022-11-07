@@ -1,13 +1,10 @@
 class WeatherQueries {
   getWeatherInstancesByUser = `  
-  SELECT user_id as "userId",
-        city_name as "cityName",
-        utc_offset AS "utcOffset",
-        latitude,
-        longitude 
-           FROM weathers
-           where user_id=$1
-           ORDER BY city_name`;
+  select user_id as "userId", city_name as "cityName", utc_offset as "utcOffset", latitude, longitude from weathers
+  left join users
+  on users.id=weathers.user_id
+  where users.id=$1
+  `;
 
   getAWeatherInstance = `
   SELECT * FROM weathers

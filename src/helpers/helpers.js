@@ -55,7 +55,7 @@ export default class OpenWeatherAPI {
       appid: api_key,
     };
     try {
-      const forecast = await this.request("dailyForecast", data);
+      const forecast = await this.request("weather/dailyForecast", data);
       return forecast;
     } catch (error) {
       return undefined;
@@ -77,7 +77,15 @@ export default class OpenWeatherAPI {
       console.error(error.message);
     }
   }
-  static async getUser({ userName }) {}
+
+  static async getUser(userName) {
+    try {
+      const user = await this.request(`users/${userName}`);
+      return user;
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
 }
 
 /* 
