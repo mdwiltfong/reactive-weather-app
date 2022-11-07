@@ -65,7 +65,7 @@ export default class OpenWeatherAPI {
     try {
       const token = await this.request(
         "/login",
-        (data = { userName, password }),
+        { userName, password },
         "post"
       );
       if (token) {
