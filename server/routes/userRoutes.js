@@ -52,7 +52,7 @@ router.post(
       const { username } = req.params;
       const { body: weatherData } = req;
       const weatherInstance = await User.saveWeather(username, weatherData);
-      return res.status(201).send({ data: weatherInstance });
+      return res.status(201).json({ data: weatherInstance });
     } catch (error) {
       console.error(error);
       next(error);
@@ -63,7 +63,9 @@ router.get("/:username", authenticateJWT, async (req, res, next) => {
   try {
     const { username } = req.params;
     const user = await User.get(username);
-    return res.status(200).send({ data: { user } });
+    delete user.password;
+    delete user.id;
+    return res.status(200).json({ data: { user } });
   } catch (error) {
     console.error(error);
     next(error);
