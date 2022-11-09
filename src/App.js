@@ -18,7 +18,7 @@ const USER_INITIAL_STATE = {
 };
 
 function App() {
-  const [token, setToken] = useLocalStoragestate("weatherapp", null);
+  const [token, setToken] = useLocalStoragestate("weatherapp");
   const [currentUser, setCurrentUser] = useState(null);
   const [infoLoaded, setInfoLoaded] = useState(false);
   useEffect(() => {
@@ -27,7 +27,6 @@ function App() {
         try {
           let { username } = jwt_decode(token);
           OpenWeatherAPI.token = token;
-          //TODO:
           const user = await OpenWeatherAPI.getUser(username);
           setCurrentUser(user);
           setInfoLoaded(true);
