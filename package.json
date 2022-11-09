@@ -28,7 +28,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "dev": "concurrently -n 'server,client' \"nodemon -r dotenv ./server/server.js test\" \"npm start\"",
+    "dev": "concurrently -n 'server,client' \"nodemon -r dotenv ./server/server.js\" \"npm start\"",
+    "mock_owapi_server": "concurrently -n 'server,client' \"cd server/mock_server && nodemon server.js\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

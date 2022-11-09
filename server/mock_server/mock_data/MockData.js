@@ -453,4 +453,4 @@ class MockData {
   MockWeatherData = new MockWeatherData();
 }
 
-module.s = new MockData();
+module.exports = new MockData();

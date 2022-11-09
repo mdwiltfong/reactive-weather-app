@@ -6,9 +6,9 @@ router.get("/", async (req, res, next) => {
     const { params } = req;
     console.debug("Current Weather params: ", params);
     const {
-      MockWeatherData: { mockOneCallAPIForecast },
+      MockWeatherData: { mockCurrentWeatherData },
     } = MockData;
-    return res.status(200).json(mockOneCallAPIForecast);
+    return res.status(200).json(mockCurrentWeatherData);
   } catch (error) {
     console.error(error.message);
   }

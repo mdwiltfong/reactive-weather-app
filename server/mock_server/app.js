@@ -2,6 +2,7 @@ const express = require("express");
 
 const morgan = require("morgan");
 const onecallroute = require("./mock_routes/onecallroute");
+const weatherRoutes = require("./mock_routes/weatherRoutes");
 const app = express();
 
 app.use(express.json());
@@ -10,6 +11,7 @@ app.get("/mock_status", (req, res, next) => {
   res.send("mock server connected");
 });
 
-app.use("/3.0", onecallroute);
+app.use("/data/3.0/onecall", onecallroute);
+app.use("/data/2.5/weather", weatherRoutes);
 
 module.exports = app;
