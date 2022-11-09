@@ -11,31 +11,37 @@ describe("useLocalStoragestate", () => {
     renderHook(() => useLocalStoragestate());
   });
   test("Returns undefined if no information is stored locallys", () => {
-    const { result } = renderHook(() => useLocalStoragestate("coords"));
-    expect(result.current[0].coords).toBe(null);
+    const { result } = renderHook(() => useLocalStoragestate("weatherapp"));
+    expect(result.current[0].weatherapp.coords).toBe(null);
   });
   test("Is able to store value", () => {
     const { result, rerender } = renderHook(() =>
-      useLocalStoragestate("coords")
+      useLocalStoragestate("weatherapp")
     );
-    const [coords, setCoords] = result.current;
+    const [localStorage, setStorage] = result.current;
     // Storage should be empty at first
-    expect(result.current[0].coords).toBe(null);
+    expect(localStorage.weatherapp.coords).toBe(null);
+
     act(() => {
-      setCoords({
-        coords: {
-          latitude: "45",
-          longitude: "56",
+      setStorage({
+        weatherapp: {
+          coords: {
+            latitude: "45",
+            longitude: "56",
+          },
+          token: null,
         },
       });
     });
     // State should be a string when entered into storage
     expect(result.current[0]).toEqual(
-      '{"coords":{"latitude":"45","longitude":"56"}}'
+      '{"weatherapp":{"coords":{"latitude":"45","longitude":"56"},"token":null}}'
     );
-    const { result: res } = renderHook(() => useLocalStoragestate("coords"));
+    const { result: res } = renderHook(() =>
+      useLocalStoragestate("weatherapp")
+    );
     // Retrieve value from storage to confirm it's parseing the string back into JSON object
-    expect(res.current[0].coords).toStrictEqual(
+    expect(res.current[0].weatherapp.coords).toStrictEqual(
       expect.objectContaining({
         latitude: 45,
         longitude: 56,
