@@ -10,7 +10,7 @@ describe("useLocalStoragestate", () => {
   test("Smoke Test", () => {
     renderHook(() => useLocalStoragestate());
   });
-  test("Returns undefined if no information is stored locallys", () => {
+  test("Returns undefined if no information is stored locally", () => {
     const { result } = renderHook(() => useLocalStoragestate("weatherapp"));
     expect(result.current[0].weatherapp.coords).toBe(null);
   });
