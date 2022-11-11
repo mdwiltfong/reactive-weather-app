@@ -10,6 +10,19 @@ describe("useLocalStoragestate", () => {
   test("Smoke Test", () => {
     renderHook(() => useLocalStoragestate());
   });
+  test("Hook stores information with the correct schema", () => {
+    const {
+      result: { current },
+    } = renderHook(() => useLocalStoragestate("weatherapp"));
+    expect(current[0]).toEqual(
+      expect.objectContaining({
+        weatherapp: {
+          coords: null,
+          token: null,
+        },
+      })
+    );
+  });
   test("Returns undefined if no information is stored locally", () => {
     const { result } = renderHook(() => useLocalStoragestate("weatherapp"));
     expect(result.current[0].weatherapp.coords).toBe(null);
