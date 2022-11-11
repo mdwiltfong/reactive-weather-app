@@ -8,6 +8,7 @@ import OpenWeatherAPI from "./helpers/helpers";
 import { useEffect, useState } from "react";
 import useLocalStoragestate from "./hooks/useLocalStorageState";
 import jwt_decode from "jwt-decode";
+
 const USER_INITIAL_STATE = {
   username: "",
   firstName: "",
@@ -18,7 +19,9 @@ const USER_INITIAL_STATE = {
 };
 
 function App() {
-  const [token, setToken] = useLocalStoragestate("weatherapp");
+  const [localStorage, setLocalStorage] = useLocalStoragestate("weatherapp");
+  const { weatherapp } = localStorage;
+  const { token } = weatherapp;
   const [currentUser, setCurrentUser] = useState(null);
   const [infoLoaded, setInfoLoaded] = useState(false);
   useEffect(() => {
@@ -43,7 +46,8 @@ function App() {
   async function logIn(loginCredentials = { userName: null, password: null }) {
     try {
       let token = await OpenWeatherAPI.loginUser(loginCredentials);
-      setToken(token);
+      weatherapp.token = token;
+      setLocalStorage({ weatherapp });
       console.debug("Logged in User", currentUser);
     } catch (error) {
       console.error(error);

@@ -55,8 +55,11 @@ export default class OpenWeatherAPI {
       appid: api_key,
     };
     try {
-      const forecast = await this.request("weather/dailyForecast", data);
-      return forecast;
+      const { data: foreCast } = await this.request(
+        "weather/dailyForecast",
+        data
+      );
+      return foreCast;
     } catch (error) {
       return undefined;
     }

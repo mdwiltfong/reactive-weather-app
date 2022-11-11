@@ -38,7 +38,7 @@ const useLocalStoragestate = (
     setState(jsonString);
   }
   useEffect(() => {
-    window.localStorage.setItem(key, state);
+    window.localStorage.setItem(key, JSON.stringify(state));
   }, [key, state]);
   return [state, _setState];
 };
