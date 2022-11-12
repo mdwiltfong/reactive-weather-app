@@ -3,7 +3,10 @@ import OpenWeatherAPI from "../helpers/helpers";
 import WeatherClass from "../components/WeatherClass";
 
 function useGeoLocAPI() {
-  const [coords, setCoords] = useState(null);
+  const [coords, setCoords] = useState({
+    lat: 45,
+    long: -75,
+  });
   function success(position) {
     console.debug(
       "Browser Postion",
