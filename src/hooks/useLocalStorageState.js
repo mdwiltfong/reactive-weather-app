@@ -34,8 +34,7 @@ const useLocalStoragestate = (
     return value;
   });
   function _setState(jsonObj) {
-    const jsonString = JSON.stringify(jsonObj);
-    setState(jsonString);
+    setState(jsonObj);
   }
   useEffect(() => {
     window.localStorage.setItem(key, JSON.stringify(state));

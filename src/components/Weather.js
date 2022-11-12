@@ -6,6 +6,9 @@ import { CurrentWeather } from "./CurrentWeather";
 import WeatherClass from "./WeatherClass";
 import useGeoLocAPI from "../hooks/useGeoLocAPI";
 export function Weather(params) {
+  const {
+    localStorage: { localStorage, setLocalStorage },
+  } = params;
   const [coords, setCoords] = useGeoLocAPI();
   const [loading, setLoading] = useState(true);
 
@@ -28,7 +31,11 @@ export function Weather(params) {
           })
         );
       }
-      fetchWeather(coords).then(setLoading(false));
+      localStorage.weatherapp.coords = coords;
+      fetchWeather(coords).then(() => {
+        setLocalStorage(localStorage);
+        setLoading(false);
+      });
     }
   }, [coords]);
   const formik = useFormik({

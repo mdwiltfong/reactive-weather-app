@@ -57,7 +57,10 @@ function App() {
     <div className="App">
       <NavBar />
       <Routes>
-        <Route path="/" element={<Weather />} />
+        <Route
+          path="/"
+          element={<Weather localStorage={{ localStorage, setLocalStorage }} />}
+        />
         <Route path="/login" element={<Login logIn={logIn} />} />
       </Routes>
     </div>

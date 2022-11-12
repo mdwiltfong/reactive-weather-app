@@ -44,10 +44,7 @@ describe("useLocalStoragestate", () => {
     act(() => {
       setStorage(store);
     });
-    // State should be a string when entered into storage
-    expect(result.current[0]).toEqual(
-      '{"coords":{"latitude":45,"longitude":56},"token":null}'
-    );
+
     const { result: res } = renderHook(() =>
       useLocalStoragestate("weatherapp")
     );
