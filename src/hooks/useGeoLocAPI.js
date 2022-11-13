@@ -3,10 +3,7 @@ import OpenWeatherAPI from "../helpers/helpers";
 import WeatherClass from "../components/WeatherClass";
 
 function useGeoLocAPI() {
-  const [coords, setCoords] = useState({
-    lat: 45,
-    long: -75,
-  });
+  const [coords, setCoords] = useState(null);
   function success(position) {
     console.debug(
       "Browser Postion",
@@ -20,6 +17,10 @@ function useGeoLocAPI() {
   }
   function error(error) {
     console.error(error.message);
+    setCoords({
+      lat: 45,
+      long: -75,
+    });
   }
   useEffect(() => {
     if ("geolocation" in navigator) {

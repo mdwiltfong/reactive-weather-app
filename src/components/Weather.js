@@ -5,17 +5,13 @@ import { useEffect, useState } from "react";
 import { CurrentWeather } from "./CurrentWeather";
 import WeatherClass from "./WeatherClass";
 import useGeoLocAPI from "../hooks/useGeoLocAPI";
-export function Weather(params) {
-  const {
-    localStorage: { localStorage, setLocalStorage },
-  } = params;
-  const [coords, setCoords] = useGeoLocAPI();
+export function Weather({ localStorage, setLocalStorage, coordinates }) {
   const [loading, setLoading] = useState(true);
 
   const [weatherData, setWeatherData] = useState();
 
   useEffect(() => {
-    if (coords) {
+    if (coordinates) {
       async function fetchWeather({ lat, long }) {
         //TODO: In the event the API call returns and error, the front needs to handle it smoothly.
         const { current: currentWeather, daily: foreCast } =
@@ -31,13 +27,18 @@ export function Weather(params) {
           })
         );
       }
-      localStorage.weatherapp.coords = coords;
-      fetchWeather(coords).then(() => {
-        setLocalStorage(localStorage);
+      localStorage.weatherapp.coords = coordinates;
+      fetchWeather(coordinates).then(() => {
         setLoading(false);
       });
     }
-  }, [coords]);
+  }, [coordinates]);
+  useEffect(() => {
+    if (loading == false) {
+      localStorage.weatherapp.coords = coordinates;
+      setLocalStorage(localStorage);
+    }
+  }, [loading]);
   const formik = useFormik({
     initialValues: {
       city: "",

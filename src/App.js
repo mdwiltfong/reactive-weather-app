@@ -8,6 +8,7 @@ import OpenWeatherAPI from "./helpers/helpers";
 import { useEffect, useState } from "react";
 import useLocalStoragestate from "./hooks/useLocalStorageState";
 import jwt_decode from "jwt-decode";
+import useGeoLocAPI from "./hooks/useGeoLocAPI";
 
 const USER_INITIAL_STATE = {
   username: "",
@@ -20,8 +21,10 @@ const USER_INITIAL_STATE = {
 
 function App() {
   const [localStorage, setLocalStorage] = useLocalStoragestate("weatherapp");
-  const { weatherapp } = localStorage;
-  const { token } = weatherapp;
+  const [coords, setCoords] = useGeoLocAPI();
+  const {
+    weatherapp: { token },
+  } = localStorage;
   const [currentUser, setCurrentUser] = useState(null);
   const [infoLoaded, setInfoLoaded] = useState(false);
   useEffect(() => {
@@ -46,8 +49,10 @@ function App() {
   async function logIn(loginCredentials = { userName: null, password: null }) {
     try {
       let token = await OpenWeatherAPI.loginUser(loginCredentials);
-      weatherapp.token = token;
-      setLocalStorage({ weatherapp });
+      setLocalStorage((prevState) => {
+        prevState.weatherapp.token = token;
+        return prevState;
+      });
       console.debug("Logged in User", currentUser);
     } catch (error) {
       console.error(error);
@@ -59,7 +64,13 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Weather localStorage={{ localStorage, setLocalStorage }} />}
+          element={
+            <Weather
+              localStorage={localStorage}
+              setLocalStorage={setLocalStorage}
+              coordinates={coords}
+            />
+          }
         />
         <Route path="/login" element={<Login logIn={logIn} />} />
       </Routes>
