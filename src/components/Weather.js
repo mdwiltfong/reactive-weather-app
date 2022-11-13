@@ -36,7 +36,10 @@ export function Weather({ localStorage, setLocalStorage, coordinates }) {
   useEffect(() => {
     if (loading == false) {
       localStorage.weatherapp.coords = coordinates;
-      setLocalStorage(localStorage);
+      setLocalStorage((prevState) => {
+        prevState.weatherapp.coords = coordinates;
+        return prevState;
+      });
     }
   }, [loading]);
   const formik = useFormik({

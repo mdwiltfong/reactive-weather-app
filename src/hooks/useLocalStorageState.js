@@ -26,6 +26,7 @@ const default_storage_state = {
 
 const useLocalStoragestate = (
   key,
+  coords,
   defaultValue = JSON.stringify(default_storage_state)
 ) => {
   const [state, setState] = useState(() => {
@@ -38,10 +39,11 @@ const useLocalStoragestate = (
     setState(jsonObj);
   } */
   useEffect(() => {
-    setTimeout(() => {
+    /*  setTimeout(() => {
       window.localStorage.setItem(key, JSON.stringify(state));
-    }, 1000);
-  }, [key, state]);
+    }, 1000); */
+    window.localStorage.setItem(key, JSON.stringify(state));
+  }, [coords, state]);
   return [state, setState];
 };
 

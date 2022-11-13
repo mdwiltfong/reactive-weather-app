@@ -20,8 +20,11 @@ const USER_INITIAL_STATE = {
 };
 
 function App() {
-  const [localStorage, setLocalStorage] = useLocalStoragestate("weatherapp");
   const [coords, setCoords] = useGeoLocAPI();
+  const [localStorage, setLocalStorage] = useLocalStoragestate(
+    "weatherapp",
+    coords
+  );
   const {
     weatherapp: { token },
   } = localStorage;
