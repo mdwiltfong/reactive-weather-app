@@ -3,12 +3,14 @@ import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Weather } from "./components/Weather";
 import { Login } from "./components/Login";
+import UserProfile from "./components/UserProfile";
 import NavBar from "./components/NavBar";
 import OpenWeatherAPI from "./helpers/helpers";
 import { useEffect, useState } from "react";
 import useLocalStoragestate from "./hooks/useLocalStorageState";
 import jwt_decode from "jwt-decode";
 import useGeoLocAPI from "./hooks/useGeoLocAPI";
+import UserContext from "./context/UserContext";
 
 const USER_INITIAL_STATE = {
   username: "",
@@ -18,7 +20,6 @@ const USER_INITIAL_STATE = {
   isAdmin: false,
   applications: [],
 };
-
 function App() {
   const [coords, setCoords] = useGeoLocAPI();
   const [localStorage, setLocalStorage] = useLocalStoragestate(
@@ -30,6 +31,7 @@ function App() {
   } = localStorage;
   const [currentUser, setCurrentUser] = useState(null);
   const [infoLoaded, setInfoLoaded] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchUser() {
       if (token) {
@@ -48,7 +50,7 @@ function App() {
 
     setInfoLoaded(false);
     fetchUser();
-  }, [token]);
+  }, [localStorage]);
   async function logIn(loginCredentials = { userName: null, password: null }) {
     try {
       let { token } = await OpenWeatherAPI.loginUser(loginCredentials);
@@ -57,27 +59,31 @@ function App() {
         prevState.weatherapp.token = token;
         return prevState;
       });
-      console.debug("Logged in User", currentUser);
     } catch (error) {
       console.error(error);
     }
   }
   return (
     <div className="App">
-      <NavBar />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Weather
-              localStorage={localStorage}
-              setLocalStorage={setLocalStorage}
-              coordinates={coords}
-            />
-          }
-        />
-        <Route path="/login" element={<Login logIn={logIn} />} />
-      </Routes>
+      <UserContext.Provider
+        value={{ currentUser, setCurrentUser, setLocalStorage }}
+      >
+        <NavBar />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Weather
+                localStorage={localStorage}
+                setLocalStorage={setLocalStorage}
+                coordinates={coords}
+              />
+            }
+          />
+          <Route path="/login" element={<Login logIn={logIn} />} />
+          <Route path="/profile" element={<UserProfile />} />
+        </Routes>
+      </UserContext.Provider>
     </div>
   );
 }
