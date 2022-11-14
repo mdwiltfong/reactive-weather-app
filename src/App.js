@@ -59,6 +59,7 @@ function App() {
         prevState.weatherapp.token = token;
         return prevState;
       });
+      navigate("/profile");
     } catch (error) {
       console.error(error);
     }

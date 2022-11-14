@@ -17,5 +17,5 @@ export default function UserProfile(params) {
   const formik = useFormik({
     initialValues: {},
   });
-  return <h1>{currentUser}</h1>;
+  return <h1>HEY USER!</h1>;
 }
