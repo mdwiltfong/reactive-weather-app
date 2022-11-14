@@ -66,13 +66,11 @@ export default class OpenWeatherAPI {
   }
   static async loginUser({ userName, password }) {
     try {
-      const token = await this.request(
-        "/login",
-        { userName, password },
-        "post"
-      );
+      const token = await this.request("login", { userName, password }, "post");
+      console.debug("TOKEN loginUser\n", token);
       if (token) {
         this.token = token;
+        return token;
       } else {
         throw new Error("There was an issue logging in");
       }

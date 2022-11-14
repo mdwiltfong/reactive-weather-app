@@ -51,7 +51,8 @@ function App() {
   }, [token]);
   async function logIn(loginCredentials = { userName: null, password: null }) {
     try {
-      let token = await OpenWeatherAPI.loginUser(loginCredentials);
+      let { token } = await OpenWeatherAPI.loginUser(loginCredentials);
+      console.debug("TOKEN\n", token);
       setLocalStorage((prevState) => {
         prevState.weatherapp.token = token;
         return prevState;

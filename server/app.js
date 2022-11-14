@@ -17,5 +17,5 @@ app.get("/status", (req, res, next) => {
 
 app.use("/weather", weatherRoutes);
 app.use("/users", authenticateJWT, userRoutes);
-app.use("/login", authenticateJWT, loginRoutes);
+app.use("/login", loginRoutes);
 module.exports = app;

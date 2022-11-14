@@ -41,6 +41,8 @@ export function Login({ logIn }) {
           id="examplePassword"
           name="password"
           placeholder="Password"
+          onChange={formik.handleChange}
+          value={formik.values.password}
           type="password"
         />
       </FormGroup>{" "}

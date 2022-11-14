@@ -34,14 +34,9 @@ const useLocalStoragestate = (
     let value = JSON.parse(coordsString, reviver);
     return value;
   });
-  /*   function _setState(jsonObj) {
-    window.localStorage.setItem(key, JSON.stringify(state));
-    setState(jsonObj);
-  } */
+
   useEffect(() => {
-    /*  setTimeout(() => {
-      window.localStorage.setItem(key, JSON.stringify(state));
-    }, 1000); */
+    console.debug("UseEffect state: \n", state);
     window.localStorage.setItem(key, JSON.stringify(state));
   }, [coords, state]);
   return [state, setState];
