@@ -14,5 +14,9 @@ export default function UserProfile(params) {
   };
   console.log(currentUser);
 
-  return <h1>Hey {currentUser.username}</h1>;
+  return (
+    <>
+      <h1>Hey {currentUser.username}!</h1>
+    </>
+  );
 }

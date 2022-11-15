@@ -78,7 +78,25 @@ export default class OpenWeatherAPI {
       console.error(error.message);
     }
   }
-
+  /*
+Function returns an object representing the logged in user. Returns an object of this form:
+data:{user:{
+    "username": "m.mcfly",
+    "firstName": "Marty",
+    "lastName": "McFly",
+    "email": "hello.mcfly@okta.com",
+    "isAdmin": false,
+    "savedWeather": [
+        {
+            "userId": 1,
+            "cityName": "madrid",
+            "utcOffset": 2,
+            "latitude": null,
+            "longitude": null
+        }
+    ]
+}}
+*/
   static async getUser(userName) {
     try {
       const user = await this.request(`users/${userName}`);
