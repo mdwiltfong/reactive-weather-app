@@ -13,9 +13,6 @@ export default function UserProfile(params) {
     password: "",
   };
   console.log(currentUser);
-  const [formData, setFormData] = useState(INITIAL_FORM_STATE);
-  const formik = useFormik({
-    initialValues: {},
-  });
-  return <h1>HEY USER!</h1>;
+
+  return <h1>Hey {currentUser.username}</h1>;
 }

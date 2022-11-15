@@ -38,7 +38,9 @@ function App() {
         try {
           let { username } = jwt_decode(token);
           OpenWeatherAPI.token = token;
-          const user = await OpenWeatherAPI.getUser(username);
+          const {
+            data: { user },
+          } = await OpenWeatherAPI.getUser(username);
           setCurrentUser(user);
           setInfoLoaded(true);
         } catch (error) {
