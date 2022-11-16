@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { Weather } from "./components/Weather";
 import { Login } from "./components/Login";
 import UserProfile from "./components/UserProfile";
@@ -59,10 +59,13 @@ function App() {
       let { token } = await OpenWeatherAPI.loginUser(loginCredentials);
       console.debug("TOKEN:\n", token);
       setLocalStorage((prevState) => {
-        prevState.weatherapp.token = token;
-        return prevState;
+        return {
+          ...prevState,
+          token: token,
+        };
       });
-      navigate("/profile");
+
+      navigate("/profile", { replace: true });
     } catch (error) {
       console.error(error);
     }

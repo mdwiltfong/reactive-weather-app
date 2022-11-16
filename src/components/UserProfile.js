@@ -10,9 +10,9 @@ export default function UserProfile({ localStorage }) {
   const [error, setError] = useState(null);
   useEffect(() => {
     async function fetchUser() {
-      if (localStorage.weatherapp.token) {
-        OpenWeatherAPI.setToken(localStorage.weatherapp.token);
-        const { username } = jwt_decode(localStorage.weatherapp.token);
+      if (localStorage.token) {
+        OpenWeatherAPI.setToken(localStorage.token);
+        const { username } = jwt_decode(localStorage.token);
         const {
           data: { user },
         } = await OpenWeatherAPI.getUser(username);
@@ -20,6 +20,7 @@ export default function UserProfile({ localStorage }) {
         setIsLoading(false);
       }
     }
+
     fetchUser();
   }, []);
   return (
