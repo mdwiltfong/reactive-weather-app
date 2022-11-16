@@ -1,22 +1,28 @@
 import { useFormik } from "formik";
-import React, { useContext, useState } from "react";
+import jwt_decode from "jwt-decode";
+import React, { useContext, useEffect, useState } from "react";
 import { Label, Form, Input, FormGroup, Button } from "reactstrap";
 import UserContext from "../context/UserContext";
-export default function UserProfile(params) {
+import OpenWeatherAPI from "../helpers/helpers";
+export default function UserProfile({ localStorage }) {
   const { currentUser, setCurrentUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const INITIAL_FORM_STATE = {
-    username: currentUser.username,
-    firstName: currentUser.firstName,
-    lastName: currentUser.lastName,
-    email: currentUser.email,
-    password: "",
-  };
-  console.log(currentUser);
-
+  useEffect(() => {
+    async function fetchUser() {
+      if (localStorage.weatherapp.token) {
+        OpenWeatherAPI.setToken(localStorage.weatherapp.token);
+        const { username } = jwt_decode(localStorage.weatherapp.token);
+        const {
+          data: { user },
+        } = await OpenWeatherAPI.getUser(username);
+        setCurrentUser(user);
+        setIsLoading(false);
+      }
+    }
+    fetchUser();
+  }, []);
   return (
-    <>
-      <h1>Hey {currentUser.username}!</h1>
-    </>
+    <>{isLoading ? <p>Loading...</p> : <h1>Hey {currentUser.username}</h1>}</>
   );
 }

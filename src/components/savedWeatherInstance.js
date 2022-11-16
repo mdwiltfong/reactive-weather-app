@@ -20,7 +20,7 @@ export default function savedWeatherInstance({ savedWeatherInstances }) {
     <>
       <ListGroup>
         {savedWeatherInstances.map((weatherInstance) => {
-          return <ListGroupItem></ListGroupItem>;
+          return <ListGroupItem>{weatherInstance.cityName}</ListGroupItem>;
         })}
       </ListGroup>
     </>

@@ -6,6 +6,9 @@ console.debug("BASE_URL", BASE_URL);
 /* This class will handle all the api calls to the server and NOT the actual OpenWeather API. */
 export default class OpenWeatherAPI {
   static token;
+  static setToken(token) {
+    this.token = token;
+  }
   static async request(endpoint, data = {}, method = "get") {
     console.debug("API Call:", BASE_URL, endpoint, data, method);
 
