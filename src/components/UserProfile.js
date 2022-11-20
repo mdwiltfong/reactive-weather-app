@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import React, { useContext, useEffect, useState } from "react";
 import { Label, Form, Input, FormGroup, Button } from "reactstrap";
 import UserContext from "../context/UserContext";
-import { OpenWeatherAPI, WeatherInstance } from "../helpers/helpers";
+import OpenWeatherAPI, { WeatherInstance } from "../helpers/helpers";
 
 export default function UserProfile({ localStorage }) {
   const { currentUser, setCurrentUser } = useContext(UserContext);
