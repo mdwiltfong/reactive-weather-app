@@ -59,9 +59,9 @@ function App() {
       let { token } = await OpenWeatherAPI.loginUser(loginCredentials);
       console.debug("TOKEN:\n", token);
       setLocalStorage((prevState) => {
+        prevState.weatherapp.token = token;
         return {
           ...prevState,
-          token: token,
         };
       });
 
