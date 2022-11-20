@@ -152,5 +152,24 @@ export class DateFormatter {
     return `${hours}:${minutes} ${timeOfDay}`;
   };
 }
+export class WeatherInstance {
+  static #savedWeatherArrayObj;
+  constructor(savedWeatherArrayObj) {
+    this.#savedWeatherArrayObj = savedWeatherArrayObj;
+  }
 
+  static async #fetchWeather(savedWeatherObj) {
+    const currentWeather = await OpenWeatherAPI.currentWeather(
+      savedWeatherObj.cityName
+    );
+  }
+
+  static async fetchAllWeather() {
+    const promiseArray = this.#savedWeatherArrayObj.map((weatherObj) => {
+      this.#fetchWeather(weatherObj);
+    });
+    const currentWeatherArray = await Promise.all(promiseArray);
+    return currentWeatherArray;
+  }
+}
 OpenWeatherAPI.token = "test";
