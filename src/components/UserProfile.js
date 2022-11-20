@@ -10,9 +10,12 @@ export default function UserProfile({ localStorage }) {
   const [error, setError] = useState(null);
   useEffect(() => {
     async function fetchUser() {
-      if (localStorage.token) {
-        OpenWeatherAPI.setToken(localStorage.token);
-        const { username } = jwt_decode(localStorage.token);
+      if (localStorage.weatherapp.token) {
+        const {
+          weatherapp: { token },
+        } = localStorage;
+        OpenWeatherAPI.setToken(token);
+        const { username } = jwt_decode(token);
         const {
           data: { user },
         } = await OpenWeatherAPI.getUser(username);
