@@ -1,10 +1,10 @@
 import { useFormik } from "formik";
 import jwt_decode from "jwt-decode";
 import React, { useContext, useEffect, useState } from "react";
-import { Label, Form, Input, FormGroup, Button } from "reactstrap";
+import { Label, Form, Input, FormGroup, Button, ListGroup } from "reactstrap";
 import UserContext from "../context/UserContext";
 import OpenWeatherAPI, { WeatherInstance } from "../helpers/helpers";
-
+import SavedWeatherInstance from "./SavedWeatherInstance";
 export default function UserProfile({ localStorage }) {
   const { currentUser, setCurrentUser } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,7 +27,20 @@ export default function UserProfile({ localStorage }) {
 
     fetchUser();
   }, []);
+  let savedWeatherContent = null;
+  if (!isLoading && currentUser.savedWeather.length > 0) {
+    savedWeatherContent = (
+      <ListGroup>
+        {currentUser.savedWeather.map((savedWeather) => {
+          return <SavedWeatherInstance savedWeatherInstance={savedWeather} />;
+        })}
+      </ListGroup>
+    );
+  }
   return (
-    <>{isLoading ? <p>Loading...</p> : <h1>Hey {currentUser.username}</h1>}</>
+    <>
+      {!isLoading ? currentUser.username : <p>Loading....</p>}
+      {savedWeatherContent}
+    </>
   );
 }

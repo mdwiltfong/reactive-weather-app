@@ -27,7 +27,57 @@ export default class OpenWeatherAPI {
     }
   }
 
-  /* No authentication is needed to get the weather of a city */
+  /* No authentication is needed to get the weather of a city.
+  This function will return the current weather of a city of specific location in the following format:
+{
+    "coord": {
+        "lon": -75.6981,
+        "lat": 45.4112
+    },
+    "weather": [
+        {
+            "id": 803,
+            "main": "Clouds",
+            "description": "broken clouds",
+            "icon": "04n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 275.99,
+        "feels_like": 270.26,
+        "temp_min": 274.68,
+        "temp_max": 276.97,
+        "pressure": 1015,
+        "humidity": 57
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 8.75,
+        "deg": 220,
+        "gust": 11.83
+    },
+    "clouds": {
+        "all": 75
+    },
+    "dt": 1669066158,
+    "sys": {
+        "type": 2,
+        "id": 2005537,
+        "country": "CA",
+        "sunrise": 1669032592,
+        "sunset": 1669066070
+    },
+    "timezone": -18000,
+    "id": 6094817,
+    "name": "Ottawa",
+    "cod": 200
+}
+
+  
+  
+  */
+
   static async currentWeather(city = null, lat, long) {
     let data;
     if (city) {
@@ -152,24 +202,5 @@ export class DateFormatter {
     return `${hours}:${minutes} ${timeOfDay}`;
   };
 }
-export class WeatherInstance {
-  static #savedWeatherArrayObj;
-  constructor(savedWeatherArrayObj) {
-    this.#savedWeatherArrayObj = savedWeatherArrayObj;
-  }
 
-  static async #fetchWeather(savedWeatherObj) {
-    const currentWeather = await OpenWeatherAPI.currentWeather(
-      savedWeatherObj.cityName
-    );
-  }
-
-  static async fetchAllWeather() {
-    const promiseArray = this.#savedWeatherArrayObj.map((weatherObj) => {
-      this.#fetchWeather(weatherObj);
-    });
-    const currentWeatherArray = await Promise.all(promiseArray);
-    return currentWeatherArray;
-  }
-}
 OpenWeatherAPI.token = "test";
