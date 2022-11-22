@@ -30,7 +30,7 @@ export default function UserProfile({ localStorage }) {
   let savedWeatherContent = null;
   if (!isLoading && currentUser.savedWeather.length > 0) {
     savedWeatherContent = (
-      <ListGroup>
+      <ListGroup className="container">
         {currentUser.savedWeather.map((savedWeather) => {
           return <SavedWeatherInstance savedWeatherInstance={savedWeather} />;
         })}

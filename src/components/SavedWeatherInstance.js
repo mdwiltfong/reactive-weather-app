@@ -28,7 +28,7 @@ export default function SavedWeatherInstance({ savedWeatherInstance }) {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <ListGroupItem>
+        <ListGroupItem className="d-flex justify-content-between">
           {weatherData.name}
           <WeatherIcon icon={weatherData.weather[0].icon} />
           {weatherData.weather[0].description}
