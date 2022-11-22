@@ -8,6 +8,7 @@ class OpenWeatherAPI {
   static async request(endpoint, data = {}, method = "get") {
     console.debug("API Call:", OWAPI_BASE_URL, endpoint, data, method);
     data.appid = api_key;
+    data.units = "metric";
     const url = `${OWAPI_BASE_URL}/${endpoint}`;
     const params = method === "get" ? data : {};
 

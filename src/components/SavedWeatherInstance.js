@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ListGroup, ListGroupItem } from "reactstrap";
 import OpenWeatherAPI from "../helpers/helpers";
+import WeatherIcon from "./WeatherIcon";
 
 export default function SavedWeatherInstance({ savedWeatherInstance }) {
   const [weatherData, setWeatherData] = useState(null);
@@ -27,7 +28,12 @@ export default function SavedWeatherInstance({ savedWeatherInstance }) {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <ListGroupItem>{weatherData.name}</ListGroupItem>
+        <ListGroupItem>
+          {weatherData.name}
+          <WeatherIcon icon={weatherData.weather[0].icon} />
+          {weatherData.weather[0].description}
+          {weatherData.main.temp}
+        </ListGroupItem>
       )}
     </>
   );
