@@ -31,7 +31,7 @@ export function CurrentWeather({ weatherData }) {
   }
   return (
     <>
-      <Container className="d-flex">
+      <Container className="d-flex flex-column">
         <div className="col d-flex" data-testid="current-weather">
           <img
             src={`http://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
@@ -65,8 +65,8 @@ export function CurrentWeather({ weatherData }) {
           </div>
           <div id="date-time" style={{ fontSize: "1em" }}></div>
         </span>
+        <Forecast foreCastData={weatherData.getForeCast()} />
       </Container>
-      <Forecast foreCastData={weatherData.getForeCast()} />
     </>
   );
 }
