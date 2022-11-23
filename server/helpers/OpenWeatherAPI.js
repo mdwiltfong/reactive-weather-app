@@ -1,15 +1,15 @@
 const axios = require("axios");
 const dotenv = require("dotenv").config({ path: "../../../.env" });
 console.debug("DOTENV FILE", dotenv);
-const OWAPI_BASE_URL = process.env.OWAPI_MOCK_URL;
-
+const OWAPI_BASE_URL = process.env.REACT_APP_MOCK;
+console.debug("OWAPI BASE URL: \n", OWAPI_BASE_URL);
 const api_key = process.env.OPENWEATHER_API_KEY;
 class OpenWeatherAPI {
   static async request(endpoint, data = {}, method = "get") {
-    console.debug("API Call:", OWAPI_BASE_URL, endpoint, data, method);
     data.appid = api_key;
     data.units = "metric";
-    const url = `${OWAPI_BASE_URL}/${endpoint}`;
+    const url = `${OWAPI_BASE_URL}/data/${endpoint}`;
+    console.debug("API Call:", url, endpoint, data, method);
     const params = method === "get" ? data : {};
 
     try {
@@ -35,7 +35,7 @@ class OpenWeatherAPI {
       };
     }
     try {
-      const currentWeather = await this.request("/2.5/weather", data);
+      const currentWeather = await this.request("2.5/weather", data);
       console.log(currentWeather);
       return currentWeather;
     } catch (error) {
@@ -45,7 +45,7 @@ class OpenWeatherAPI {
 
   static async fetchForecast(lat, long) {
     try {
-      const oneApiCall = await this.request("/3.0/onecall", {
+      const oneApiCall = await this.request("3.0/onecall", {
         lat: lat,
         long: long,
       });

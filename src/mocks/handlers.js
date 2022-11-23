@@ -3,13 +3,14 @@ import { rest } from "msw";
 import { SECRET_KEY } from "../../database/config";
 import { createToken } from "../../server/helpers/token";
 import MockData from "../helpers/mocks/mocks";
-const BASE_URL = process.env.REACT_APP_MOCK || "http://localhost:3001";
+const BASE_URL = process.env.MOCK_OWAPI_URL || "http://localhost:3001";
 console.log(BASE_URL);
 //TODO: #21 Now that the API routes have been made, these handlers need to be updated to enable testing
 export const handlers = [
   // Handles a GET /weather request. This will return the weather for madrid
-  rest.get(`${BASE_URL}/weather`, (req, res, ctx) => {
+  rest.get(`${BASE_URL}/data/2.5/weather`, (req, res, ctx) => {
     const { q, appid } = req.params;
+    console.log("THIS IS MSW!!!---------------------");
     console.log(q, appid);
     return res(
       ctx.status(200),
@@ -17,8 +18,9 @@ export const handlers = [
     );
   }),
   // Handles a GET /forecast request. This will return the weather for madrid for 5 days.
-  rest.get(`${BASE_URL}/weather/dailyForecast`, (req, res, ctx) => {
+  rest.get(`${BASE_URL}/data/3.0/onecall`, (req, res, ctx) => {
     const { lat, long } = req.params;
+    console.debug("Forecast API call req object: ", req.params);
     console.debug("Forecast API Call", lat, long);
     return res(
       ctx.status(200),
@@ -55,9 +57,7 @@ export const handlers = [
   }),
   rest.post("/users/weather", (req, res, ctx) => {
     ctx.status(201),
-      ctx.json({
-        data: MockData.MockWeatherData.mockSavedWeatherInstance,
-      });
+      ctx.json(MockData.MockWeatherData.mockSavedWeatherInstance);
   }),
   rest.post(`${BASE_URL}/login`, (req, res, ctx) => {
     ctx.status(200),

@@ -1,3 +1,4 @@
+process.env.NODE_ENV = "test";
 import App from "../../App";
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
@@ -35,7 +36,7 @@ describe("Basic UI Flow", () => {
     expect(loading).toBeInTheDocument();
   });
 
-  test.only("App loads geolocation", async () => {
+  test("App loads geolocation", async () => {
     useGeoLocAPI.mockImplementation(() => [
       {
         lat: 56,
@@ -71,9 +72,7 @@ describe("Basic UI Flow", () => {
     ]);
     const screen = setUp();
 
-    await waitFor(() => screen.getByTestId("current-weather"), {
-      timeout: 5000,
-    });
+    await waitFor(() => screen.getByTestId("current-weather"));
 
     /* await waitFor(() => screen.getByText("Madrid")); */
     expect(screen.getByText("Madrid")).toBeInTheDocument();

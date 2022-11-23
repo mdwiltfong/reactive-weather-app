@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_MOCK || "http://localhost:3001";
+const BASE_URL = process.env.REACT_APP_EXPRESS_URL || "http://localhost:3001";
+console.log("ENVIORNMENT VARIABLES helpers.js", process.env);
+
 const api_key = process.env.REACT_APP_OPENWEATHER_API_KEY;
 console.debug("BASE_URL", BASE_URL);
 /* This class will handle all the api calls to the server and NOT the actual OpenWeather API. */
@@ -10,9 +12,8 @@ export default class OpenWeatherAPI {
     this.token = token;
   }
   static async request(endpoint, data = {}, method = "get") {
-    console.debug("API Call:", BASE_URL, endpoint, data, method);
-
     const url = `${BASE_URL}/${endpoint}`;
+    console.debug("API Call:", url, endpoint, data, method);
     const headers = { Authorization: `Bearer ${OpenWeatherAPI.token}` };
     const params = method === "get" ? data : {};
 
@@ -107,12 +108,10 @@ export default class OpenWeatherAPI {
       exclude: "hourly,minutely",
       appid: api_key,
     };
+    console.debug("Current Weather Forecast Data: \n", data);
     try {
-      const { data: foreCast } = await this.request(
-        "weather/dailyForecast",
-        data
-      );
-      return foreCast;
+      const response = await this.request("weather/dailyForecast", data);
+      return response;
     } catch (error) {
       return undefined;
     }
