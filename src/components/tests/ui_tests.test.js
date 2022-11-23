@@ -4,7 +4,13 @@ import { render, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
 import useGeoLocAPI from "../../hooks/useGeoLocAPI";
-function setUp(route = "/") {
+function setUp(coordsObj, route = "/") {
+  useGeoLocAPI.mockImplementation(() => [
+    coordsObj,
+    function setUp() {
+      return;
+    },
+  ]);
   const screen = render(
     <MemoryRouter initialEntries={[route]}>
       <App />
@@ -20,33 +26,31 @@ function searchCity(screen) {
   screen.debug();
   fireEvent.submit(searchInput);
 }
+function logIn(username, password) {
+  const screen = setUp(null, "/login");
+  const usernameInput = screen.getByTestId("username");
+  const passwordInput = screen.getByTestId("password");
+  const submitBtn = screen.getByTestId("submit");
+  fireEvent.change(usernameInput, { target: { value: username } });
+  fireEvent.change(passwordInput, { target: { value: password } });
+  fireEvent.click(submitBtn);
+  return screen;
+}
 
 jest.mock("../../hooks/useGeoLocAPI");
 
 describe("Basic UI Flow", () => {
   test("App has loading screen", () => {
-    useGeoLocAPI.mockImplementation(() => [
-      null,
-      function setUp() {
-        return;
-      },
-    ]);
-    const screen = setUp();
+    const screen = setUp(null);
     const loading = screen.getByText("Loading...");
     expect(loading).toBeInTheDocument();
   });
 
   test("App loads geolocation", async () => {
-    useGeoLocAPI.mockImplementation(() => [
-      {
-        lat: 56,
-        long: 67,
-      },
-      function setUp() {
-        return;
-      },
-    ]);
-    const screen = setUp();
+    const screen = setUp({
+      lat: 56,
+      long: 67,
+    });
     await waitFor(
       () => {
         screen.getByTestId("current-weather");
@@ -60,24 +64,22 @@ describe("Basic UI Flow", () => {
     );
   });
 
-  test.skip("Users can search for a city's weather", async () => {
-    useGeoLocAPI.mockImplementation(() => [
+  //TODO: Create mock data in order to make this test happen.
+  test.todo("Users can search for a city's weather");
+  test("Users can navigate to the login page", () => {
+    const screen = setUp(
       {
         lat: 56,
         long: 67,
       },
-      function _setUp() {
-        return;
-      },
-    ]);
-    const screen = setUp();
-
-    await waitFor(() => screen.getByTestId("current-weather"));
-
-    /* await waitFor(() => screen.getByText("Madrid")); */
-    expect(screen.getByText("Madrid")).toBeInTheDocument();
-    expect(screen.queryAllByTestId("forecast-", { exact: false })).toHaveLength(
-      5
+      "/login"
     );
+    expect(screen.getByTestId("submit")).toBeInTheDocument();
+  });
+  test("Users can login", async () => {
+    const screen = logIn("m.mcfly", "password");
+    waitFor(() => {
+      expect(screen.getByTestId("user_title")).toBeInTheDocument();
+    });
   });
 });

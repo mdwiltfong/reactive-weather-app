@@ -39,7 +39,11 @@ export default function UserProfile({ localStorage }) {
   }
   return (
     <>
-      {!isLoading ? currentUser.username : <p>Loading....</p>}
+      {!isLoading ? (
+        <h1 data-testid="user_title">{currentUser.username}</h1>
+      ) : (
+        <p>Loading....</p>
+      )}
       {savedWeatherContent}
     </>
   );

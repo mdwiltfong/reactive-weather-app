@@ -29,6 +29,7 @@ export function Login({ logIn }) {
           name="userName"
           placeholder="Username"
           type="text"
+          data-testid="username"
           onChange={formik.handleChange}
           value={formik.values.userName}
         />
@@ -41,12 +42,13 @@ export function Login({ logIn }) {
           id="examplePassword"
           name="password"
           placeholder="Password"
+          data-testid="password"
           onChange={formik.handleChange}
           value={formik.values.password}
           type="password"
         />
       </FormGroup>{" "}
-      <Button>Submit</Button>
+      <Button data-testid="submit">Submit</Button>
     </Form>
   );
 }
