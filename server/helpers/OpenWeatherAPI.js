@@ -36,7 +36,7 @@ class OpenWeatherAPI {
     }
     try {
       const currentWeather = await this.request("2.5/weather", data);
-      console.log(currentWeather);
+      console.debug("SERVER OPENWEATHER HELPER: \n", currentWeather);
       return currentWeather;
     } catch (error) {
       return undefined;

@@ -98,7 +98,7 @@ export default class OpenWeatherAPI {
       console.debug("API Call for current weather", currentWeather);
       return currentWeather;
     } catch (error) {
-      return undefined;
+      console.error(error);
     }
   }
   static async currentWeatherForecast(lat, lon) {

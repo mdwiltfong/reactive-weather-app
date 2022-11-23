@@ -11,8 +11,8 @@ export default function SavedWeatherInstance({ savedWeatherInstance }) {
       const weatherData = await OpenWeatherAPI.currentWeather(
         savedWeatherInstance.cityName
       );
-      const { data } = weatherData;
-      setWeatherData(data);
+
+      setWeatherData(weatherData);
       setIsLoading(false);
       return weatherData;
     } catch (error) {

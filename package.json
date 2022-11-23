@@ -30,7 +30,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "dev": "concurrently -n 'server,client' \"nodemon ./server/server.js\" \"npm start\"",
+    "dev": "concurrently -n 'server,client' \"nodemon ./server/server.js\" \"npm run mock_owapi_server\" \"npm start\"",
     "mock_owapi_server": "concurrently -n 'server,client' \"cd server/mock_server && nodemon server.js\"",
     "eject": "react-scripts eject"
   },
