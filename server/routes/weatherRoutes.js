@@ -6,7 +6,7 @@ router.get("/", async (req, res, next) => {
   console.debug(city);
   try {
     const currentWeather = await OpenWeatherAPI.fetchCurrentWeather(city);
-    return res.status(200).json({ data: currentWeather });
+    return res.status(200).json(currentWeather);
   } catch (error) {
     return next(error);
   }
@@ -21,7 +21,7 @@ router.get("/dailyForecast", async (req, res, next) => {
   );
   try {
     const foreCast = await OpenWeatherAPI.fetchForecast(lat, lon);
-    return res.status(200).json({ data: foreCast });
+    return res.status(200).json(foreCast);
   } catch (error) {
     return next(error);
   }

@@ -17,6 +17,10 @@ function useGeoLocAPI() {
   }
   function error(error) {
     console.error(error.message);
+    setCoords({
+      lat: 55,
+      long: -75,
+    });
   }
   useEffect(() => {
     if ("geolocation" in navigator) {

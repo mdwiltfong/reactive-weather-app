@@ -4,16 +4,18 @@ const userRoutes = require("./routes/userRoutes");
 const loginRoutes = require("./routes/loginRoutes");
 const morgan = require("morgan");
 const { authenticateJWT } = require("./middleware/auth");
-const app = express();
+const cors = require("cors");
 
+const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(morgan("tiny"));
-app.use(authenticateJWT);
+
 app.get("/status", (req, res, next) => {
   res.send("connected");
 });
 
 app.use("/weather", weatherRoutes);
-app.use("/users", userRoutes);
+app.use("/users", authenticateJWT, userRoutes);
 app.use("/login", loginRoutes);
 module.exports = app;
