@@ -32,6 +32,11 @@ function NavigationBar(args) {
             {currentUser ? null : <NavLink to={"/login"}>Login</NavLink>}
           </NavItem>
           <NavItem>
+            {currentUser ? (
+              <NavLink to={"/profile"}>Profile Page</NavLink>
+            ) : null}
+          </NavItem>
+          <NavItem>
             <NavLink to={"/register"}>Register</NavLink>
           </NavItem>
         </Nav>
