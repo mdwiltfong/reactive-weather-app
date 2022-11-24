@@ -33,7 +33,6 @@ router.post(
     try {
       const { username } = req.params;
       const { body: weatherData } = req;
-      console.log("userRoutes weatherData:\n", weatherData);
       const weatherInstance = await User.saveWeather(username, weatherData);
       return res.status(201).json(weatherInstance);
     } catch (error) {

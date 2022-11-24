@@ -22,7 +22,6 @@ class User {
     try {
       const user = await this.get(username);
       weatherData.userId = user.id;
-      console.debug("saveWeather: \n", weatherData);
       const newWeatherInstance = await Weather.save(weatherData);
       return newWeatherInstance;
     } catch (error) {

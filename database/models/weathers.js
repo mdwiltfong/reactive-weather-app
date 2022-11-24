@@ -29,7 +29,6 @@ class Weather {
   }
 
   static async save({ userId, name, utcOffset, latitude, longitude }) {
-    console.log("Weather.save: \n", name);
     const result = await db.query(queries.weatherQueries.insertWeather, [
       userId,
       name,
