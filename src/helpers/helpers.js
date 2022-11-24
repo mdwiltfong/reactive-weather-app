@@ -512,13 +512,12 @@ data:{user:{
       console.error(error.message);
     }
   }
-  static async saveWeather(weatherInstance, userObj) {
-    const { username } = userObj;
-
+  static async saveWeather(weatherInstance, username) {
     try {
       const savedWeather = await this.request(
         `users/weather/${username}`,
-        weatherInstance
+        weatherInstance,
+        "POST"
       );
       return savedWeather;
     } catch (error) {
@@ -539,6 +538,7 @@ data:{user:{
   static async registerUser(userObj) {
     try {
       const { token } = await this.request("register", userObj, "POST");
+      this.setToken(token);
       return token;
     } catch (error) {
       console.error("Register User: " + error);

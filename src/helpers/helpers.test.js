@@ -137,6 +137,16 @@ describe("OpenWeatherAPI handler class", () => {
       })
     );
   });
-  test.todo("Wrapper can save a single weather instance");
+  test("Wrapper can save a single weather instance", async () => {
+    const saveWeatherInstance =
+      MockData.MockWeatherData.mockSavedWeatherInstance[0];
+    const MockUser = MockData.MockUserData.users[0];
+    const weatherInstance = await OpenWeatherAPI.saveWeather(
+      saveWeatherInstance,
+      MockUser.username
+    );
+    expect(weatherInstance).toBeDefined();
+  });
   test.todo("Wrapper can delete a user");
+  test.todo("Wrapper can delete a saved weather instance");
 });

@@ -18,9 +18,9 @@ class User {
     }
   }
 
-  static async saveWeather(userName, weatherData) {
+  static async saveWeather(username, weatherData) {
     try {
-      const user = await this.get(userName);
+      const user = await this.get(username);
       weatherData.userId = user.id;
       const newWeatherInstance = await Weather.save(weatherData);
       return newWeatherInstance;
