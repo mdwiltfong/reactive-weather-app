@@ -1,10 +1,9 @@
 import { Container, Form, FormGroup, Label, Input } from "reactstrap";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import OpenWeatherAPI from "../helpers/helpers";
 import { useContext, useEffect, useState } from "react";
 import { CurrentWeather } from "./CurrentWeather";
 import WeatherClass from "./WeatherClass";
-import useGeoLocAPI from "../hooks/useGeoLocAPI";
 import UserContext from "../context/UserContext";
 import SavedWeatherBtn from "./SavedWeatherBtn";
 export function Weather({ localStorage, setLocalStorage, coordinates }) {
@@ -87,7 +86,9 @@ export function Weather({ localStorage, setLocalStorage, coordinates }) {
           ) : weatherData ? (
             <CurrentWeather weatherData={weatherData} />
           ) : null}
-          {currentUser ? <SavedWeatherBtn /> : null}
+          {currentUser ? (
+            <SavedWeatherBtn currentWeather={weatherData} />
+          ) : null}
         </Container>
       </Container>
     </>

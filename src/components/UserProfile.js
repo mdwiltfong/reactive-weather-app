@@ -17,9 +17,7 @@ export default function UserProfile({ localStorage }) {
         } = localStorage;
         OpenWeatherAPI.setToken(token);
         const { username } = jwt_decode(token);
-        const {
-          data: { user },
-        } = await OpenWeatherAPI.getUser(username);
+        const user = await OpenWeatherAPI.getUser(username);
         setCurrentUser(user);
         setIsLoading(false);
       }

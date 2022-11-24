@@ -53,7 +53,7 @@ class User {
     firstName,
     lastName,
     email,
-    isAdmin,
+    isAdmin = false,
   }) {
     const duplicateCheck = await db.query(queries.userQueries.getUser, [
       username,

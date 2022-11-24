@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import OpenWeatherAPI from "../helpers/helpers";
-import WeatherClass from "../components/WeatherClass";
 
 function useGeoLocAPI() {
   const [coords, setCoords] = useState(null);

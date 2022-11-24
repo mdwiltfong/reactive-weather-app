@@ -397,6 +397,7 @@ const users = [
     firstName: "U1F",
     lastName: "U1L",
     email: "user1@user.com",
+    password: "password",
     isAdmin: false,
   },
   {
@@ -404,6 +405,7 @@ const users = [
     firstName: "U2F",
     lastName: "U2L",
     email: "user2@user.com",
+    password: "password",
     isAdmin: false,
   },
   {
@@ -411,6 +413,7 @@ const users = [
     firstName: "U3F",
     lastName: "U3L",
     email: "user3@user.com",
+    password: "password",
     isAdmin: true,
   },
 ];
