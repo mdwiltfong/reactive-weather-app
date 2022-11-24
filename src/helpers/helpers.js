@@ -193,11 +193,12 @@ export class DateFormatter {
     const dateInstance = this._Date;
     let hours = dateInstance.getHours();
     let timeOfDay = "a.m.";
-    const minutes = dateInstance.getMinutes();
+    let minutes = dateInstance.getMinutes();
     if (hours > 12) {
       hours -= 12;
       timeOfDay = "p.m.";
     }
+    minutes = minutes > 10 ? minutes : "0" + minutes;
     return `${hours}:${minutes} ${timeOfDay}`;
   };
 }
