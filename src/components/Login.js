@@ -6,7 +6,7 @@ import OpenWeatherAPI from "../helpers/helpers";
 export function Login({ logIn }) {
   const formik = useFormik({
     initialValues: {
-      userName: "",
+      username: "",
       password: "",
     },
     onSubmit: async (values) => logIn(values),
@@ -25,13 +25,13 @@ export function Login({ logIn }) {
           Username
         </Label>
         <Input
-          id="userName"
-          name="userName"
+          id="username"
+          name="username"
           placeholder="Username"
           type="text"
           data-testid="username"
           onChange={formik.handleChange}
-          value={formik.values.userName}
+          value={formik.values.username}
         />
       </FormGroup>{" "}
       <FormGroup>
