@@ -17,12 +17,18 @@ export function Weather({ localStorage, setLocalStorage, coordinates }) {
         //TODO: In the event the API call returns and error, the front needs to handle it smoothly.
         const { current: currentWeather, daily: foreCast } =
           await OpenWeatherAPI.currentWeatherForecast(lat, long);
-        const { name } = await OpenWeatherAPI.currentWeather(null, lat, long);
+        const { name, coord, timezone } = await OpenWeatherAPI.currentWeather(
+          null,
+          lat,
+          long
+        );
+        currentWeather.name = name;
+        currentWeather.coord = coord;
+        currentWeather.timezone = timezone;
         setWeatherData(
           new WeatherClass({
             currentWeather: {
               ...currentWeather,
-              name: name,
             },
             foreCast,
           })
