@@ -78,8 +78,10 @@ describe("Basic UI Flow", () => {
   });
   test("Users can login", async () => {
     const screen = logIn("m.mcfly", "password");
-    waitFor(() => {
+    await waitFor(() => {
+      screen.debug();
       expect(screen.getByTestId("user_title")).toBeInTheDocument();
+      expect(screen.getByTestId("savedWeather")).toBeInTheDocument();
     });
   });
 });
