@@ -71,7 +71,18 @@ function App() {
   }
   async function register(registrationDetails) {
     try {
-    } catch (error) {}
+      const token = await OpenWeatherAPI.registerUser(registrationDetails);
+      setLocalStorage((prevState) => {
+        prevState.weatherapp.token = token;
+        return {
+          ...prevState,
+        };
+      });
+
+      navigate("/profile", { replace: true });
+    } catch (error) {
+      console.error(error);
+    }
   }
   return (
     <div className="App">
@@ -95,10 +106,7 @@ function App() {
             path="/profile"
             element={<UserProfile localStorage={localStorage} />}
           />
-          <Route
-            path="/register"
-            element={<SignUp localStorage={localStorage} />}
-          />
+          <Route path="/register" element={<SignUp register={register} />} />
         </Routes>
       </UserContext.Provider>
     </div>

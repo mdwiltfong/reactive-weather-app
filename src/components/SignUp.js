@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
-export function SignUp() {
+export function SignUp({ register }) {
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -9,7 +9,9 @@ export function SignUp() {
       firstName: "",
       lastName: "",
       email: "",
+      isAdmin: false,
     },
+    onSubmit: async (values) => register(values),
   });
   return (
     <>
