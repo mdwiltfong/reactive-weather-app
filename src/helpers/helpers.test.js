@@ -1,9 +1,10 @@
+process.env.NODE_ENV = "test";
 import OpenWeatherAPI, { DateFormatter } from "./helpers";
 import MockDatePM from "./DateMockPM";
 import MockDateAM from "./DateMockAM";
-import MockWeatherData from "./mocks/mocks";
 import MockData from "./mocks/mocks";
 import axios from "axios";
+import { createToken } from "../../server/helpers/token";
 const days = [
   "Sunday",
   "Monday",
@@ -56,7 +57,18 @@ function setUpMock(mockData, errorMessage = null) {
     });
   }
 }
+
 describe("OpenWeatherAPI handler class", () => {
+  beforeAll(async () => {
+    const MockUser = MockData.MockUserData.users[0];
+    await OpenWeatherAPI.registerUser(MockUser);
+  });
+  afterAll(async () => {
+    const MockUser = MockData.MockUserData.users[0];
+    delete OpenWeatherAPI.token;
+    await OpenWeatherAPI.loginUser(MockUser);
+    await OpenWeatherAPI.deleteUser(MockUser.username);
+  });
   test("Wrapper can retrieve current weather", async () => {
     const weatherData = await OpenWeatherAPI.currentWeather("Madrid");
     expect(weatherData).toStrictEqual(
@@ -95,9 +107,7 @@ describe("OpenWeatherAPI handler class", () => {
       const apiData = await OpenWeatherAPI.request("badRoute");
     } catch (error) {
       console.debug("Wrapper Error Object", error);
-      expect(error).toStrictEqual(
-        expect.arrayContaining(["Internal Server Error"])
-      );
+      expect(error.message).toStrictEqual("Page Not Found");
     }
   });
   test("Wrapper obtains current weather through city name", async () => {
@@ -112,10 +122,12 @@ describe("OpenWeatherAPI handler class", () => {
       MockData.MockWeatherData.mockCurrentWeatherData
     );
   });
+
   test("Wrapper can retrieve a single user", async () => {
     const MockUser = MockData.MockUserData.users[0];
+    OpenWeatherAPI.token = createToken(MockUser);
     const response = await OpenWeatherAPI.getUser(MockUser.username);
-    expect(response.user).toStrictEqual(
+    expect(response).toStrictEqual(
       expect.objectContaining({
         email: MockUser.email,
         firstName: MockUser.firstName,
@@ -125,4 +137,16 @@ describe("OpenWeatherAPI handler class", () => {
       })
     );
   });
+  test("Wrapper can save a single weather instance", async () => {
+    const saveWeatherInstance =
+      MockData.MockWeatherData.mockSavedWeatherInstance[0];
+    const MockUser = MockData.MockUserData.users[0];
+    const weatherInstance = await OpenWeatherAPI.saveWeather(
+      saveWeatherInstance,
+      MockUser.username
+    );
+    expect(weatherInstance).toBeDefined();
+  });
+  test.todo("Wrapper can delete a user");
+  test.todo("Wrapper can delete a saved weather instance");
 });

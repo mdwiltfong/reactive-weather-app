@@ -1,13 +1,14 @@
 import { Container, Form, FormGroup, Label, Input } from "reactstrap";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import OpenWeatherAPI from "../helpers/helpers";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CurrentWeather } from "./CurrentWeather";
 import WeatherClass from "./WeatherClass";
-import useGeoLocAPI from "../hooks/useGeoLocAPI";
+import UserContext from "../context/UserContext";
+import SavedWeatherBtn from "./SavedWeatherBtn";
 export function Weather({ localStorage, setLocalStorage, coordinates }) {
   const [loading, setLoading] = useState(true);
-
+  const { currentUser } = useContext(UserContext);
   const [weatherData, setWeatherData] = useState();
 
   useEffect(() => {
@@ -16,12 +17,18 @@ export function Weather({ localStorage, setLocalStorage, coordinates }) {
         //TODO: In the event the API call returns and error, the front needs to handle it smoothly.
         const { current: currentWeather, daily: foreCast } =
           await OpenWeatherAPI.currentWeatherForecast(lat, long);
-        const { name } = await OpenWeatherAPI.currentWeather(null, lat, long);
+        const { name, coord, timezone } = await OpenWeatherAPI.currentWeather(
+          null,
+          lat,
+          long
+        );
+        currentWeather.name = name;
+        currentWeather.coord = coord;
+        currentWeather.timezone = timezone;
         setWeatherData(
           new WeatherClass({
             currentWeather: {
               ...currentWeather,
-              name: name,
             },
             foreCast,
           })
@@ -79,12 +86,18 @@ export function Weather({ localStorage, setLocalStorage, coordinates }) {
             />
           </FormGroup>
         </Form>
-        {loading ? (
-          <p>Loading...</p>
-        ) : weatherData ? (
-          <CurrentWeather weatherData={weatherData} />
-        ) : null}
-        {}
+        <Container className="d-flex flex-row">
+          {loading ? (
+            <p>Loading...</p>
+          ) : weatherData ? (
+            <CurrentWeather weatherData={weatherData} />
+          ) : null}
+          {currentUser ? (
+            loading ? null : (
+              <SavedWeatherBtn currentWeather={weatherData} />
+            )
+          ) : null}
+        </Container>
       </Container>
     </>
   );

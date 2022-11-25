@@ -6,16 +6,16 @@ const { createToken } = require("../helpers/token");
 
 router.post("/", async (req, res, next) => {
   try {
-    const { userName, password } = req.body;
-    if (!userName || !password) {
+    const { username, password } = req.body;
+    if (!username || !password) {
       throw new ExpressError("Username and password required", 400);
     }
-    console.debug("USERNAME AND PASSWORD", userName, password);
-    const user = await User.authenticate(userName, password);
+    console.debug("USERNAME AND PASSWORD", username, password);
+    const user = await User.authenticate(username, password);
 
     if (user != null) {
       const token = createToken(user);
-      return res.json({ token });
+      return res.json(token);
     } else {
       throw new NotFoundError("No user Found");
     }

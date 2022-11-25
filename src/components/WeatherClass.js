@@ -4,6 +4,9 @@ class Weather {
   constructor({ currentWeather, foreCast }) {
     this.description = currentWeather.weather[0].description;
     this.icon = currentWeather.weather[0].icon;
+    this.utcOffset = currentWeather.timezone;
+    this.latitude = currentWeather.lat;
+    this.longitude = currentWeather.long;
     if ("main" in currentWeather) {
       this.temp = currentWeather.main.temp;
     } else {

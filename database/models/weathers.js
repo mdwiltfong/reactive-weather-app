@@ -28,10 +28,10 @@ class Weather {
     return weather;
   }
 
-  static async save({ userId, cityName, utcOffset, latitude, longitude }) {
+  static async save({ userId, name, utcOffset, latitude, longitude }) {
     const result = await db.query(queries.weatherQueries.insertWeather, [
       userId,
-      cityName,
+      name,
       utcOffset,
       latitude,
       longitude,

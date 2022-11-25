@@ -22,24 +22,6 @@ router.get("/all", ensureAdmin, async (req, res, next) => {
   }
 });
 
-router.post("/register", async (req, res, next) => {
-  try {
-    const { username, password, firstName, lastname, email } = req.body;
-    if (!username || !password) {
-      throw new ExpressError("Username and password required", 400);
-    }
-    const user = await User.register(req.body);
-    const token = createToken(user);
-    return res.status(201).json({ user, token });
-  } catch (error) {
-    if (e.code === "23505") {
-      return next(
-        new ExpressError("Username taken. Please pick another!", 400)
-      );
-    }
-    return next(e);
-  }
-});
 /*
 This route will create a saved weather instance for specific user.
 It also ensures that a logged in user can only save instances to itself. 
@@ -52,7 +34,7 @@ router.post(
       const { username } = req.params;
       const { body: weatherData } = req;
       const weatherInstance = await User.saveWeather(username, weatherData);
-      return res.status(201).json({ data: weatherInstance });
+      return res.status(201).json(weatherInstance);
     } catch (error) {
       console.error(error);
       next(error);
@@ -65,11 +47,25 @@ router.get("/:username", authenticateJWT, async (req, res, next) => {
     const user = await User.get(username);
     delete user.password;
     delete user.id;
-    return res.status(200).json({ data: { user } });
+    return res.status(200).json(user);
   } catch (error) {
     console.error(error);
     next(error);
   }
 });
+router.delete(
+  "/:username",
+  ensureCorrectUserOrAdmin,
+  async (req, res, next) => {
+    try {
+      const { username } = req.params;
+      const user = await User.remove(username);
+      return res.status(202).json(user);
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  }
+);
 
 module.exports = router;
