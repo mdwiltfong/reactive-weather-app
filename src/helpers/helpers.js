@@ -20,6 +20,7 @@ export default class OpenWeatherAPI {
       const weatherData = await axios({ url, method, data, params, headers });
       return weatherData.data;
     } catch (err) {
+      return err.response.data;
       console.error("API Error:", err);
     }
   }
@@ -465,14 +466,16 @@ export default class OpenWeatherAPI {
   }
   static async loginUser({ username, password }) {
     try {
-      const token = await this.request("login", { username, password }, "post");
-      console.debug("TOKEN loginUser\n", token);
-      if (token) {
-        this.token = token;
-        return token;
-      } else {
-        throw new Error("There was an issue logging in");
+      const response = await this.request(
+        "login",
+        { username, password },
+        "post"
+      );
+      console.debug("TOKEN loginUser\n", response);
+      if (!response.error) {
+        this.setToken(response);
       }
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -537,9 +540,11 @@ data:{user:{
   */
   static async registerUser(userObj) {
     try {
-      const { token } = await this.request("register", userObj, "POST");
-      this.setToken(token);
-      return token;
+      const response = await this.request("register", userObj, "POST");
+      if (!response.error) {
+        this.setToken(response);
+      }
+      return response;
     } catch (error) {
       console.error("Register User: " + error);
     }

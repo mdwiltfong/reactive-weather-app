@@ -13,6 +13,7 @@ import useGeoLocAPI from "./hooks/useGeoLocAPI";
 import UserContext from "./context/UserContext";
 import PrivateRoute from "./components/PrivateRoute";
 import { SignUp } from "./components/SignUp";
+import { ErrorModal } from "./components/ErrorModal";
 const USER_INITIAL_STATE = {
   username: "",
   firstName: "",
@@ -23,7 +24,8 @@ const USER_INITIAL_STATE = {
 };
 function App() {
   const [coords, setCoords] = useGeoLocAPI();
-
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [infoLoaded, setInfoLoaded] = useState(false);
   const [localStorage, setLocalStorage] = useLocalStoragestate(
@@ -55,37 +57,55 @@ function App() {
   }, [localStorage]);
   async function logIn(loginCredentials = { username: null, password: null }) {
     try {
-      let token = await OpenWeatherAPI.loginUser(loginCredentials);
-      console.debug("TOKEN:\n", token);
-      setLocalStorage((prevState) => {
-        prevState.weatherapp.token = token;
-        return {
-          ...prevState,
-        };
-      });
+      const response = await OpenWeatherAPI.loginUser(loginCredentials);
+      if (response.error) {
+        setError(true);
+        setErrorMessage(response);
+        return;
+      } else {
+        console.debug("TOKEN:\n", response);
+        setLocalStorage((prevState) => {
+          prevState.weatherapp.token = response;
+          return {
+            ...prevState,
+          };
+        });
 
-      navigate("/profile", { replace: true });
+        navigate("/profile", { replace: true });
+      }
     } catch (error) {
       console.error(error);
     }
   }
   async function register(registrationDetails) {
     try {
-      const token = await OpenWeatherAPI.registerUser(registrationDetails);
-      setLocalStorage((prevState) => {
-        prevState.weatherapp.token = token;
-        return {
-          ...prevState,
-        };
-      });
-
-      navigate("/profile", { replace: true });
+      const response = await OpenWeatherAPI.registerUser(registrationDetails);
+      if (response.error) {
+        setError(true);
+        setErrorMessage(response);
+        return;
+      } else {
+        setLocalStorage((prevState) => {
+          prevState.weatherapp.token = response.token;
+          return {
+            ...prevState,
+          };
+        });
+        navigate("/profile", { replace: true });
+      }
     } catch (error) {
       console.error(error);
     }
   }
   return (
     <div className="App">
+      {error ? (
+        <ErrorModal
+          error={error}
+          setError={setError}
+          errorMessage={errorMessage}
+        />
+      ) : null}
       <UserContext.Provider
         value={{ currentUser, setCurrentUser, setLocalStorage }}
       >
