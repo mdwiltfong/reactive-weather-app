@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 
-export function ErrorModal({ errorMessage }) {
-  const [modal, setModal] = useState(true);
-
-  const toggle = () => setModal(!modal);
+export function ErrorModal({ error, errorMessage, setError }) {
+  const toggle = () => setError(!error);
 
   return (
     <div>
-      <Modal isOpen={modal} toggle={toggle}>
+      <Modal isOpen={error} toggle={toggle}>
         <ModalBody>{errorMessage.error.message}</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={toggle}>

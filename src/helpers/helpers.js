@@ -466,12 +466,16 @@ export default class OpenWeatherAPI {
   }
   static async loginUser({ username, password }) {
     try {
-      const token = await this.request("login", { username, password }, "post");
-      console.debug("TOKEN loginUser\n", token);
-      if (token) {
-        this.setToken(token);
-        return token;
+      const response = await this.request(
+        "login",
+        { username, password },
+        "post"
+      );
+      console.debug("TOKEN loginUser\n", response);
+      if (!response.error) {
+        this.setToken(response);
       }
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -536,9 +540,11 @@ data:{user:{
   */
   static async registerUser(userObj) {
     try {
-      const { token } = await this.request("register", userObj, "POST");
-      this.setToken(token);
-      return token;
+      const response = await this.request("register", userObj, "POST");
+      if (!response.error) {
+        this.setToken(response);
+      }
+      return response;
     } catch (error) {
       console.error("Register User: " + error);
     }
