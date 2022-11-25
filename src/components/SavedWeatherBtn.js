@@ -19,7 +19,7 @@ export default function SavedWeatherBtn({ currentWeather }) {
     }
   }
   return (
-    <Button onClick={handleOnClick} color={btnColor}>
+    <Button onClick={handleOnClick} color={btnColor} data-testid="save-button">
       {" "}
       +{" "}
     </Button>

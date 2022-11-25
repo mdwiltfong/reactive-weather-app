@@ -25,7 +25,9 @@ function NavigationBar(args) {
     <div>
       <Navbar className="d-flex justify-content-start" {...args}>
         <NavbarBrand>
-          <NavLink to={"/"}>WeatherApp</NavLink>
+          <NavLink data-testid={"WeatherApp"} to={"/"}>
+            WeatherApp
+          </NavLink>
         </NavbarBrand>
         <Nav>
           <NavItem>

@@ -1,9 +1,17 @@
 process.env.NODE_ENV = "test";
 import App from "../../App";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
 import useGeoLocAPI from "../../hooks/useGeoLocAPI";
+/*
+Function takes in an object with the following form:
+coords={
+  lat:number,
+  long:number
+}
+As well as a route. 
+*/
 function setUp(coordsObj, route = "/") {
   useGeoLocAPI.mockImplementation(() => [
     coordsObj,
@@ -79,9 +87,8 @@ describe("Basic UI Flow", () => {
   test("Users can login", async () => {
     const screen = logIn("m.mcfly", "password");
     await waitFor(() => {
-      screen.debug();
       expect(screen.getByTestId("user_title")).toBeInTheDocument();
-      expect(screen.getByTestId("savedWeather")).toBeInTheDocument();
+      expect(screen.getAllByTestId("savedWeather")[0]).toBeInTheDocument();
     });
   });
   test.todo("Users can save a weather instance");
