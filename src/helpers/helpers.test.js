@@ -33,13 +33,13 @@ describe("DateFormatter client time tests", () => {
   test("Outputs current time in p.m.", () => {
     const date = dateFormatterSetUp();
     const currentTime = date.GetTime();
-    expect(currentTime).toEqual("11:17 p.m.");
+    expect(currentTime).toEqual("11:07 p.m.");
   });
   test("Outputs am", () => {
     global.Date = MockDateAM;
     const date = dateFormatterSetUp();
     const currentTime = date.GetTime();
-    expect(currentTime).toEqual("4:17 a.m.");
+    expect(currentTime).toEqual("4:07 a.m.");
   });
 });
 
@@ -92,7 +92,7 @@ describe("OpenWeatherAPI handler class", () => {
   });
   test("Wrapper throws an error message", async () => {
     try {
-      const apiData = await OpenWeatherAPI.request("badRoute");
+      const Data = await OpenWeatherAPI.request("badRoute");
     } catch (error) {
       console.debug("Wrapper Error Object", error);
       expect(error).toStrictEqual(

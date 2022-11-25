@@ -9,7 +9,7 @@ class Date {
     return 23;
   }
   getMinutes() {
-    return 17;
+    return 7;
   }
 }
 
