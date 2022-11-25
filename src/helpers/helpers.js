@@ -20,6 +20,7 @@ export default class OpenWeatherAPI {
       const weatherData = await axios({ url, method, data, params, headers });
       return weatherData.data;
     } catch (err) {
+      return err.response.data;
       console.error("API Error:", err);
     }
   }
@@ -468,10 +469,8 @@ export default class OpenWeatherAPI {
       const token = await this.request("login", { username, password }, "post");
       console.debug("TOKEN loginUser\n", token);
       if (token) {
-        this.token = token;
+        this.setToken(token);
         return token;
-      } else {
-        throw new Error("There was an issue logging in");
       }
     } catch (error) {
       console.error(error);
