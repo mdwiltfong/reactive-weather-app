@@ -58,9 +58,7 @@ export function SignUp() {
           ></Input>
         </FormGroup>
         <FormGroup>
-          <Label for="exampleEmail" hidden>
-            Username
-          </Label>
+          <Label for="username">Username</Label>
           <Input
             id="username"
             name="username"
@@ -72,9 +70,7 @@ export function SignUp() {
           />
         </FormGroup>{" "}
         <FormGroup>
-          <Label for="password" hidden>
-            Password
-          </Label>
+          <Label for="password">Password</Label>
           <Input
             id="examplePassword"
             name="password"
