@@ -147,6 +147,15 @@ describe("OpenWeatherAPI handler class", () => {
     );
     expect(weatherInstance).toBeDefined();
   });
-  test.todo("Wrapper can delete a user");
+  test("Wrapper can register a user", async () => {
+    const MockUser = MockData.MockUserData.users[1];
+    const token = await OpenWeatherAPI.registerUser(MockUser);
+    expect(token).toBeDefined();
+  });
+  test("Wrapper can delete a user", async () => {
+    const MockUser = MockData.MockUserData.users[1];
+    const deletedUser = await OpenWeatherAPI.deleteUser(MockUser.username);
+    expect(deletedUser).toBeDefined();
+  });
   test.todo("Wrapper can delete a saved weather instance");
 });
