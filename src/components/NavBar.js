@@ -16,7 +16,7 @@ import {
 } from "reactstrap";
 import UserContext from "../context/UserContext";
 
-function NavigationBar(args) {
+function NavigationBar({ logOut }) {
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser } = useContext(UserContext);
 
@@ -24,7 +24,7 @@ function NavigationBar(args) {
 
   return (
     <div>
-      <Navbar className="d-flex justify-content-start" {...args}>
+      <Navbar className="d-flex justify-content-start">
         <Container className="d-flex justify-content-start mx-0">
           <NavLink data-testid={"WeatherApp"} to={"/"}>
             WeatherApp
@@ -32,7 +32,13 @@ function NavigationBar(args) {
 
           <Nav>
             <NavItem className="mx-2">
-              {currentUser ? null : <NavLink to={"/login"}>Login</NavLink>}
+              {currentUser ? (
+                <NavLink onClick={logOut} to={"/"}>
+                  Log Out
+                </NavLink>
+              ) : (
+                <NavLink to={"/login"}>Login</NavLink>
+              )}
             </NavItem>
             <NavItem className="mx-2">
               {currentUser ? (
