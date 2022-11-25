@@ -12,6 +12,7 @@ import jwt_decode from "jwt-decode";
 import useGeoLocAPI from "./hooks/useGeoLocAPI";
 import UserContext from "./context/UserContext";
 import PrivateRoute from "./components/PrivateRoute";
+import { SignUp } from "./components/SignUp";
 const USER_INITIAL_STATE = {
   username: "",
   firstName: "",
@@ -89,6 +90,10 @@ function App() {
           <Route
             path="/profile"
             element={<UserProfile localStorage={localStorage} />}
+          />
+          <Route
+            path="/register"
+            element={<SignUp localStorage={localStorage} />}
           />
         </Routes>
       </UserContext.Provider>

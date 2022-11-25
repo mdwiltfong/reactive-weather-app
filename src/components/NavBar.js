@@ -39,7 +39,7 @@ function NavigationBar(args) {
             ) : null}
           </NavItem>
           <NavItem>
-            <NavLink to={"/register"}>Register</NavLink>
+            {currentUser ? null : <NavLink to={"/register"}>Register</NavLink>}
           </NavItem>
         </Nav>
         <NavbarText>Simple Text</NavbarText>
