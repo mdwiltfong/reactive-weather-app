@@ -65,7 +65,7 @@ describe("Basic UI Flow", () => {
   });
 
   //TODO: Create mock data in order to make this test happen.
-  test.todo("Users can search for a city's weather");
+
   test("Users can navigate to the login page", () => {
     const screen = setUp(
       {
@@ -84,4 +84,7 @@ describe("Basic UI Flow", () => {
       expect(screen.getByTestId("savedWeather")).toBeInTheDocument();
     });
   });
+  test.todo("Users can save a weather instance");
+  test.todo("Users can delete a weather instance");
+  test.todo("Users can search for a city's weather");
 });

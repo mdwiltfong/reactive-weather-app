@@ -93,7 +93,9 @@ export function Weather({ localStorage, setLocalStorage, coordinates }) {
             <CurrentWeather weatherData={weatherData} />
           ) : null}
           {currentUser ? (
-            <SavedWeatherBtn currentWeather={weatherData} />
+            loading ? null : (
+              <SavedWeatherBtn currentWeather={weatherData} />
+            )
           ) : null}
         </Container>
       </Container>
