@@ -69,6 +69,10 @@ function App() {
       console.error(error);
     }
   }
+  async function register(registrationDetails) {
+    try {
+    } catch (error) {}
+  }
   return (
     <div className="App">
       <UserContext.Provider
