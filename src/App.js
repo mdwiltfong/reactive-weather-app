@@ -54,7 +54,7 @@ function App() {
 
     setInfoLoaded(false);
     fetchUser();
-  }, [localStorage]);
+  }, []);
   async function logIn(loginCredentials = { username: null, password: null }) {
     try {
       const response = await OpenWeatherAPI.loginUser(loginCredentials);
@@ -97,6 +97,22 @@ function App() {
       console.error(error);
     }
   }
+  async function logOut() {
+    try {
+      setLocalStorage((prevState) => {
+        prevState.weatherapp.token = null;
+        return {
+          ...prevState,
+        };
+      });
+      OpenWeatherAPI.token = null;
+      setCurrentUser(null);
+    } catch (error) {
+      setError(true);
+      setErrorMessage(error);
+      console.error(error);
+    }
+  }
   return (
     <div className="App">
       {error ? (
@@ -109,7 +125,7 @@ function App() {
       <UserContext.Provider
         value={{ currentUser, setCurrentUser, setLocalStorage }}
       >
-        <NavBar />
+        <NavBar logOut={logOut} />
         <Routes>
           <Route
             path="/"

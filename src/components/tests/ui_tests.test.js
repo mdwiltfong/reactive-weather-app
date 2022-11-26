@@ -4,6 +4,7 @@ import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
 import useGeoLocAPI from "../../hooks/useGeoLocAPI";
+import { wait } from "@testing-library/user-event/dist/utils";
 /*
 Function takes in an object with the following form:
 coords={
@@ -34,7 +35,7 @@ function searchCity(screen) {
   screen.debug();
   fireEvent.submit(searchInput);
 }
-function logIn(username, password) {
+async function logIn(username, password) {
   const screen = setUp(null, "/login");
   const usernameInput = screen.getByTestId("username");
   const passwordInput = screen.getByTestId("password");
@@ -85,10 +86,19 @@ describe("Basic UI Flow", () => {
     expect(screen.getByTestId("submit")).toBeInTheDocument();
   });
   test("Users can login", async () => {
-    const screen = logIn("m.mcfly", "password");
+    const screen = await logIn("m.mcfly", "password");
     await waitFor(() => {
       expect(screen.getByTestId("user_title")).toBeInTheDocument();
       expect(screen.getAllByTestId("savedWeather")[0]).toBeInTheDocument();
+    });
+  });
+  test("Users can logout", async () => {
+    const screen = await logIn("m.mcfly", "password");
+
+    await waitFor(() => {
+      const logOutLink = screen.getByText("Log Out");
+      fireEvent.click(logOutLink);
+      expect(screen.getByText("City Name")).toBeInTheDocument();
     });
   });
   test.todo("Users can save a weather instance");
