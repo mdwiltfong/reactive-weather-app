@@ -1,6 +1,9 @@
 import axios from "axios";
+import { ConnectionString } from "./ConnectionString";
 
-const BASE_URL = process.env.REACT_APP_EXPRESS_URL || "http://localhost:3001";
+//const BASE_URL = process.env.REACT_APP_EXPRESS_URL || "http://localhost:3001";
+
+const BASE_URL = ConnectionString.getExpressURL();
 
 const api_key = process.env.REACT_APP_OPENWEATHER_API_KEY;
 console.debug("BASE_URL", BASE_URL);
@@ -20,8 +23,8 @@ export default class OpenWeatherAPI {
       const weatherData = await axios({ url, method, data, params, headers });
       return weatherData.data;
     } catch (err) {
-      return err.response.data;
       console.error("API Error:", err);
+      return err.response.data;
     }
   }
 
