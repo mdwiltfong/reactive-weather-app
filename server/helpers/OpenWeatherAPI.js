@@ -3,7 +3,8 @@ const dotenv = require("dotenv").config({ path: "../../../.env" });
 console.debug("DOTENV FILE", dotenv);
 const ConnectionString = require("./ConnectionString");
 //const OWAPI_BASE_URL = process.env.REACT_APP_MOCK;
-const OWAPI_BASE_URL = ConnectionString.getOpeanWeatherAPIURL();
+//const OWAPI_BASE_URL = ConnectionString.getOpeanWeatherAPIURL();
+const OWAPI_BASE_URL = process.env.OWAPI_BASE_URL || "http://localhost:8000";
 console.debug("OWAPI BASE URL: \n", OWAPI_BASE_URL);
 const api_key = process.env.OPENWEATHER_API_KEY;
 class OpenWeatherAPI {
