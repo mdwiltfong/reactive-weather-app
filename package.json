@@ -27,7 +27,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cd server && npm install && node index.js",
+    "heroku-postbuild": "cd src && npm install && npm run build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "dev": "concurrently -n 'server,client' \"nodemon ./server/server.js\" \"npm run mock_owapi_server\" \"npm start\"",

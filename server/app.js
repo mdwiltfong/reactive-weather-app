@@ -7,15 +7,17 @@ const morgan = require("morgan");
 const { authenticateJWT } = require("./middleware/auth");
 const cors = require("cors");
 const { ExpressError } = require("./ExpressError");
-/* const path = require("path");
-const publicPath = path.join(__dirname, "..", "build");
-const filePath = path.join(publicPath, "index.html");
-const app = express();
+const path = require("path");
+const publicPath = path.join(__dirname, "../build");
+const filePath = path.join(publicPath, "../build/index.html");
+console.debug("FILE PATH: \n", filePath);
+console.debug("PUBLIC PATH: \n", publicPath);
 console.log(publicPath);
 app.use(express.static(publicPath));
-app.get("/*", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(filePath);
-}); */
+});
+const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("tiny"));

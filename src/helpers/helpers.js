@@ -5,7 +5,10 @@ import { ConnectionString } from "./ConnectionString";
 
 //const BASE_URL = ConnectionString.getExpressURL();
 
-const BASE_URL = process.env.REACT_APP_PUBLIC_URL || "http://localhost:5001";
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? process.env.REACT_APP_PUBLIC_URL
+    : "http://localhost:5001";
 
 const api_key = process.env.REACT_APP_OPENWEATHER_API_KEY;
 console.debug("BASE_URL", BASE_URL);
