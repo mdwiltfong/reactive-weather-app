@@ -577,7 +577,7 @@ export class DateFormatter {
   ];
   constructor(epochTime = Date.now()) {
     this.now = epochTime;
-    this._Date = new Date(this.now);
+    this._Date = new Date(this.now * 1000);
     this.days = this.constructor._days;
   }
   static _getDay = (epochTime) => {

@@ -60,7 +60,7 @@ export function CurrentWeather({ weatherData }) {
               {weatherData.name}
             </p>
             <p>
-              {weatherData.GetDay()} {weatherData.GetTime()}
+              {weatherData.getDay} {weatherData.getTime}
             </p>
           </div>
           <div id="date-time" style={{ fontSize: "1em" }}></div>
