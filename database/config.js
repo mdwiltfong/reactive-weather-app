@@ -13,7 +13,7 @@ const PORT = +process.env.EXPRESS_PORT || 3001;
 // Use dev database, testing database, or via env var, production database
 const BASE_URI =
   process.env.NODE_ENV === "production"
-    ? process.env.BASE_URI
+    ? process.env.DATABASE_URL
     : "postgresql://mdwiltfong:5056@localhost:5432/";
 console.log(BASE_URI);
 // Use dev database, testing database, or via env var, production database
