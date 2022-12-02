@@ -5,13 +5,16 @@
 const dotenv = require("dotenv").config({ path: "../../.env" });
 console.log(dotenv);
 require("colors");
-console.debug("CONFIG DOTENV", dotenv);
+console.debug("DATA BASE CONFIG DOTENV \n", dotenv);
 const SECRET_KEY = process.env.SECRET_KEY || "secret-dev";
 
 const PORT = +process.env.EXPRESS_PORT || 3001;
 
 // Use dev database, testing database, or via env var, production database
-const BASE_URI = process.env.BASE_URI;
+const BASE_URI =
+  process.env.NODE_ENV === "production"
+    ? process.env.BASE_URI
+    : "postgresql://mdwiltfong:5056@localhost:5432/";
 console.log(BASE_URI);
 // Use dev database, testing database, or via env var, production database
 function getDatabaseUri() {
