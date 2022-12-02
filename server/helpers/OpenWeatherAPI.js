@@ -45,11 +45,11 @@ class OpenWeatherAPI {
     }
   }
 
-  static async fetchForecast(lat, long) {
+  static async fetchForecast(lat, lon) {
     try {
       const oneApiCall = await this.request("3.0/onecall", {
         lat: lat,
-        long: long,
+        lon: lon,
       });
       return oneApiCall;
     } catch (error) {
