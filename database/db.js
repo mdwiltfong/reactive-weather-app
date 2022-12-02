@@ -15,9 +15,7 @@ if (process.env.NODE_ENV === "test") {
     console.error(e.message);
   }
 } else {
-  db = new Client({
-    connectionString: getDatabaseUri(),
-  });
+  db = new Client(process.env.DATABASE_URL);
 }
 
 db.connect();
