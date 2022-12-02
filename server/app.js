@@ -15,7 +15,7 @@ console.debug("FILE PATH: \n", filePath);
 console.debug("PUBLIC PATH: \n", publicPath);
 console.log(publicPath);
 app.use(express.static(publicPath));
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(filePath);
 });
 app.use(cors());
