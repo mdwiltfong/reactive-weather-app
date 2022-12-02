@@ -15,7 +15,12 @@ if (process.env.NODE_ENV === "test") {
     console.error(e.message);
   }
 } else {
-  db = new Client(process.env.DATABASE_URL);
+  db = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  });
 }
 
 db.connect();
